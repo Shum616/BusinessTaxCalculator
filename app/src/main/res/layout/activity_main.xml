@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main">
+
     <data>
 
     </data>
@@ -10,63 +11,100 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:background="@drawable/background">
+        android:background="@drawable/background"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
 
-        <EditText
-            android:id="@+id/editTextBusiness"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="148dp"
-            android:hint="Enter business income this month"
+            android:layout_marginHorizontal="@dimen/dp42"
+            android:hint="@string/enter_income"
+            android:textColorHint="#424242"
+            app:boxStrokeColor="#515fcf"
+            app:boxStrokeErrorColor="#f70000"
+            app:errorTextColor="#f70000"
+            app:hintTextColor="#515fcf"
+            app:layout_constraintBottom_toTopOf="@+id/cardVw1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/TxtVw1"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+            android:id="@+id/cardVw1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="152dp"
-            android:text="shit"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/cardVw3"
+            app:layout_constraintEnd_toStartOf="@id/cardVw2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextBusiness" />
+            app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
 
-        <TextView
-            android:id="@+id/TxtVw2"
+        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+            android:id="@+id/cardVw2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="shit"
-            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/cardVw4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TxtVw1" />
+            app:layout_constraintStart_toEndOf="@+id/cardVw1"
+            app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
 
-        <TextView
-            android:id="@+id/TxtVw3"
+        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+            android:id="@+id/cardVw3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="shit"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/calculateBttn"
+            app:layout_constraintEnd_toStartOf="@+id/cardVw4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TxtVw2" />
+            app:layout_constraintTop_toBottomOf="@+id/cardVw1" />
 
-        <TextView
-            android:id="@+id/TxtVw4"
+        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+            android:id="@+id/cardVw4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="shit"
-            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/calculateBttn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardVw3"
+            app:layout_constraintTop_toBottomOf="@+id/cardVw2" />
+
+        <Button
+            android:id="@+id/calculateBttn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/violet"
+            android:text="@string/calculate_taxes"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TxtVw3" />
+            app:layout_constraintTop_toBottomOf="@+id/cardVw4" />
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            style="@style/Base.Theme.BusinessTaxCalculator"
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70dp"
+            android:layout_alignParentBottom="true"
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/start_page_menu"
+          />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

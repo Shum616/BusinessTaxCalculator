@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">BusinessTaxCalculator</string>
+    <string name="enter_income">Введіть дохід за місяць</string>
+    <string name="im_a_subhead">I\'m a subhead</string>
+    <string name="i_m_also_a_title">I\'m also a title</string>
+    <string name="text_validation_success">Success</string>
+    <string name="text_validation_error_empty_field">Empty field\n</string>
+    <string name="text_validation_error_income">Invalid income input</string>
+    <string name="calculate_taxes">Calculate taxes</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="homepage">HomePage</string>
+
+
 </resources>

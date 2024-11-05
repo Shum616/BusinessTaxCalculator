@@ -36,6 +36,10 @@ android {
     buildFeatures{
         dataBinding = true
     }
+    packaging {
+        resources.excludes.add("META-INF/LICENSE.md")
+        resources.excludes.add("META-INF/NOTICE.md")
+    }
 }
 
 dependencies {
@@ -49,4 +53,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation (libs.material)
+    // Use to implement support for wear tiles
+    implementation(libs.androidx.tiles)
+
+    // Use to utilize standard components and layouts in your tiles
+    implementation(libs.androidx.protolayout)
+
+    // Use to utilize components and layouts with Material Design in your tiles
+    implementation(libs.androidx.protolayout.material)
+    implementation (libs.material.v140)
+    implementation(libs.androidx.fragment.ktx)
+
+
 }
