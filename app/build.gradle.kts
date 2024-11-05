@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.businesstaxcalculator"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.businesstaxcalculator"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -62,7 +62,6 @@ dependencies {
 
     // Use to utilize components and layouts with Material Design in your tiles
     implementation(libs.androidx.protolayout.material)
-    implementation (libs.material.v140)
     implementation(libs.androidx.fragment.ktx)
 
 
