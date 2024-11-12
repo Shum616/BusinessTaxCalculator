@@ -21,8 +21,9 @@ class CustomCardView : ConstraintLayout{
     constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
             : super(context, attrs, defStyle)
 
-    fun setValues(title: Int, value: String){
-        binding.title.setText(title) //setting text for int and resources
+    fun setValues(title: String, value: String){
+        //binding.title.setText(title) //setting text for int and resources
+        binding.title.text = title
         binding.subhead.text = value
     }
 

@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    kotlin("kapt")
 }
 
 android {
     namespace = "com.example.businesstaxcalculator"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.businesstaxcalculator"
@@ -64,6 +66,12 @@ dependencies {
     implementation(libs.androidx.protolayout.material)
     implementation (libs.material.v140)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    // ViewModel utilities for Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // LiveData
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
 
 
 }
