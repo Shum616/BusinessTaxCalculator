@@ -70,6 +70,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.fragment.ktx)
+
+// Views/Fragments integration
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+
 
 
 
