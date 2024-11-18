@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.main.base.BaseTabFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : BaseTabFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

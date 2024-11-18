@@ -9,16 +9,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedIncomeViewModel @Inject constructor(private val validator: IValidator) : ViewModel() {
 
-    fun setIncomeTax(income:String): Array<Double> {
-        var icomeNum = income.toDouble()
+    fun setIncomeTax(income: String): Array<Double> {
+        val incomeNum = income.toDouble()
 
-        var taxResult1 = icomeNum*2
-        var taxResult2 = icomeNum*3
-        var taxResult3 = icomeNum*4
-        var taxResult4 = icomeNum*5
+        var taxResult1 = incomeNum * 2
+        var taxResult2 = incomeNum * 3
+        var taxResult3 = incomeNum * 4
+        var taxResult4 = incomeNum * 5
 
-        return arrayOf(taxResult1,taxResult2, taxResult3, taxResult4)
+        return arrayOf(taxResult1, taxResult2, taxResult3, taxResult4)
     }
 
-    fun incomeValidation(text: String) : ValidateResult = validator.validateInput(text)
+    fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 }

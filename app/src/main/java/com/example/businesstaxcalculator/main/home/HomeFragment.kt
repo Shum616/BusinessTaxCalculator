@@ -8,7 +8,9 @@ import androidx.fragment.app.viewModels
 import com.example.businesstaxcalculator.databinding.HomeFragmentLayoutBinding
 import com.example.businesstaxcalculator.main.SharedIncomeViewModel
 import com.example.businesstaxcalculator.main.base.BaseTabFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseTabFragment() {
 
     private lateinit var binding: HomeFragmentLayoutBinding
