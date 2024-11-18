@@ -1,7 +1,8 @@
-package com.example.businesstaxcalculator
+package com.example.businesstaxcalculator.main.base
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.example.businesstaxcalculator.main.MainActivity
 
 abstract class BaseTabFragment: Fragment() {
     protected open val viewModel: ViewModel

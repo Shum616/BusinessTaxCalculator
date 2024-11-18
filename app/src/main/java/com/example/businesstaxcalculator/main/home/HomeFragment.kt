@@ -1,13 +1,13 @@
-package com.example.businesstaxcalculator
+package com.example.businesstaxcalculator.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import com.example.businesstaxcalculator.databinding.HomeFragmentLayoutBinding
-import com.example.businesstaxcalculator.viewmodel.SharedIncomeViewModel
+import com.example.businesstaxcalculator.main.SharedIncomeViewModel
+import com.example.businesstaxcalculator.main.base.BaseTabFragment
 
 class HomeFragment : BaseTabFragment() {
 
@@ -24,7 +24,6 @@ class HomeFragment : BaseTabFragment() {
             val inputTxt = binding.txtField.text.toString()
 
             val validRes = viewModel.incomeValidation(inputTxt)
-            //fixed validation but not sure if it`s good
 
             binding.txtInputLt.error =
                 if (!validRes.isSuccess) "Invalid income input"

@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator
+package com.example.businesstaxcalculator.main
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -6,9 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.ActivityMainBinding
+import com.example.businesstaxcalculator.main.home.HomeFragment
+import com.example.businesstaxcalculator.main.profile.ProfileFragment
+import com.example.businesstaxcalculator.main.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var bottomNavigationView: BottomNavigationView
