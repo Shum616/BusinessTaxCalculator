@@ -20,17 +20,18 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            style="@style/Base.Theme.BusinessTaxCalculator"
+            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp70"
+            android:layout_height="90dp"
             android:layout_alignParentBottom="true"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/start_page_menu"
-            app:itemIconTint="#873677"
+            android:backgroundTint="@color/violet"
+            app:itemIconTint="@color/white"
           />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
