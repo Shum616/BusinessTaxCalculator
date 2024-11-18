@@ -19,11 +19,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp42"
             android:hint="@string/enter_income"
-            android:textColorHint="#424242"
-            app:boxStrokeColor="#515fcf"
-            app:boxStrokeErrorColor="#f70000"
-            app:errorTextColor="#f70000"
-            app:hintTextColor="#515fcf"
+            android:textColorHint="@color/_424242"
+            app:boxStrokeColor="@color/_515fcf"
+            app:boxStrokeErrorColor="@color/f70000"
+            app:errorTextColor="@color/f70000"
+            app:hintTextColor="@color/_515fcf"
             app:layout_constraintBottom_toTopOf="@+id/cardVw1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,18 +37,17 @@
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
             android:id="@+id/cardVw1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtInputLt"
-            android:layout_marginTop="-61dp"
             app:layout_constraintBottom_toTopOf="@+id/cardVw3"
             app:layout_constraintEnd_toStartOf="@id/cardVw2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
 
-        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
             android:id="@+id/cardVw2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +56,7 @@
             app:layout_constraintStart_toEndOf="@+id/cardVw1"
             app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
 
-        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
             android:id="@+id/cardVw3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardVw1" />
 
-        <com.example.businesstaxcalculator.widgets.cardview.CustomCardView
+        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
             android:id="@+id/cardVw4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

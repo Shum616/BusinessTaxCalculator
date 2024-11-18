@@ -1,10 +1,10 @@
 package com.example.businesstaxcalculator.validatot
 
 import com.example.businesstaxcalculator.R
-import com.example.businesstaxcalculator.validatot.base.BaseValidator
+import com.example.businesstaxcalculator.validatot.base.BaseValidatorInput
 import com.example.businesstaxcalculator.validatot.base.ValidateResult
 
-class EmptyValidator(val input: String) : BaseValidator() {
+class EmptyValidatorInput(val input: String) : BaseValidatorInput() {
     override fun validate(): ValidateResult {
         val isValid = input.isNotEmpty()
         return ValidateResult(

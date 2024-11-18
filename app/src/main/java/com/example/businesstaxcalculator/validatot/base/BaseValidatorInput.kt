@@ -1,10 +1,11 @@
 package com.example.businesstaxcalculator.validatot.base
 
 import com.example.businesstaxcalculator.R
+import javax.inject.Inject
 
-abstract class BaseValidator : IValidator {
+abstract class BaseValidatorInput @Inject constructor() : IValidatorInput, IValidatorEmpty{
     companion object {
-        fun validate(vararg validators: IValidator): ValidateResult {
+        fun validate(vararg validators: IValidatorInput): ValidateResult {
             validators.forEach {
                 val result = it.validate()
                 if (!result.isSuccess)

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.businesstaxcalculator.databinding.CardviewLayoutBinding
 
-class CustomCardView : ConstraintLayout{
+class CardViewMainVw : ConstraintLayout{
     private val binding: CardviewLayoutBinding
 
     init {
@@ -22,7 +22,6 @@ class CustomCardView : ConstraintLayout{
             : super(context, attrs, defStyle)
 
     fun setValues(title: String, value: String){
-        //binding.title.setText(title) //setting text for int and resources
         binding.title.text = title
         binding.subhead.text = value
     }

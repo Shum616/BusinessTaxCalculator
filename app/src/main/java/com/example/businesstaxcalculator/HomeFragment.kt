@@ -4,36 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import com.example.businesstaxcalculator.databinding.HomeFragmentLayoutBinding
-import com.example.businesstaxcalculator.validatot.IncomeValidator
-import com.example.businesstaxcalculator.viewmodel.IncomeViewModel
+import com.example.businesstaxcalculator.viewmodel.SharedIncomeViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseTabFragment() {
 
     private lateinit var binding: HomeFragmentLayoutBinding
+    override val viewModel: SharedIncomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = HomeFragmentLayoutBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val incomeCounter = IncomeViewModel()
 
         binding.calculateBttn.setOnClickListener {
             val inputTxt = binding.txtField.text.toString()
-            val validRes = IncomeValidator(inputTxt).validate()
+
+            val validRes = viewModel.incomeValidation(inputTxt)
+            //fixed validation but not sure if it`s good
 
             binding.txtInputLt.error =
                 if (!validRes.isSuccess) "Invalid income input"
                 else {
-                    val array = incomeCounter.SetIncomeTax(binding.txtField.text.toString())
+                    val array = viewModel.setIncomeTax(binding.txtField.text.toString())
                     binding.cardVw1.setValues(array[0].toString(), "income * 2")
                     binding.cardVw2.setValues(array[1].toString(), "income * 3")
                     binding.cardVw3.setValues(array[2].toString(), "income * 4")
@@ -41,5 +37,6 @@ class HomeFragment : Fragment() {
                     ""
                 }
         }
+        return binding.root
     }
 }

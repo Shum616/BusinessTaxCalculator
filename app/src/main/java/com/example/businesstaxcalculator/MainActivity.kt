@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(ProfileFragment())
                     true
                 }
-                else -> false ///wtf have i done???
+                else -> error(R.string.fragment_error)
             }
         }
     }

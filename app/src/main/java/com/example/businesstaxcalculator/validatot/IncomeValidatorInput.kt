@@ -2,11 +2,11 @@ package com.example.businesstaxcalculator.validatot
 
 import android.text.TextUtils
 import com.example.businesstaxcalculator.R
-import com.example.businesstaxcalculator.validatot.base.BaseValidator
+import com.example.businesstaxcalculator.validatot.base.BaseValidatorInput
 import com.example.businesstaxcalculator.validatot.base.ValidateResult
 import java.math.BigDecimal
 
-class IncomeValidator(val income: String) : BaseValidator(){
+class IncomeValidatorInput(val income: String) : BaseValidatorInput(){
     override fun validate(): ValidateResult {
         val isValid =  !TextUtils.isEmpty(income) && income.toBigDecimal() > BigDecimal.ZERO
         return ValidateResult(

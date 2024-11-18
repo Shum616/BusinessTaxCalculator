@@ -1,5 +1,5 @@
 package com.example.businesstaxcalculator.validatot.base
 
-interface IValidator {
+interface IValidatorInput {
     fun validate() : ValidateResult
 }
