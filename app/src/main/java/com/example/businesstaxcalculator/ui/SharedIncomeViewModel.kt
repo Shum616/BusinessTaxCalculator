@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.main
+package com.example.businesstaxcalculator.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.businesstaxcalculator.utils.validator.IValidator
