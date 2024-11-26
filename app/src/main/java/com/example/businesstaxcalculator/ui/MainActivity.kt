@@ -39,10 +39,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
+//        val db = Room.databaseBuilder(
+//            applicationContext,
+//            AppDatabase::class.java, "database-name"
+//        ).build()
 
 
 

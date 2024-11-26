@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
+
 
 @Dao
 interface IncomeDao {
@@ -13,9 +15,19 @@ interface IncomeDao {
     @Query("SELECT * FROM income WHERE incomeId IN (:incomeIds)")
     fun loadAllByIds(incomeIds: IntArray): List<Income>
 
+    @Query("SELECT * FROM income WHERE incomeYear = :year ")
+    fun getQuarter(year: Int) : List<Income>
+
     @Insert
     fun insertAll(vararg incomes: Income)
 
+    @Insert
+    fun insertOne(vararg income: Income)
+
     @Delete
     fun delete(income: Income)
+
+    @Update
+    fun update(id: Int, income: Income)
+
 }
