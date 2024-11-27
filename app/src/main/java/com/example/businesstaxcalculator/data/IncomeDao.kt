@@ -3,6 +3,7 @@ package com.example.businesstaxcalculator.data
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
@@ -15,7 +16,7 @@ interface IncomeDao {
     @Query("SELECT * FROM income WHERE incomeId IN (:incomeIds)")
     fun loadAllByIds(incomeIds: IntArray): List<Income>
 
-    @Query("SELECT * FROM income WHERE incomeYear = :year ")
+    @Query("SELECT * FROM income WHERE income_year = :year ")
     fun getQuarter(year: Int) : List<Income>
 
     @Insert
@@ -27,7 +28,10 @@ interface IncomeDao {
     @Delete
     fun delete(income: Income)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(income: Income)
+
     @Update
-    fun update(id: Int, income: Income)
+    fun update(income: Income)
 
 }

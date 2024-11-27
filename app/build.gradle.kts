@@ -91,7 +91,8 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    kapt (libs.androidx.room.compiler.v250)
+    kapt (libs.androidx.room.compiler)
+
 }
 kapt {
     correctErrorTypes = true

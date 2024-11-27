@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.room.Room
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.AppDatabase
+import com.example.businesstaxcalculator.data.MIGRATION_1_2
 import com.example.businesstaxcalculator.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,15 +38,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            AppDatabase::class.java, "database-name"
-//        ).build()
-
-
-
     }
 
     private fun navigate(action: Int) = findNavController(R.id.container).navigate(action)
