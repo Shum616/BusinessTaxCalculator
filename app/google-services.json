@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "314847584761",
+    "project_id": "businesstaxcalculator",
+    "storage_bucket": "businesstaxcalculator.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314847584761:android:7f005258d0598a6ac09d28",
+        "android_client_info": {
+          "package_name": "com.example.businesstaxcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314847584761-hfd5e6dv6rmv4mrhdgug30rogckmcmbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiwU4FLnE1-2tAmNcL7aCVg9n3LvfazlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314847584761-hfd5e6dv6rmv4mrhdgug30rogckmcmbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

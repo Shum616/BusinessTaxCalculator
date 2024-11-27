@@ -5,13 +5,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.room.Room
 import com.example.businesstaxcalculator.R
+import com.example.businesstaxcalculator.data.AppDatabase
+import com.example.businesstaxcalculator.data.MIGRATION_1_2
 import com.example.businesstaxcalculator.databinding.ActivityMainBinding
-import com.example.businesstaxcalculator.ui.home.HomeFragment
-import com.example.businesstaxcalculator.ui.profile.ProfileFragment
-import com.example.businesstaxcalculator.ui.settings.SettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
