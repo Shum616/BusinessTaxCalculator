@@ -23,5 +23,35 @@ class SharedIncomeViewModel @Inject constructor(private val validator: IValidato
 
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 
+    fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double) : Double {
+        return Math.round(gross * exchangeRate * 0.05 * 100) /100.0
+    }
+
+    fun calculateUnidedSocialСontributionUan(gross : Double) : Double{
+        return gross * 0.22
+    }
+
+    fun calculateIncomeCurrency(gross: Double, currRate: Double): Double{
+        return gross * currRate
+    }
+
+    fun calculateIncomeUan(gross: Double, currRate: Double): Double{
+        return gross * currRate
+    }
+
+    fun calculateRemaining(gross: Double,) : Double{
+        return gross - calculateUnidedSocialСontributionUan(gross)
+    }
+
+    fun  calculateIncomeUanQuarter(incomes : List<Double>): Double{
+        return incomes.sum()
+    }
+
+    fun calculateRemainingQuarter(incomes: List<Double>): Double{
+        var sum :Double = 0.0
+        incomes.forEach { it -> sum += it * 0.22 }
+        return sum
+    }
+
 
 }
