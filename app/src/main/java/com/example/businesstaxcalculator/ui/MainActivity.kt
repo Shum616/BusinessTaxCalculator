@@ -46,14 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.privatbank.ua/p24api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val api = retrofit.create(PrivatBankApi::class.java)
-        api.getExchangeRates("20.10.2022")
     }
 
     private fun navigate(action: Int) = findNavController(R.id.container).navigate(action)

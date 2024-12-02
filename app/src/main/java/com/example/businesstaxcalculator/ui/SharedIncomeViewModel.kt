@@ -1,13 +1,16 @@
 package com.example.businesstaxcalculator.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.businesstaxcalculator.data.remote.repositories.interfaces.CurrencyFormat
+import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRate
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.ValidateResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.sql.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedIncomeViewModel @Inject constructor(private val validator: IValidator) : ViewModel() {
+class SharedIncomeViewModel @Inject constructor(private val validator: IValidator, private val currencyRate: ICurrencyRate) : ViewModel() {
 
     fun setIncomeTax(income: String): Array<Double> {
         val incomeNum = income.toDouble()
@@ -21,4 +24,7 @@ class SharedIncomeViewModel @Inject constructor(private val validator: IValidato
     }
 
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
+
+    fun currencyRateDollar(date: Date): CurrencyFormat = currencyRate.getDollarRate(date)
+    fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
 }
