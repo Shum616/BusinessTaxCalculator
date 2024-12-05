@@ -53,5 +53,4 @@ class SharedIncomeViewModel @Inject constructor(private val validator: IValidato
         return sum
     }
 
-
 }
