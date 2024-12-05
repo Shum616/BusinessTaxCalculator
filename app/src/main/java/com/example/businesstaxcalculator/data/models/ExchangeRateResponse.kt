@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator
+package com.example.businesstaxcalculator.data.models
 
 data class ExchangeRatesResponse(
     val date: String,

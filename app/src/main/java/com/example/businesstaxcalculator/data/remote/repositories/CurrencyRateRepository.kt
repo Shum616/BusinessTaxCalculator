@@ -1,19 +1,22 @@
-package com.example.businesstaxcalculator.data.remote.repositories.interfaces
+package com.example.businesstaxcalculator.data.remote.repositories
 
-import com.example.businesstaxcalculator.RetrofitInstance
+import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
+import com.example.businesstaxcalculator.data.remote.repositories.interfaces.CurrencyFormat
+import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
-class CurrencyRate : ICurrencyRate {
-
-    suspend fun getRateForCurrency(date: String, currency: String): CurrencyFormat {
+class CurrencyRateRepository @Inject constructor(private val currencyApi: PrivatBankApi) :
+    ICurrencyRateRepository {
+    private suspend fun getRateForCurrency(date: String, currency: String): CurrencyFormat {
         return withContext(Dispatchers.IO) {
             try {
-                val response = RetrofitInstance.api.getExchangeRates(date)
+                val response = currencyApi.getExchangeRates(date)
                 val rate = response.exchangeRate.find { it.currency == currency }
                 if (rate != null) {
                     CurrencyFormat(
@@ -35,7 +38,7 @@ class CurrencyRate : ICurrencyRate {
         return dateFormat.format(date)
     }
 
-    override fun getDollarRate(date: Date): CurrencyFormat = runBlocking{
+    override fun getDollarRate(date: Date): CurrencyFormat = runBlocking {
         val formattedDate = formatDate(date)
         getRateForCurrency(formattedDate, "USD")
     }

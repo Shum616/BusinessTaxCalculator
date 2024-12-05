@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator
+package com.example.businesstaxcalculator.data.models
 
 data class ExchangeRate(
     val baseCurrency: String,
