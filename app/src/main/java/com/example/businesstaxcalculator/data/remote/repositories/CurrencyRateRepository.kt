@@ -1,7 +1,7 @@
 package com.example.businesstaxcalculator.data.remote.repositories
 
 import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
-import com.example.businesstaxcalculator.data.remote.repositories.interfaces.CurrencyFormat
+import com.example.businesstaxcalculator.data.models.CurrencyFormat
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

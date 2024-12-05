@@ -1,7 +1,7 @@
 package com.example.businesstaxcalculator.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.businesstaxcalculator.data.remote.repositories.interfaces.CurrencyFormat
+import com.example.businesstaxcalculator.data.models.CurrencyFormat
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.ValidateResult
