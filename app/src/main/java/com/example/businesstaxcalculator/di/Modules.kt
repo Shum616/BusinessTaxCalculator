@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRepository
 import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
-import com.example.businesstaxcalculator.data.AppDatabase
+import com.example.businesstaxcalculator.data.local.AppDatabase
 import com.example.businesstaxcalculator.utils.BASE_URL
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.Validator
