@@ -1,8 +1,10 @@
 package com.example.businesstaxcalculator.di
 
+import android.app.Application
 import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRepository
 import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
+import com.example.businesstaxcalculator.data.AppDatabase
 import com.example.businesstaxcalculator.utils.BASE_URL
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.Validator
@@ -36,4 +38,10 @@ object AppModule {
     @Singleton
     fun provideCurrencyRate(api: PrivatBankApi): ICurrencyRateRepository =
         CurrencyRateRepository(api)
+    
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application): AppDatabase {
+        return AppDatabase.invoke(app.applicationContext)
+    }
 }

@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.android
+import org.gradle.kotlin.dsl.libs
 
 plugins {
     alias(libs.plugins.android.application)
@@ -6,6 +7,7 @@ plugins {
     id("kotlin-kapt")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -74,19 +76,31 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.fragment.ktx)
 
-// Views/Fragments integration
+    // Views/Fragments integration
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 
+    //dagger hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    ///retrofit + gson
+    //retrofit + gson
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.gson)
+    
+    //room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor (libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.rxjava3)
+
+    //firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    kapt (libs.androidx.room.compiler)
 
 }
 kapt {
