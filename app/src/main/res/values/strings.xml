@@ -21,5 +21,7 @@
     <string name="dollar_rate">Курс долара</string>
     <string name="euro_rate">Курс євро</string>
     <string name="get_rate">Зафіксувати курс</string>
+    <string name="available_currencies">Доступні валюти</string>
+    <string name="field">Поле вибору елемента</string>
 
 </resources>

@@ -5,15 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.R
+import com.example.businesstaxcalculator.data.UserSelection
+import com.example.businesstaxcalculator.data.database.DataStorage
+import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
 import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -21,6 +26,8 @@ class SettingsFragment : BaseTabFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     override val viewModel: SharedIncomeViewModel by viewModels()
+    @Inject
+    lateinit var dataStorage: IDataStorage<UserSelection>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,42 +40,46 @@ class SettingsFragment : BaseTabFragment() {
 
         val arrayAdapter = createAdapter(requireContext(),currencies)
 
-        binding.currencyDropdown.adapter = arrayAdapter
+        binding.materialSpinner.setAdapter(arrayAdapter)
 
-        binding.currencyDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent?.getItemAtPosition(position).toString()
-                Toast.makeText(requireContext(), selectedItem.toString(), Toast.LENGTH_SHORT ).show()
-            }
+        /////not sure about this part
+        val userSelection = UserSelection()
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                Toast.makeText(requireContext(), "Nothing", Toast.LENGTH_SHORT ).show()
-            }
+        binding.materialSpinner.setOnItemClickListener { _, _, position, _ ->
+            val selectedItem = currencies[position]
+            userSelection.spinnerSelection = selectedItem
         }
 
-        val inputTxtDollar = binding.editDollar.text.toString()
-        val validResDollar = viewModel.incomeValidation(inputTxtDollar)
 
-        val inputTxtEuro = binding.editEuro.text.toString()
-        val validResEuro = viewModel.incomeValidation(inputTxtEuro)
 
         binding.getRateBtn.setOnClickListener {
+            val inputTxtDollar = binding.editDollar.text.toString()
+            val validResDollar = viewModel.incomeValidation(inputTxtDollar)
+
+            val inputTxtEuro = binding.editEuro.text.toString()
+            val validResEuro = viewModel.incomeValidation(inputTxtEuro)
+
             if(validResDollar.isSuccess){
-                TODO()
+                userSelection.dollarInput = inputTxtDollar.toDouble()
             } else{
-                TODO()
+                Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
             }
             if(validResEuro.isSuccess){
-                TODO()
+                userSelection.euroInput = inputTxtEuro.toDouble()
             }else{
-                TODO()
+                Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
             }
+
+            lifecycleScope.launch { dataStorage.save(userSelection) }
+
         }
+
+//        lifecycleScope.launch {    //this function works!
+//            val loadedData = dataStorage.load()
+//            loadedData?.let {
+//                println("Spinner: ${it.spinnerSelection}, First: ${it.dollarInput}, Second: ${it.euroInput}")
+//            }
+//        }
 
         return binding.root
     }
@@ -76,7 +87,7 @@ class SettingsFragment : BaseTabFragment() {
     fun createAdapter(context: Context, stringList: List<String>): ArrayAdapter<String> {
         return ArrayAdapter(
             context,
-            android.R.layout.simple_spinner_item,
+            android.R.layout.simple_dropdown_item_1line,
             stringList
         )
     }

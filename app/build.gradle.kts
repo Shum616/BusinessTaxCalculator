@@ -92,6 +92,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     kapt (libs.androidx.room.compiler)
+    implementation ("com.google.android.material:material:1.12.0")
 
 }
 kapt {

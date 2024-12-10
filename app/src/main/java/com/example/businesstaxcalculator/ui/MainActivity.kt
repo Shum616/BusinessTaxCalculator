@@ -41,4 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigate(action: Int) = findNavController(R.id.container).navigate(action)
+
+
 }

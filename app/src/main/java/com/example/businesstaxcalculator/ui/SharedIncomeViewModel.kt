@@ -2,13 +2,17 @@ package com.example.businesstaxcalculator.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.businesstaxcalculator.data.AppDatabase
+import com.example.businesstaxcalculator.data.database.DataStorage
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.ValidateResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedIncomeViewModel @Inject constructor(private val validator: IValidator, private val db: AppDatabase) : ViewModel() {
+class SharedIncomeViewModel @Inject constructor(
+    private val validator: IValidator,
+    private val db: AppDatabase,
+    private  val dataStorage: DataStorage) : ViewModel() {
 
     fun setIncomeTax(income: String): Array<Double> {
         val incomeNum = income.toDouble()
