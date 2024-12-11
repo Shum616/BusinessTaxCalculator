@@ -1,6 +1,11 @@
 package com.example.businesstaxcalculator.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import com.example.businesstaxcalculator.data.UserSelection
+import com.example.businesstaxcalculator.data.database.IDataStorage
+import com.example.businesstaxcalculator.data.database.UserSettingsDataStorage
 import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRepository
 import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
@@ -43,5 +48,23 @@ object AppModule {
     @Singleton
     fun provideDatabase(app: Application): AppDatabase {
         return AppDatabase.invoke(app.applicationContext)
+    }
+
+    @Provides
+    @Singleton
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(context: Context): SharedPreferences {
+        return context.getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStorage(sharedPreferences: SharedPreferences): IDataStorage<UserSelection> {
+        return UserSettingsDataStorage(sharedPreferences)
     }
 }

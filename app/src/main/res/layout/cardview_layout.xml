@@ -5,8 +5,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/dp160"
         android:layout_height="@dimen/dp80"
-        android:shadowRadius="0"
-        android:background="@drawable/pink_rectangle">
+        android:background="@drawable/pink_rectangle"
+        android:shadowRadius="0">
 
         <TextView
             android:id="@+id/title"
@@ -14,11 +14,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
             android:text="@string/i_m_also_a_title"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/black"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/subhead"
@@ -27,10 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp4"
             android:text="@string/im_a_subhead"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            android:textColor="@color/black"/>
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,17 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.businesstaxcalculator.ui.SharedIncomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp200"
-        android:text="@string/settings"
-        android:textSize="@dimen/sp50"
-        android:textStyle="bold"
-        android:textColor="@color/black" />
+        android:layout_height="match_parent"
+        android:background="@drawable/violet_square">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            android:text="@string/choose_currency"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/currencyDropdown"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="@dimen/dp250"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/field"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="RtlHardcoded,RtlSymmetry">
+
+            <AutoCompleteTextView
+                android:id="@+id/materialSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@null"
+                android:contentDescription="@string/field"
+                android:hint="@string/available_currencies"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp2"
+            android:background="@android:color/black"
+            android:paddingTop="@dimen/dp10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currencyDropdown" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:paddingStart="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            android:text="@string/custom_rate_input"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/editDollar"
+            android:layout_width="@dimen/dp200"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:hint="@string/dollar_rate"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:ignore="RtlHardcoded" />
+
+        <EditText
+            android:id="@+id/editEuro"
+            android:layout_width="@dimen/dp200"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginLeft="@dimen/dp10"
+            android:hint="@string/euro_rate"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editDollar"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/getRateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:backgroundTint="@color/violet"
+            android:text="@string/get_rate"
+            app:layout_constraintEnd_toEndOf="@+id/editEuro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editEuro" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
