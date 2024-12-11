@@ -17,7 +17,7 @@ interface IncomeDao {
     fun loadAllByIds(incomeIds: IntArray): List<Income>
 
     @Query("SELECT * FROM income WHERE income_year = :year ")
-    fun getQuarter(year: Int) : List<Income>
+    fun getQuarter(year: Int): List<Income>
 
     @Insert
     fun insertAll(vararg incomes: Income)

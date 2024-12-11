@@ -13,8 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/violet_square"
-        android:orientation="vertical">
+        android:background="@drawable/violet_square">
 
         <TextView
             android:id="@+id/textView"

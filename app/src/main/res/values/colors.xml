@@ -7,4 +7,8 @@
     <color name="f70000">#f70000</color>
     <color name="_424242">#424242</color>
     <color name="dfbee8">#dfbee8</color>
+
+    <color name="rectangle_violet">#74D235E9</color>
+    <color name="rectangle_border">#52000000</color>
+
 </resources>

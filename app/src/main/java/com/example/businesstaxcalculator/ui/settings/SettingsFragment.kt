@@ -30,12 +30,15 @@ class SettingsFragment : BaseTabFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
-        val currencies = listOf(getString(R.string.usd), getString(R.string.eur),
-            getString(R.string.uah))
+        val currencies = listOf(
+            getString(R.string.usd),
+            getString(R.string.eur),
+            getString(R.string.uah)
+        )
 
-        val arrayAdapter = createAdapter(requireContext(),currencies)
+        val arrayAdapter = createAdapter(requireContext(), currencies)
 
         binding.materialSpinner.setAdapter(arrayAdapter)
 
@@ -53,16 +56,11 @@ class SettingsFragment : BaseTabFragment() {
             val inputTxtEuro = binding.editEuro.text.toString()
             val validResEuro = viewModel.incomeValidation(inputTxtEuro)
 
-            if(validResDollar.isSuccess){
-                userSelection.dollarInput = inputTxtDollar.toDouble()
-            } else{
-                Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
-            }
-            if(validResEuro.isSuccess){
-                userSelection.euroInput = inputTxtEuro.toDouble()
-            }else{
-                Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
-            }
+            if (validResDollar.isSuccess) userSelection.dollarInput = inputTxtDollar.toDouble()
+            else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
+
+            if (validResEuro.isSuccess)  userSelection.euroInput = inputTxtEuro.toDouble()
+            else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
 
             viewModel.dataStorageSave(userSelection)
 
@@ -78,7 +76,7 @@ class SettingsFragment : BaseTabFragment() {
         return binding.root
     }
 
-    fun createAdapter(context: Context, stringList: List<String>): ArrayAdapter<String> {
+    private fun createAdapter(context: Context, stringList: List<String>): ArrayAdapter<String> {
         return ArrayAdapter(
             context,
             android.R.layout.simple_dropdown_item_1line,

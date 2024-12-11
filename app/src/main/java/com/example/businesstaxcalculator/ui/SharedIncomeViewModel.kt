@@ -13,7 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedIncomeViewModel @Inject constructor(
     private val validator: IValidator,
-    private val dataStorage: IDataStorage<UserSelection>) : ViewModel() {
+    private val dataStorage: IDataStorage<UserSelection>
+) : ViewModel() {
 
     fun setIncomeTax(income: String): Array<Double> {
         val incomeNum = income.toDouble()
@@ -29,35 +30,35 @@ class SharedIncomeViewModel @Inject constructor(
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 
     fun dataStorageSave(userSelection: UserSelection) {
-        viewModelScope.launch { dataStorage.save(userSelection)}
+        viewModelScope.launch { dataStorage.save(userSelection) }
     }
 
-    fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double) : Double {
-        return Math.round(gross * exchangeRate * 0.05 * 100) /100.0
+    fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double): Double {
+        return Math.round(gross * exchangeRate * 0.05 * 100) / 100.0
     }
 
-    fun calculateUnidedSocialСontributionUan(gross : Double) : Double{
+    fun calculateUnidedSocialСontributionUan(gross: Double): Double {
         return gross * 0.22
     }
 
-    fun calculateIncomeCurrency(gross: Double, currRate: Double): Double{
+    fun calculateIncomeCurrency(gross: Double, currRate: Double): Double {
         return gross * currRate
     }
 
-    fun calculateIncomeUan(gross: Double, currRate: Double): Double{
+    fun calculateIncomeUan(gross: Double, currRate: Double): Double {
         return gross * currRate
     }
 
-    fun calculateRemaining(gross: Double,) : Double{
+    fun calculateRemaining(gross: Double): Double {
         return gross - calculateUnidedSocialСontributionUan(gross)
     }
 
-    fun  calculateIncomeUanQuarter(incomes : List<Double>): Double{
+    fun calculateIncomeUanQuarter(incomes: List<Double>): Double {
         return incomes.sum()
     }
 
-    fun calculateRemainingQuarter(incomes: List<Double>): Double{
-        var sum :Double = 0.0
+    fun calculateRemainingQuarter(incomes: List<Double>): Double {
+        var sum: Double = 0.0
         incomes.forEach { it -> sum += it * 0.22 }
         return sum
     }

@@ -8,7 +8,7 @@ class UserSettingsDataStorage @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : IDataStorage<UserSelection> {
 
-        private val keySpinner = "spinner_selection"
+    private val keySpinner = "spinner_selection"
     private val keyDollarInput = "dollar_input"
     private val keyEuroInput = "euro_input"
 
