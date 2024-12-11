@@ -64,7 +64,7 @@ class SettingsFragment : BaseTabFragment() {
                 Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
             }
 
-            lifecycleScope.launch { viewModel.dataStorageSave(userSelection) }
+            viewModel.dataStorageSave(userSelection)
 
         }
 

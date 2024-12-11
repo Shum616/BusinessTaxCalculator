@@ -5,7 +5,9 @@ import com.example.businesstaxcalculator.data.UserSelection
 import javax.inject.Inject
 
 class UserSettingsDataStorage @Inject constructor(
-    private val sharedPreferences: SharedPreferences) : IDataStorage<UserSelection>{
+    private val sharedPreferences: SharedPreferences
+) : IDataStorage<UserSelection> {
+
         private val keySpinner = "spinner_selection"
     private val keyDollarInput = "dollar_input"
     private val keyEuroInput = "euro_input"
@@ -39,7 +41,7 @@ class UserSettingsDataStorage @Inject constructor(
     }
 
     override suspend fun hasData(): Boolean {
-        return sharedPreferences.contains(keySpinner) == true
+        return sharedPreferences.contains(keySpinner)
     }
 
 }

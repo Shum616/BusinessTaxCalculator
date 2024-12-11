@@ -1,11 +1,9 @@
 package com.example.businesstaxcalculator.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import com.example.businesstaxcalculator.data.AppDatabase
+import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.data.database.IDataStorage
-import com.example.businesstaxcalculator.data.database.UserSettingsDataStorage
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.ValidateResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,8 +28,8 @@ class SharedIncomeViewModel @Inject constructor(
 
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 
-    suspend fun dataStorageSave(userSelection: UserSelection) {
-         dataStorage.save(userSelection)
+    fun dataStorageSave(userSelection: UserSelection) {
+        viewModelScope.launch { dataStorage.save(userSelection)}
     }
 
     fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double) : Double {
