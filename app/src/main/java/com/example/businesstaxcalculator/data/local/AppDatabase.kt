@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.data
+package com.example.businesstaxcalculator.data.local
 
 import android.content.Context
 import androidx.room.Database
@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.businesstaxcalculator.data.local.entities.Income
+import com.example.businesstaxcalculator.data.local.dao.IncomeDao
 
 @Database(entities = [Income::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
