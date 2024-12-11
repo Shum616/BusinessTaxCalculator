@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.businesstaxcalculator.data.AppDatabase
 import com.example.businesstaxcalculator.data.UserSelection
-import com.example.businesstaxcalculator.data.database.DataStorage
 import com.example.businesstaxcalculator.data.database.IDataStorage
+import com.example.businesstaxcalculator.data.database.UserSettingsDataStorage
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.Validator
 import dagger.Module
@@ -42,6 +42,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDataStorage(sharedPreferences: SharedPreferences): IDataStorage<UserSelection> {
-        return DataStorage(sharedPreferences)
+        return UserSettingsDataStorage(sharedPreferences)
     }
 }

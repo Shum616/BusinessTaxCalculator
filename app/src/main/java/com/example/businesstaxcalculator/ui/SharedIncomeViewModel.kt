@@ -1,18 +1,21 @@
 package com.example.businesstaxcalculator.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.data.AppDatabase
-import com.example.businesstaxcalculator.data.database.DataStorage
+import com.example.businesstaxcalculator.data.UserSelection
+import com.example.businesstaxcalculator.data.database.IDataStorage
+import com.example.businesstaxcalculator.data.database.UserSettingsDataStorage
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.ValidateResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SharedIncomeViewModel @Inject constructor(
     private val validator: IValidator,
-    private val db: AppDatabase,
-    private  val dataStorage: DataStorage) : ViewModel() {
+    private val dataStorage: IDataStorage<UserSelection>) : ViewModel() {
 
     fun setIncomeTax(income: String): Array<Double> {
         val incomeNum = income.toDouble()
@@ -26,6 +29,10 @@ class SharedIncomeViewModel @Inject constructor(
     }
 
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
+
+    suspend fun dataStorageSave(userSelection: UserSelection) {
+         dataStorage.save(userSelection)
+    }
 
     fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double) : Double {
         return Math.round(gross * exchangeRate * 0.05 * 100) /100.0

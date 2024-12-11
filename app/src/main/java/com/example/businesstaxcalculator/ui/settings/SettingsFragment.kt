@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
-import com.example.businesstaxcalculator.data.database.DataStorage
 import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
 import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
@@ -26,8 +25,6 @@ class SettingsFragment : BaseTabFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     override val viewModel: SharedIncomeViewModel by viewModels()
-    @Inject
-    lateinit var dataStorage: IDataStorage<UserSelection>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +39,12 @@ class SettingsFragment : BaseTabFragment() {
 
         binding.materialSpinner.setAdapter(arrayAdapter)
 
-        /////not sure about this part
         val userSelection = UserSelection()
 
         binding.materialSpinner.setOnItemClickListener { _, _, position, _ ->
             val selectedItem = currencies[position]
             userSelection.spinnerSelection = selectedItem
         }
-
-
 
         binding.getRateBtn.setOnClickListener {
             val inputTxtDollar = binding.editDollar.text.toString()
@@ -70,7 +64,7 @@ class SettingsFragment : BaseTabFragment() {
                 Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
             }
 
-            lifecycleScope.launch { dataStorage.save(userSelection) }
+            lifecycleScope.launch { viewModel.dataStorageSave(userSelection) }
 
         }
 
