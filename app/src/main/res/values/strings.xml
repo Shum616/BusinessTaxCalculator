@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BusinessTaxCalculator</string>
+    <string name="app_name">Business Tax Calculator</string>
     <string name="enter_income">Введіть дохід за місяць</string>
     <string name="im_a_subhead">I\'m a subhead</string>
     <string name="i_m_also_a_title">I\'m also a title</string>
