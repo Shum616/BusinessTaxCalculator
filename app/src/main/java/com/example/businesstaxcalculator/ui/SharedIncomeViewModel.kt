@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import com.example.businesstaxcalculator.data.models.CurrencyFormat
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.data.local.AppDatabase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.sql.Date
 import javax.inject.Inject
 
@@ -70,6 +72,22 @@ class SharedIncomeViewModel @Inject constructor(
         var sum: Double = 0.0
         incomes.forEach { it -> sum += it * 0.22 }
         return sum
+    }
+
+    private val _usdRate = MutableStateFlow<CurrencyFormat?>(null)
+    val usdRate: StateFlow<CurrencyFormat?> = _usdRate
+
+    private val _eurRate = MutableStateFlow<CurrencyFormat?>(null)
+    val eurRate: StateFlow<CurrencyFormat?> = _eurRate
+
+    fun fetchRates() {
+        val timestamp: Long = System.currentTimeMillis()
+        val today = Date(timestamp)
+
+        viewModelScope.launch {
+            _usdRate.value = currencyRate.getDollarRate(today)
+            _eurRate.value = currencyRate.getEuroRate(today)
+        }
     }
 
 }

@@ -6,18 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
-import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
 import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -31,6 +30,8 @@ class SettingsFragment : BaseTabFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+
 
         val currencies = listOf(
             getString(R.string.usd),
@@ -66,12 +67,16 @@ class SettingsFragment : BaseTabFragment() {
 
         }
 
+        observeRates()
+        viewModel.fetchRates()
+
 //        lifecycleScope.launch {    //this function works!
 //            val loadedData = dataStorage.load()
 //            loadedData?.let {
 //                println("Spinner: ${it.spinnerSelection}, First: ${it.dollarInput}, Second: ${it.euroInput}")
 //            }
 //        }
+
 
         return binding.root
     }
@@ -82,5 +87,19 @@ class SettingsFragment : BaseTabFragment() {
             android.R.layout.simple_dropdown_item_1line,
             stringList
         )
+    }
+
+    private fun observeRates() {
+
+        lifecycleScope.launch {
+            viewModel.usdRate.collect { rate ->
+                binding.currencyRateUsd.text = rate?.let { "USD: ${it.purchaseRate}" } ?: "USD: N/A" //rate null
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.eurRate.collect { rate ->
+                binding.currencyRateEur.text = rate?.let { "EUR: ${it.purchaseRate}" } ?: "EUR: N/A"
+            }
+        }
     }
 }

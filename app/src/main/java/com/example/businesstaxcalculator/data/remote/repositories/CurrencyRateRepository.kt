@@ -16,12 +16,14 @@ class CurrencyRateRepository @Inject constructor(private val currencyApi: Privat
     private suspend fun getRateForCurrency(date: String, currency: String): CurrencyFormat {
         return withContext(Dispatchers.IO) {
             try {
-                val response = currencyApi.getExchangeRates(date)
+                val response = currencyApi.getExchangeRates(date)// if found uah why
                 val rate = response.exchangeRate.find { it.currency == currency }
-                if (rate != null) {
+                if (rate != null) { //rate null
                     CurrencyFormat(
                         date = response.date,
-                        currency = rate.currency
+                        currency = rate.currency,
+                        purchaseRate = rate.purchaseRateNB,
+                        saleRate = rate.saleRateNB
                     )
                 } else {
                     null
