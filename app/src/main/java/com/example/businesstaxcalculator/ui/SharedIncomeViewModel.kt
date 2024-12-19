@@ -1,5 +1,6 @@
 package com.example.businesstaxcalculator.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.data.UserSelection
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 import com.example.businesstaxcalculator.data.models.CurrencyFormat
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.data.local.AppDatabase
+import com.example.businesstaxcalculator.data.remote.repositories.CurrencyNotFoundException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.sql.Date
@@ -85,9 +87,12 @@ class SharedIncomeViewModel @Inject constructor(
         val today = Date(timestamp)
 
         viewModelScope.launch {
-            _usdRate.value = currencyRate.getDollarRate(today)
-            _eurRate.value = currencyRate.getEuroRate(today)
+            try {
+                _usdRate.value = currencyRate.getDollarRate(today)
+                _eurRate.value = currencyRate.getEuroRate(today)
+            }  catch (e: CurrencyNotFoundException){
+                Log.e("ViewModel", "Помилка при отриманні курсів: ${e.message}")
+            }
         }
     }
-
 }

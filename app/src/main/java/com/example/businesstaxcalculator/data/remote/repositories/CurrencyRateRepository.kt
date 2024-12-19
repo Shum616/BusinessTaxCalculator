@@ -25,13 +25,11 @@ class CurrencyRateRepository @Inject constructor(private val currencyApi: Privat
                         purchaseRate = rate.purchaseRateNB,
                         saleRate = rate.saleRateNB
                     )
-                } else {
-                    null
-                }
+                } else throw CurrencyNotFoundException()
             } catch (e: Exception) {
                 e.printStackTrace()
-                null
-            } as CurrencyFormat
+                throw CurrencyNotFoundException()
+            }
         }
     }
 
@@ -50,3 +48,5 @@ class CurrencyRateRepository @Inject constructor(private val currencyApi: Privat
         getRateForCurrency(formattedDate, "EUR")
     }
 }
+
+class CurrencyNotFoundException: Exception("Cant fetch data")
