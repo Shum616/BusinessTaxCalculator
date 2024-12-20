@@ -93,12 +93,18 @@ class SettingsFragment : BaseTabFragment() {
 
         lifecycleScope.launch {
             viewModel.usdRate.collect { rate ->
-                binding.currencyRateUsd.text = rate?.let { "USD: ${it.purchaseRate}" } ?: "USD: N/A" //rate null
+                binding.currencyRateUsd.text = rate?.let {
+                    val formattedRate = String.format("%.2f", it.purchaseRate)
+                    "USD: $formattedRate"
+                } ?: "USD: N/A"
             }
         }
         lifecycleScope.launch {
             viewModel.eurRate.collect { rate ->
-                binding.currencyRateEur.text = rate?.let { "EUR: ${it.purchaseRate}" } ?: "EUR: N/A"
+                binding.currencyRateEur.text = rate?.let {
+                    val formattedRate = String.format("%.2f", it.purchaseRate)
+                    "EUR: $formattedRate"
+                } ?: "EUR: N/A"
             }
         }
     }
