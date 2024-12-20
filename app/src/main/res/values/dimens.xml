@@ -18,5 +18,6 @@
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp100">100dp</dimen>
     <dimen name="dp150">150dp</dimen>
+    <dimen name="dp90">90dp</dimen>
 
 </resources>
