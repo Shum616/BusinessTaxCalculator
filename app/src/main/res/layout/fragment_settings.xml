@@ -12,8 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/violet_square">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView"
@@ -23,7 +22,7 @@
             android:paddingTop="@dimen/dp10"
             android:paddingBottom="@dimen/dp10"
             android:text="@string/choose_currency"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +70,7 @@
             android:paddingTop="@dimen/dp10"
             android:paddingBottom="@dimen/dp10"
             android:text="@string/custom_rate_input"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +107,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
-            android:backgroundTint="@color/violet"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/c681d3"
             android:text="@string/get_rate"
             app:layout_constraintEnd_toEndOf="@+id/editEuro"
             app:layout_constraintStart_toStartOf="parent"

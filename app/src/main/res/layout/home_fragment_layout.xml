@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     tools="com.example.businesstaxcalculator.ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +12,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="@dimen/dp350"
+            android:layout_height="@dimen/dp300"
+            android:layout_marginTop="@dimen/dp20"
+            android:dateTextAppearance="@style/CalendarDateTextStyle"
+            android:weekDayTextAppearance="@style/CalendarWeekDayTextStyle"
+            android:background="@drawable/custom_calendar_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInputLt"
             android:layout_width="match_parent"
@@ -20,21 +31,22 @@
             android:layout_marginHorizontal="@dimen/dp42"
             android:hint="@string/enter_income"
             android:textColorHint="@color/_424242"
-            app:boxStrokeColor="@color/_515fcf"
+            app:boxStrokeColor="@color/ef63ff"
             app:boxStrokeErrorColor="@color/f70000"
             app:errorTextColor="@color/f70000"
-            app:hintTextColor="@color/_515fcf"
+            app:hintTextColor="@color/ee65fb"
             app:layout_constraintBottom_toTopOf="@+id/cardVw1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:background="@color/_69f1beff"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
@@ -78,7 +90,7 @@
             android:id="@+id/calculateBttn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/violet"
+            android:backgroundTint="@color/_642b75"
             android:text="@string/calculate_taxes"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

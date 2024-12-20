@@ -16,5 +16,12 @@
     <dimen name="dp250">250dp</dimen>
     <dimen name="dp2">2dp</dimen>
     <dimen name="dp1">1dp</dimen>
+    <dimen name="dp300">300dp</dimen>
+    <dimen name="dp400">400</dimen>
+    <dimen name="dp350">350dp</dimen>
+    <dimen name="dp55">55dp</dimen>
+    <dimen name="dp60">60dp</dimen>
+    <dimen name="sp10">10sp</dimen>
+    <dimen name="sp12">12sp</dimen>
 
 </resources>
