@@ -15,6 +15,39 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/currencyRateUsd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:padding="@dimen/dp15"
+            android:layout_marginStart="@dimen/dp20"
+            android:background="@drawable/violet_background_rectangle"
+            android:gravity="center"
+            android:contentDescription="@string/description"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/currencyRateEur"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/currencyRateEur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/violet_background_rectangle"
+            android:padding="@dimen/dp15"
+            android:gravity="center"
+            android:contentDescription="@string/description"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            android:layout_marginTop="@dimen/dp10"
+            app:layout_constraintStart_toEndOf="@id/currencyRateUsd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +59,7 @@
             android:textSize="@dimen/sp20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currencyRateUsd"
             tools:ignore="RtlSymmetry" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -48,7 +81,8 @@
                 android:backgroundTint="@null"
                 android:contentDescription="@string/field"
                 android:hint="@string/available_currencies"
-                android:inputType="none" />
+                android:inputType="none"
+                tools:ignore="ContentDescription" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View
