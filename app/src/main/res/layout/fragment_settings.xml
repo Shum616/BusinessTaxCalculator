@@ -17,31 +17,34 @@
 
         <TextView
             android:id="@+id/currencyRateUsd"
-            android:layout_width="@dimen/dp100"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
-            android:layout_marginStart="@dimen/dp90"
+            android:padding="@dimen/dp15"
+            android:layout_marginStart="@dimen/dp20"
             android:background="@drawable/violet_background_rectangle"
             android:gravity="center"
             android:contentDescription="@string/description"
             android:text="@string/description"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp20"
+            android:textSize="@dimen/sp14"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/currencyRateEur"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/currencyRateEur"
-            android:layout_width="@dimen/dp100"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/violet_background_rectangle"
+            android:padding="@dimen/dp15"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/dp90"
             android:contentDescription="@string/description"
             android:text="@string/description"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp20"
+            android:textSize="@dimen/sp14"
             android:layout_marginTop="@dimen/dp10"
+            app:layout_constraintStart_toEndOf="@id/currencyRateUsd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
