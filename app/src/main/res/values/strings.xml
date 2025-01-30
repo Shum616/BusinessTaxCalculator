@@ -25,4 +25,9 @@
     <string name="field">Поле вибору елемента</string>
     <string name="description">description</string>
 
+    <string name="usd_template">USD\n%.2f</string>
+    <string name="eur_template">EUR\n%.2f</string>
+    <string name="usd_n_a">USD:\nN/A</string>
+    <string name="eur_n_a">EUR:\nN/A</string>
+
 </resources>

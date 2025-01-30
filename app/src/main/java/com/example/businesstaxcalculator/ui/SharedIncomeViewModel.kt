@@ -42,9 +42,9 @@ class SharedIncomeViewModel @Inject constructor(
     fun dataStorageSave(userSelection: UserSelection) =
         viewModelScope.launch { dataStorage.save(userSelection) }
 
-    fun currencyRateDollar(date: Date): CurrencyFormat = currencyRate.getDollarRate(date)
+    suspend fun currencyRateDollar(date: Date): CurrencyFormat = currencyRate.getDollarRate(date)
 
-    fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
+    suspend fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
 
     fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double): Double {
         return Math.round(gross * exchangeRate * 0.05 * 100) / 100.0

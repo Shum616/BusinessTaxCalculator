@@ -28,10 +28,8 @@ class SettingsFragment : BaseTabFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-
-
 
         val currencies = listOf(
             getString(R.string.usd),
@@ -60,7 +58,7 @@ class SettingsFragment : BaseTabFragment() {
             if (validResDollar.isSuccess) userSelection.dollarInput = inputTxtDollar.toDouble()
             else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
 
-            if (validResEuro.isSuccess)  userSelection.euroInput = inputTxtEuro.toDouble()
+            if (validResEuro.isSuccess) userSelection.euroInput = inputTxtEuro.toDouble()
             else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
 
             viewModel.dataStorageSave(userSelection)
@@ -69,15 +67,6 @@ class SettingsFragment : BaseTabFragment() {
 
         observeRates()
         viewModel.fetchRates()
-
-//        lifecycleScope.launch {    //this function works!
-//            val loadedData = dataStorage.load()
-//            loadedData?.let {
-//                println("Spinner: ${it.spinnerSelection}, First: ${it.dollarInput}, Second: ${it.euroInput}")
-//            }
-//        }
-
-
         return binding.root
     }
 
@@ -90,21 +79,18 @@ class SettingsFragment : BaseTabFragment() {
     }
 
     private fun observeRates() {
-
         lifecycleScope.launch {
             viewModel.usdRate.collect { rate ->
-                binding.currencyRateUsd.text = rate?.let {
-                    val formattedRate = String.format("%.2f", it.purchaseRate)
-                    "USD: $formattedRate"
-                } ?: "USD: N/A"
+                binding.currencyRateUsd.text =
+                    if (rate != null) context?.getString(R.string.usd_template, rate.saleRate)
+                    else getString(R.string.usd_n_a)
             }
         }
         lifecycleScope.launch {
             viewModel.eurRate.collect { rate ->
-                binding.currencyRateEur.text = rate?.let {
-                    val formattedRate = String.format("%.2f", it.purchaseRate)
-                    "EUR: $formattedRate"
-                } ?: "EUR: N/A"
+                binding.currencyRateEur.text =
+                    if (rate != null) context?.getString(R.string.eur_template, rate.saleRate)
+                    else getString(R.string.eur_n_a)
             }
         }
     }
