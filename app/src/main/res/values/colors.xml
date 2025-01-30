@@ -7,8 +7,15 @@
     <color name="f70000">#f70000</color>
     <color name="_424242">#424242</color>
     <color name="dfbee8">#dfbee8</color>
+    <color name="d9E9E9E">#9E9E9E</color>
 
     <color name="rectangle_violet">#74D235E9</color>
     <color name="rectangle_border">#52000000</color>
+    <color name="_402e5d">#402E5D</color>
+    <color name="ee65fb">#EE65FB</color>
+    <color name="ef63ff">#EF63FF</color>
+    <color name="_642b75">#642B75</color>
+    <color name="_69f1beff">#69F1BEFF</color>
+    <color name="c681d3">#C681D3</color>
 
 </resources>
