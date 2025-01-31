@@ -1,6 +1,8 @@
 package com.example.businesstaxcalculator.ui.settings
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +10,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
-import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
 import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -25,6 +23,7 @@ class SettingsFragment : BaseTabFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     override val viewModel: SharedIncomeViewModel by viewModels()
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +71,27 @@ class SettingsFragment : BaseTabFragment() {
 //                println("Spinner: ${it.spinnerSelection}, First: ${it.dollarInput}, Second: ${it.euroInput}")
 //            }
 //        }
+
+
+        sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
+
+        binding.btnSavePassword.setOnClickListener {
+            val newPassword = binding.etNewPassword.text.toString()
+            val confirmPassword = binding.etConfirmPassword.text.toString()
+
+            if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(requireContext(), "Будь ласка, заповніть всі поля!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newPassword == confirmPassword) {
+                sharedPreferences.edit().putString("password", newPassword).apply()
+                Toast.makeText(requireContext(), "Пароль успішно змінено!", Toast.LENGTH_SHORT).show()
+                requireActivity().finish() // Закриваємо активність після зміни пароля
+            } else {
+                Toast.makeText(requireContext(), "Паролі не співпадають!", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         return binding.root
     }
