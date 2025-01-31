@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.ActivityLockBinding
 
 class AppLockActivity : AppCompatActivity() {
@@ -21,12 +22,14 @@ class AppLockActivity : AppCompatActivity() {
         binding.btnUnlock.setOnClickListener {
             val enteredPassword = binding.etPassword.text.toString()
             val savedPassword =
-                sharedPreferences.getString("password", "1234") // Пароль за замовчуванням
+                sharedPreferences.getString("password", "1234")
 
             if (enteredPassword == savedPassword) {
-                finish() // Закриваємо екран блокування
+                finish()
             } else {
-                Toast.makeText(this, "Невірний пароль!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.invalid_password),
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }

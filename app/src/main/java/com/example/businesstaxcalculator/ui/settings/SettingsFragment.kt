@@ -56,40 +56,38 @@ class SettingsFragment : BaseTabFragment() {
             val validResEuro = viewModel.incomeValidation(inputTxtEuro)
 
             if (validResDollar.isSuccess) userSelection.dollarInput = inputTxtDollar.toDouble()
-            else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(requireContext(),
+                getString(R.string.enter_value_again),
+                Toast.LENGTH_SHORT).show()
 
             if (validResEuro.isSuccess)  userSelection.euroInput = inputTxtEuro.toDouble()
-            else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(requireContext(),
+                getString(R.string.enter_value_again),
+                Toast.LENGTH_SHORT).show()
 
             viewModel.dataStorageSave(userSelection)
 
         }
 
-//        lifecycleScope.launch {    //this function works!
-//            val loadedData = dataStorage.load()
-//            loadedData?.let {
-//                println("Spinner: ${it.spinnerSelection}, First: ${it.dollarInput}, Second: ${it.euroInput}")
-//            }
-//        }
-
-
         sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
 
         binding.btnSavePassword.setOnClickListener {
             val newPassword = binding.etNewPassword.text.toString()
+            val validPassword = viewModel.passwordValidation(newPassword)
+
             val confirmPassword = binding.etConfirmPassword.text.toString()
+            val validConfirmPassword = viewModel.passwordValidation(confirmPassword)
 
-            if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(requireContext(), "Будь ласка, заповніть всі поля!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
 
-            if (newPassword == confirmPassword) {
-                sharedPreferences.edit().putString("password", newPassword).apply()
-                Toast.makeText(requireContext(), "Пароль успішно змінено!", Toast.LENGTH_SHORT).show()
-                requireActivity().finish() // Закриваємо активність після зміни пароля
+            if (validPassword.isSuccess && validConfirmPassword.isSuccess && newPassword == confirmPassword) {
+                viewModel.savePasswords(newPassword,sharedPreferences)
+                Toast.makeText(requireContext(),
+                    getString(R.string.password_changed_successfully),
+                    Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Паролі не співпадають!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_in_entering_password),
+                    Toast.LENGTH_SHORT).show()
             }
         }
 

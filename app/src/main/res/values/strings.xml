@@ -26,5 +26,9 @@
     <string name="new_password">Новий пароль</string>
     <string name="confirm_password">Підтвердіть пароль</string>
     <string name="save_password">Зберегти пароль</string>
+    <string name="enter_value_again">Enter value again</string>
+    <string name="password_changed_successfully">Пароль успішно змінено!</string>
+    <string name="error_in_entering_password">Паролі не співпадають або одне з полів пусте!</string>
+    <string name="invalid_password">Невірний пароль!</string>
 
 </resources>

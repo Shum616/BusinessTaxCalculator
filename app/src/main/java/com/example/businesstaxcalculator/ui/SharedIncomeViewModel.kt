@@ -1,5 +1,6 @@
 package com.example.businesstaxcalculator.ui
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.data.UserSelection
@@ -70,6 +71,12 @@ class SharedIncomeViewModel @Inject constructor(
         var sum: Double = 0.0
         incomes.forEach { it -> sum += it * 0.22 }
         return sum
+    }
+
+    fun passwordValidation(text: String): ValidateResult = validator.validateInput(text)
+
+    fun savePasswords(password: String, preferences:SharedPreferences){
+        preferences.edit().putString("password", password).apply()
     }
 
 }
