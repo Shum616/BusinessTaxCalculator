@@ -79,4 +79,6 @@ class SharedIncomeViewModel @Inject constructor(
         preferences.edit().putString("password", password).apply()
     }
 
+
+
 }

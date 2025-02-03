@@ -15,8 +15,11 @@
         android:theme="@style/Base.Theme.BusinessTaxCalculator"
         android:name=".App"
         tools:targetApi="31">
+
+        <activity android:name=".ui.applock.AppLockActivity" />
+        
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
 
             android:exported="true">
             <intent-filter>
@@ -26,7 +29,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.AppLockActivity" />
+
     </application>
 
 </manifest>

@@ -16,5 +16,8 @@
     <dimen name="dp250">250dp</dimen>
     <dimen name="dp2">2dp</dimen>
     <dimen name="dp1">1dp</dimen>
+    <dimen name="dp30">30dp</dimen>
+    <dimen name="dp40">40dp</dimen>
+    <dimen name="dp300">300dp</dimen>
 
 </resources>

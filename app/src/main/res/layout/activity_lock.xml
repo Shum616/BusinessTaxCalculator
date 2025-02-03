@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -10,15 +11,28 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ImageButton
+            android:id="@+id/togglePasswordButton"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginTop="@dimen/dp300"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/show_password"
+            android:src="@drawable/ic_closed_eye"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/etPassword"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp200"
             android:layout_height="wrap_content"
-            android:layout_marginTop="260dp"
-            android:hint="Введіть пароль"
+            android:layout_marginTop="@dimen/dp300"
+            android:hint="@string/enter_password"
             android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/btnUnlock"
+            app:layout_constraintEnd_toStartOf="@+id/togglePasswordButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,13 +40,12 @@
             android:id="@+id/btnUnlock"
             android:layout_width="@dimen/dp200"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="@dimen/dp30"
             android:text="Розблокувати"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword"
-            app:layout_constraintVertical_bias="0.048" />
+            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
