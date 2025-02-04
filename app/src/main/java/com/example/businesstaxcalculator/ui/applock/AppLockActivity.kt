@@ -1,9 +1,11 @@
 package com.example.businesstaxcalculator.ui.applock
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -25,7 +27,7 @@ class AppLockActivity : AppCompatActivity() {
         binding = ActivityLockBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("AppLockPrefs", Context.MODE_PRIVATE)
 
         var isPasswordVisible = false
 
@@ -59,48 +61,49 @@ class AppLockActivity : AppCompatActivity() {
             }
         }
 
-//        /////shit happens
-//        val executor: Executor = ContextCompat.getMainExecutor(this)
-//        biometricPrompt = BiometricPrompt(this, executor,
-//            object : BiometricPrompt.AuthenticationCallback() {
-//                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-//                    super.onAuthenticationSucceeded(result)
-//                    finish()
-//                }
-//
-//                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-//                    super.onAuthenticationError(errorCode, errString)
-//                    showPasswordOption()
-//                }
-//
-//                override fun onAuthenticationFailed() {
-//                    super.onAuthenticationFailed()
-//                    showPasswordOption()
-//                }
-//            })
-//
-//        promptInfo = BiometricPrompt.PromptInfo.Builder()
-//            .setTitle("Аутентифікація відбитком пальця")
-//            .setSubtitle("Підтвердьте свою особу")
-//            .setNegativeButtonText("Ввести пароль")
-//            .build()
-//
-//        binding.fingerprintButton.setOnClickListener {
-//            if (isBiometricAvailable()) {
-//                biometricPrompt.authenticate(promptInfo)
-//            } else {
-//                showPasswordOption()
-//            }
-//        }
-//    }
-//    private fun isBiometricAvailable(): Boolean {
-//        val biometricManager = BiometricManager.from(this)
-//        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS
-//    }
-//
-//    private fun showPasswordOption() {
-//        binding.etPassword.visibility = android.view.View.VISIBLE
-//        binding.btnUnlock.visibility = android.view.View.VISIBLE
-//    }
+        val isFingerprintUnlockEnabled = sharedPreferences.getBoolean("switch_fingerprint_unlock", false)
+        binding.fingerprintButton.visibility = if (isFingerprintUnlockEnabled) View.VISIBLE else View.GONE
+        /////shit happens with biometry
+        val executor: Executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    finish()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    showPasswordOption()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    showPasswordOption()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Аутентифікація відбитком пальця")
+            .setSubtitle("Підтвердьте свою особу")
+            .setNegativeButtonText("Ввести пароль")
+            .build()
+
+        binding.fingerprintButton.setOnClickListener {
+            if (isBiometricAvailable()) {
+                biometricPrompt.authenticate(promptInfo)
+            } else {
+                showPasswordOption()
+            }
+        }
+    }
+    private fun isBiometricAvailable(): Boolean {
+        val biometricManager = BiometricManager.from(this)
+        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS
+    }
+
+    private fun showPasswordOption() {
+        binding.etPassword.visibility = View.VISIBLE
+        binding.btnUnlock.visibility = View.VISIBLE
     }
 }

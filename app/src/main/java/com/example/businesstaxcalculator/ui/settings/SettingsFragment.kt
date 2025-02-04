@@ -3,13 +3,14 @@ package com.example.businesstaxcalculator.ui.settings
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
@@ -30,11 +31,30 @@ class SettingsFragment : BaseTabFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
-
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
+        /////////////////////////////////////
+        val biometricAvailable = isBiometricSupported(requireContext())
 
+        binding.switchFingerprintUnlock.visibility = if (biometricAvailable) View.VISIBLE else View.GONE
+
+        val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", false)
+        val isFingerprintEnabled = sharedPreferences.getBoolean("switch_fingerprint_unlock", false)
+
+        binding.switchAppLock.isChecked = isAppLockEnabled
+        binding.switchFingerprintUnlock.isChecked = isFingerprintEnabled
+
+        binding.switchFingerprintUnlock.isEnabled = isAppLockEnabled
+
+        binding.switchAppLock.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean("switch_app_lock", isChecked).apply()
+            binding.switchFingerprintUnlock.isEnabled = isChecked
+        }
+
+        binding.switchFingerprintUnlock.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean("switch_fingerprint_unlock", isChecked).apply()
+        }
+/////////////////////////////////////////////
         val currencies = listOf(
             getString(R.string.usd),
             getString(R.string.eur),
@@ -94,22 +114,14 @@ class SettingsFragment : BaseTabFragment() {
                     Toast.LENGTH_SHORT).show()
             }
         }
-        setupAppLockSwitch()
 
         return binding.root
     }
 
-    private fun setupAppLockSwitch() {
-        // Отримуємо поточний стан App Lock
-        val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", true)
 
-        // Встановлюємо початковий стан перемикача
-        binding.switchAppLock.isChecked = isAppLockEnabled
-
-        // Обробка подій перемикача App Lock
-        binding.switchAppLock.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreferences.edit().putBoolean("switch_app_lock", isChecked).apply()
-        }
+    private fun isBiometricSupported(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     private fun createAdapter(context: Context, stringList: List<String>): ArrayAdapter<String> {
