@@ -10,5 +10,7 @@
 
     <color name="rectangle_violet">#74D235E9</color>
     <color name="rectangle_border">#52000000</color>
+    <color name="fde1f6">#FDE1F6</color>
+    <color name="_575757">#575757</color>
 
 </resources>

@@ -7,6 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/fde1f6"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
@@ -30,6 +31,8 @@
             android:layout_marginTop="@dimen/dp300"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
+            android:textColorHint="@color/_575757"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/btnUnlock"
             app:layout_constraintEnd_toStartOf="@+id/togglePasswordButton"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -41,11 +44,23 @@
             android:layout_width="@dimen/dp200"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp30"
-            android:text="Розблокувати"
+            android:text="@string/unlock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+        <ImageButton
+            android:id="@+id/fingerprintButton"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:contentDescription="@string/fingerprint"
+            android:src="@drawable/ic_fingerprint"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUnlock" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,13 +6,19 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.ActivityLockBinding
+import java.util.concurrent.Executor
 
 class AppLockActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLockBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +46,7 @@ class AppLockActivity : AppCompatActivity() {
 
         binding.btnUnlock.setOnClickListener {
             val enteredPassword = binding.etPassword.text.toString()
-            val savedPassword =
-                sharedPreferences.getString("password", "1234")
+            val savedPassword = sharedPreferences.getString("password", "1234")
 
             if (enteredPassword == savedPassword) {
                 finish()
@@ -53,5 +58,49 @@ class AppLockActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+//        /////shit happens
+//        val executor: Executor = ContextCompat.getMainExecutor(this)
+//        biometricPrompt = BiometricPrompt(this, executor,
+//            object : BiometricPrompt.AuthenticationCallback() {
+//                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+//                    super.onAuthenticationSucceeded(result)
+//                    finish()
+//                }
+//
+//                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+//                    super.onAuthenticationError(errorCode, errString)
+//                    showPasswordOption()
+//                }
+//
+//                override fun onAuthenticationFailed() {
+//                    super.onAuthenticationFailed()
+//                    showPasswordOption()
+//                }
+//            })
+//
+//        promptInfo = BiometricPrompt.PromptInfo.Builder()
+//            .setTitle("Аутентифікація відбитком пальця")
+//            .setSubtitle("Підтвердьте свою особу")
+//            .setNegativeButtonText("Ввести пароль")
+//            .build()
+//
+//        binding.fingerprintButton.setOnClickListener {
+//            if (isBiometricAvailable()) {
+//                biometricPrompt.authenticate(promptInfo)
+//            } else {
+//                showPasswordOption()
+//            }
+//        }
+//    }
+//    private fun isBiometricAvailable(): Boolean {
+//        val biometricManager = BiometricManager.from(this)
+//        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS
+//    }
+//
+//    private fun showPasswordOption() {
+//        binding.etPassword.visibility = android.view.View.VISIBLE
+//        binding.btnUnlock.visibility = android.view.View.VISIBLE
+//    }
     }
 }

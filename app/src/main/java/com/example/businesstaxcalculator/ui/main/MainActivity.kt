@@ -1,6 +1,7 @@
 package com.example.businesstaxcalculator.ui.main
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,12 +16,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, AppLockActivity::class.java)
-        startActivity(intent)
+
+        sharedPreferences = getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
+
+        val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", true) // За замовчуванням true
+
+        if (isAppLockEnabled) {
+            val intent = Intent(this, AppLockActivity::class.java)
+            startActivity(intent)
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

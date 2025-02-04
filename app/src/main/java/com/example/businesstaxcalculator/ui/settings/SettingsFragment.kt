@@ -3,6 +3,7 @@ package com.example.businesstaxcalculator.ui.settings
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,9 @@ class SettingsFragment : BaseTabFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
+
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         val currencies = listOf(
@@ -90,8 +94,22 @@ class SettingsFragment : BaseTabFragment() {
                     Toast.LENGTH_SHORT).show()
             }
         }
+        setupAppLockSwitch()
 
         return binding.root
+    }
+
+    private fun setupAppLockSwitch() {
+        // Отримуємо поточний стан App Lock
+        val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", true)
+
+        // Встановлюємо початковий стан перемикача
+        binding.switchAppLock.isChecked = isAppLockEnabled
+
+        // Обробка подій перемикача App Lock
+        binding.switchAppLock.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean("switch_app_lock", isChecked).apply()
+        }
     }
 
     private fun createAdapter(context: Context, stringList: List<String>): ArrayAdapter<String> {

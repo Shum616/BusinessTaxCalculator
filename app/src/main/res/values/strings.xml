@@ -32,5 +32,11 @@
     <string name="invalid_password">Невірний пароль!</string>
     <string name="enter_password">Введіть пароль</string>
     <string name="show_password">Показати пароль</string>
+    <string name="fingerprint">Сканер відбитків пальців</string>
+    <string name="change_password_option">Зміна паролю</string>
+    <string name="app_lock_options">Опції блокування додатку</string>
+    <string name="applock">Блокування додатка</string>
+    <string name="unlock_with_fingerprint">Розблокування відбитком пальця</string>
+    <string name="unlock">Розблокувати</string>
 
 </resources>

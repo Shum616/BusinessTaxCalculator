@@ -124,16 +124,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/getRateBtn" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            android:text="@string/change_password_option"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3"
+            tools:ignore="RtlSymmetry" />
+
         <EditText
             android:id="@+id/etNewPassword"
             android:layout_width="@dimen/dp200"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
             android:hint="@string/new_password"
             android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
+            app:layout_constraintEnd_toEndOf="@+id/etConfirmPassword"
+            app:layout_constraintStart_toStartOf="@+id/etConfirmPassword"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <EditText
             android:id="@+id/etConfirmPassword"
@@ -157,5 +171,51 @@
             app:layout_constraintStart_toStartOf="@+id/etConfirmPassword"
             app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword" />
 
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp2"
+            android:background="@android:color/black"
+            android:paddingTop="@dimen/dp10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSavePassword" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            android:text="@string/app_lock_options"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp20"
+            app:layout_constraintTop_toBottomOf="@+id/view4"
+            tools:ignore="RtlSymmetry" />
+
+        <Switch
+            android:id="@+id/switch_app_lock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:text="@string/applock"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Switch
+            android:id="@+id/switch_fingerprint_unlock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/unlock_with_fingerprint"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            app:layout_constraintTop_toBottomOf="@id/switch_app_lock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
