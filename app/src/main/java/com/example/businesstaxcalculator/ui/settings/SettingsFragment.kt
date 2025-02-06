@@ -1,7 +1,6 @@
 package com.example.businesstaxcalculator.ui.settings
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.biometric.BiometricManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
@@ -18,6 +16,7 @@ import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
 import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -25,15 +24,15 @@ class SettingsFragment : BaseTabFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     override val viewModel: SharedIncomeViewModel by viewModels()
-    private lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
-        /////////////////////////////////////
+
         val biometricAvailable = isBiometricSupported(requireContext())
 
         binding.switchFingerprintUnlock.visibility = if (biometricAvailable) View.VISIBLE else View.GONE
@@ -54,7 +53,7 @@ class SettingsFragment : BaseTabFragment() {
         binding.switchFingerprintUnlock.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferences.edit().putBoolean("switch_fingerprint_unlock", isChecked).apply()
         }
-/////////////////////////////////////////////
+
         val currencies = listOf(
             getString(R.string.usd),
             getString(R.string.eur),
@@ -93,15 +92,12 @@ class SettingsFragment : BaseTabFragment() {
 
         }
 
-        sharedPreferences = requireContext().getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
-
         binding.btnSavePassword.setOnClickListener {
             val newPassword = binding.etNewPassword.text.toString()
             val validPassword = viewModel.passwordValidation(newPassword)
 
             val confirmPassword = binding.etConfirmPassword.text.toString()
             val validConfirmPassword = viewModel.passwordValidation(confirmPassword)
-
 
             if (validPassword.isSuccess && validConfirmPassword.isSuccess && newPassword == confirmPassword) {
                 viewModel.savePasswords(newPassword,sharedPreferences)
@@ -114,7 +110,6 @@ class SettingsFragment : BaseTabFragment() {
                     Toast.LENGTH_SHORT).show()
             }
         }
-
         return binding.root
     }
 

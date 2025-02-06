@@ -12,16 +12,17 @@ import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.ActivityMainBinding
 import com.example.businesstaxcalculator.ui.applock.AppLockActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var sharedPreferences: SharedPreferences
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sharedPreferences = getSharedPreferences("AppLockPrefs", MODE_PRIVATE)
 
         val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", true) // За замовчуванням true
 
@@ -51,6 +52,4 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigate(action: Int) = findNavController(R.id.container).navigate(action)
-
-
 }

@@ -1,6 +1,5 @@
 package com.example.businesstaxcalculator.ui.applock
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -14,11 +13,13 @@ import androidx.core.content.ContextCompat
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.ActivityLockBinding
 import java.util.concurrent.Executor
+import javax.inject.Inject
 
 class AppLockActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLockBinding
-    private lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
@@ -26,8 +27,6 @@ class AppLockActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLockBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sharedPreferences = getSharedPreferences("AppLockPrefs", Context.MODE_PRIVATE)
 
         var isPasswordVisible = false
 
@@ -44,7 +43,6 @@ class AppLockActivity : AppCompatActivity() {
             }
             binding.etPassword.setSelection(binding.etPassword.text.length)
         }
-
 
         binding.btnUnlock.setOnClickListener {
             val enteredPassword = binding.etPassword.text.toString()
@@ -63,7 +61,7 @@ class AppLockActivity : AppCompatActivity() {
 
         val isFingerprintUnlockEnabled = sharedPreferences.getBoolean("switch_fingerprint_unlock", false)
         binding.fingerprintButton.visibility = if (isFingerprintUnlockEnabled) View.VISIBLE else View.GONE
-        /////shit happens with biometry
+
         val executor: Executor = ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
