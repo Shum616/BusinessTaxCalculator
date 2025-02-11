@@ -12,9 +12,11 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.ActivityLockBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AppLockActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLockBinding
