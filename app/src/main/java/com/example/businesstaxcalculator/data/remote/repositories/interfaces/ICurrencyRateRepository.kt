@@ -1,9 +1,10 @@
 package com.example.businesstaxcalculator.data.remote.repositories.interfaces
 
 import com.example.businesstaxcalculator.data.models.CurrencyFormat
+import com.example.businesstaxcalculator.data.models.ExchangeRate
 import java.sql.Date
 
 interface ICurrencyRateRepository {
-    fun getDollarRate (date: Date) : CurrencyFormat
-    fun getEuroRate (date: Date)  : CurrencyFormat
+    suspend fun getDollarRate (date: Date) : CurrencyFormat
+    suspend fun getEuroRate (date: Date) : CurrencyFormat
 }

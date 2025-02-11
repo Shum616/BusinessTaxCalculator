@@ -38,5 +38,12 @@
     <string name="applock">Блокування додатка</string>
     <string name="unlock_with_fingerprint">Розблокування відбитком пальця</string>
     <string name="unlock">Розблокувати</string>
+    <string name="lets_count">Давай порахуємо твої податки...</string>
+    <string name="description">description</string>
+
+    <string name="usd_template">USD: %.2f</string>
+    <string name="eur_template">EUR: %.2f</string>
+    <string name="usd_n_a">USD: N/A</string>
+    <string name="eur_n_a">EUR: N/A</string>
 
 </resources>
