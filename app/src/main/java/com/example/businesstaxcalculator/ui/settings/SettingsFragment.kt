@@ -1,13 +1,14 @@
 package com.example.businesstaxcalculator.ui.settings
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
+import androidx.biometric.BiometricManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.R
@@ -15,8 +16,9 @@ import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
 import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -24,12 +26,35 @@ class SettingsFragment : BaseTabFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     override val viewModel: SharedIncomeViewModel by viewModels()
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        val biometricAvailable = isBiometricSupported(requireContext())
+
+        binding.switchFingerprintUnlock.visibility = if (biometricAvailable) View.VISIBLE else View.GONE
+
+        val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", false)
+        val isFingerprintEnabled = sharedPreferences.getBoolean("switch_fingerprint_unlock", false)
+
+        binding.switchAppLock.isChecked = isAppLockEnabled
+        binding.switchFingerprintUnlock.isChecked = isFingerprintEnabled
+
+        binding.switchFingerprintUnlock.isEnabled = isAppLockEnabled
+
+        binding.switchAppLock.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean("switch_app_lock", isChecked).apply()
+            binding.switchFingerprintUnlock.isEnabled = isChecked
+        }
+
+        binding.switchFingerprintUnlock.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean("switch_fingerprint_unlock", isChecked).apply()
+        }
 
         val currencies = listOf(
             getString(R.string.usd),
@@ -56,10 +81,14 @@ class SettingsFragment : BaseTabFragment() {
             val validResEuro = viewModel.incomeValidation(inputTxtEuro)
 
             if (validResDollar.isSuccess) userSelection.dollarInput = inputTxtDollar.toDouble()
-            else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(requireContext(),
+                getString(R.string.enter_value_again),
+                Toast.LENGTH_SHORT).show()
 
-            if (validResEuro.isSuccess) userSelection.euroInput = inputTxtEuro.toDouble()
-            else Toast.makeText(requireContext(), "Enter value again", Toast.LENGTH_SHORT).show()
+            if (validResEuro.isSuccess)  userSelection.euroInput = inputTxtEuro.toDouble()
+            else Toast.makeText(requireContext(),
+                getString(R.string.enter_value_again),
+                Toast.LENGTH_SHORT).show()
 
             viewModel.dataStorageSave(userSelection)
 
@@ -67,7 +96,31 @@ class SettingsFragment : BaseTabFragment() {
 
         observeRates()
         viewModel.fetchRates()
+        binding.btnSavePassword.setOnClickListener {
+            val newPassword = binding.etNewPassword.text.toString()
+            val validPassword = viewModel.passwordValidation(newPassword)
+
+            val confirmPassword = binding.etConfirmPassword.text.toString()
+            val validConfirmPassword = viewModel.passwordValidation(confirmPassword)
+
+            if (validPassword.isSuccess && validConfirmPassword.isSuccess && newPassword == confirmPassword) {
+                viewModel.savePasswords(newPassword,sharedPreferences)
+                Toast.makeText(requireContext(),
+                    getString(R.string.password_changed_successfully),
+                    Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_in_entering_password),
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
         return binding.root
+    }
+
+
+    private fun isBiometricSupported(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     private fun createAdapter(context: Context, stringList: List<String>): ArrayAdapter<String> {

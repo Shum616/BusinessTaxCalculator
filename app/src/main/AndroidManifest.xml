@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"  android:required="false" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" android:required="false"/>
 
     <application
         android:allowBackup="true"
@@ -15,8 +17,11 @@
         android:theme="@style/Base.Theme.BusinessTaxCalculator"
         android:name=".App"
         tools:targetApi="31">
+
+        <activity android:name=".ui.applock.AppLockActivity" />
+        
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
 
             android:exported="true">
             <intent-filter>
@@ -25,6 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>

@@ -23,6 +23,21 @@
     <string name="get_rate">Зафіксувати курс</string>
     <string name="available_currencies">Доступні валюти</string>
     <string name="field">Поле вибору елемента</string>
+    <string name="new_password">Новий пароль</string>
+    <string name="confirm_password">Підтвердіть пароль</string>
+    <string name="save_password">Зберегти пароль</string>
+    <string name="enter_value_again">Enter value again</string>
+    <string name="password_changed_successfully">Пароль успішно змінено!</string>
+    <string name="error_in_entering_password">Паролі не співпадають або одне з полів пусте!</string>
+    <string name="invalid_password">Невірний пароль!</string>
+    <string name="enter_password">Введіть пароль</string>
+    <string name="show_password">Показати пароль</string>
+    <string name="fingerprint">Сканер відбитків пальців</string>
+    <string name="change_password_option">Зміна паролю</string>
+    <string name="app_lock_options">Опції блокування додатку</string>
+    <string name="applock">Блокування додатка</string>
+    <string name="unlock_with_fingerprint">Розблокування відбитком пальця</string>
+    <string name="unlock">Розблокувати</string>
     <string name="lets_count">Давай порахуємо твої податки...</string>
     <string name="description">description</string>
 
