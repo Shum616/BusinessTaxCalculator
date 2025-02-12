@@ -18,33 +18,33 @@
             android:id="@+id/currencyRateUsd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp10"
-            android:padding="@dimen/dp15"
             android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/violet_background_rectangle"
-            android:gravity="center"
             android:contentDescription="@string/description"
+            android:gravity="center"
+            android:padding="@dimen/dp15"
             android:text="@string/description"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/currencyRateEur"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/currencyRateEur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/violet_background_rectangle"
-            android:padding="@dimen/dp15"
-            android:gravity="center"
             android:contentDescription="@string/description"
+            android:gravity="center"
+            android:padding="@dimen/dp15"
             android:text="@string/description"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"
-            android:layout_marginTop="@dimen/dp10"
-            app:layout_constraintStart_toEndOf="@id/currencyRateUsd"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/currencyRateUsd"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -120,6 +120,7 @@
             android:hint="@string/dollar_rate"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
+            android:textColorHint="@color/cac7c7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             tools:ignore="RtlHardcoded" />
@@ -132,6 +133,7 @@
             android:hint="@string/euro_rate"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
+            android:textColorHint="@color/cac7c7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editDollar"
             tools:ignore="RtlHardcoded" />
@@ -141,9 +143,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
-            android:textColor="@color/white"
             android:backgroundTint="@color/c681d3"
             android:text="@string/get_rate"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/editEuro"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editEuro" />
@@ -152,8 +154,8 @@
             android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp2"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@android:color/black"
-            android:paddingTop="@dimen/dp10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/getRateBtn" />
@@ -166,7 +168,7 @@
             android:paddingTop="@dimen/dp10"
             android:paddingBottom="@dimen/dp10"
             android:text="@string/change_password_option"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -179,6 +181,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/new_password"
             android:inputType="textPassword"
+            android:textColorHint="@color/cac7c7"
             app:layout_constraintEnd_toEndOf="@+id/etConfirmPassword"
             app:layout_constraintStart_toStartOf="@+id/etConfirmPassword"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -191,6 +194,7 @@
             android:layout_marginTop="@dimen/dp10"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
+            android:textColorHint="@color/cac7c7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etNewPassword" />
 
@@ -209,8 +213,8 @@
             android:id="@+id/view4"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp2"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@android:color/black"
-            android:paddingTop="@dimen/dp10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnSavePassword" />
 
@@ -222,7 +226,7 @@
             android:paddingTop="@dimen/dp10"
             android:paddingBottom="@dimen/dp10"
             android:text="@string/app_lock_options"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp20"
             app:layout_constraintTop_toBottomOf="@+id/view4"
             tools:ignore="RtlSymmetry" />
@@ -234,6 +238,7 @@
             android:layout_marginStart="@dimen/dp16"
             android:layout_marginEnd="@dimen/dp16"
             android:text="@string/applock"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
@@ -243,13 +248,14 @@
             android:id="@+id/switch_fingerprint_unlock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/unlock_with_fingerprint"
-            android:layout_marginTop="@dimen/dp16"
             android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp16"
             android:layout_marginEnd="@dimen/dp16"
-            app:layout_constraintTop_toBottomOf="@id/switch_app_lock"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/unlock_with_fingerprint"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/switch_app_lock"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

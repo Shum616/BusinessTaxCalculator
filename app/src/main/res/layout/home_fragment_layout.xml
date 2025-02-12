@@ -17,6 +17,7 @@
             android:layout_width="@dimen/dp350"
             android:layout_height="@dimen/dp300"
             android:layout_marginTop="@dimen/dp20"
+
             android:dateTextAppearance="@style/CalendarDateTextStyle"
             android:weekDayTextAppearance="@style/CalendarWeekDayTextStyle"
             android:background="@drawable/custom_calendar_background"

@@ -27,17 +27,6 @@ class SharedIncomeViewModel @Inject constructor(
     private val db: AppDatabase
 ) : ViewModel() {
 
-    fun setIncomeTax(income: String): Array<Double> {
-        val incomeNum = income.toDouble()
-
-        var taxResult1 = incomeNum * 2
-        var taxResult2 = incomeNum * 3
-        var taxResult3 = incomeNum * 4
-        var taxResult4 = incomeNum * 5
-
-        return arrayOf(taxResult1, taxResult2, taxResult3, taxResult4)
-    }
-
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 
     fun dataStorageSave(userSelection: UserSelection) =
@@ -48,11 +37,11 @@ class SharedIncomeViewModel @Inject constructor(
     suspend fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
 
     fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double): Double {
-        return Math.round(gross * exchangeRate * 0.05 * 100) / 100.0
+        return String.format("%.2f", Math.round(gross * exchangeRate * 0.05 * 100) / 100.0).toDouble()
     }
 
     fun calculateUnidedSocialСontributionUan(gross: Double): Double {
-        return gross * 0.22
+        return String.format("%.2f", gross * 0.22).toDouble()
     }
 
     fun calculateIncomeCurrency(gross: Double, currRate: Double): Double {
@@ -64,7 +53,8 @@ class SharedIncomeViewModel @Inject constructor(
     }
 
     fun calculateRemaining(gross: Double): Double {
-        return gross - calculateUnidedSocialСontributionUan(gross)
+        return String.format("%.2f", gross - calculateUnidedSocialСontributionUan(gross) -
+                calculateUnitedTaxUan(gross, 1.0)).toDouble()
     }
 
     fun calculateIncomeUanQuarter(incomes: List<Double>): Double {
@@ -77,13 +67,15 @@ class SharedIncomeViewModel @Inject constructor(
         return sum
     }
 
+    fun calculateTaxes(gross: Double) : Double{
+        return  String.format("%.2f", gross - calculateRemaining(gross)).toDouble()
+    }
+
     fun passwordValidation(text: String): ValidateResult = validator.validateInput(text)
 
     fun savePasswords(password: String, preferences:SharedPreferences){
         preferences.edit().putString("password", password).apply()
     }
-
-
 
     private val _usdRate = MutableStateFlow<CurrencyFormat?>(null)
     val usdRate: StateFlow<CurrencyFormat?> = _usdRate
