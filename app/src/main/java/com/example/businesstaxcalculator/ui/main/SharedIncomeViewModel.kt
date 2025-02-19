@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.ui
+package com.example.businesstaxcalculator.ui.main
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel

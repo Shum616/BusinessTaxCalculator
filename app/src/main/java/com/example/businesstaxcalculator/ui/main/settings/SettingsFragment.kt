@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.ui.settings
+package com.example.businesstaxcalculator.ui.main.settings
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,8 +13,8 @@ import androidx.fragment.app.viewModels
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
-import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
-import com.example.businesstaxcalculator.ui.base.BaseTabFragment
+import com.example.businesstaxcalculator.ui.main.SharedIncomeViewModel
+import com.example.businesstaxcalculator.ui.main.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.getValue

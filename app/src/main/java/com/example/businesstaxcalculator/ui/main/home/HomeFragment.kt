@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.ui.home
+package com.example.businesstaxcalculator.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.businesstaxcalculator.databinding.HomeFragmentLayoutBinding
-import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
-import com.example.businesstaxcalculator.ui.base.BaseTabFragment
+import com.example.businesstaxcalculator.ui.main.SharedIncomeViewModel
+import com.example.businesstaxcalculator.ui.main.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
