@@ -83,8 +83,6 @@ class SharedIncomeViewModel @Inject constructor(
         preferences.edit().putString("password", password).apply()
     }
 
-
-
     private val _usdRate = MutableStateFlow<CurrencyFormat?>(null)
     val usdRate: StateFlow<CurrencyFormat?> = _usdRate
 
