@@ -27,17 +27,6 @@ class SharedIncomeViewModel @Inject constructor(
     private val db: AppDatabase
 ) : ViewModel() {
 
-    fun setIncomeTax(income: String): Array<Double> {
-        val incomeNum = income.toDouble()
-
-        var taxResult1 = incomeNum * 2
-        var taxResult2 = incomeNum * 3
-        var taxResult3 = incomeNum * 4
-        var taxResult4 = incomeNum * 5
-
-        return arrayOf(taxResult1, taxResult2, taxResult3, taxResult4)
-    }
-
     fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 
     fun dataStorageSave(userSelection: UserSelection) =
@@ -47,13 +36,13 @@ class SharedIncomeViewModel @Inject constructor(
 
     suspend fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
 
-    fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double): Double {
-        return Math.round(gross * exchangeRate * 0.05 * 100) / 100.0
-    }
+    fun calculateUnitedTaxUan(gross: String, exchangeRate: Double) =
+        (gross.toDouble() * exchangeRate * 0.05).roundToTwoDecimals().toString()
 
-    fun calculateUnidedSocialСontributionUan(gross: Double): Double {
-        return gross * 0.22
-    }
+
+    fun calculateUnidedSocialСontributionUan(gross: String) =
+        (gross.toDouble() * 0.22 ).roundToTwoDecimals().toString()
+
 
     fun calculateIncomeCurrency(gross: Double, currRate: Double): Double {
         return gross * currRate
@@ -63,9 +52,12 @@ class SharedIncomeViewModel @Inject constructor(
         return gross * currRate
     }
 
-    fun calculateRemaining(gross: Double): Double {
-        return gross - calculateUnidedSocialСontributionUan(gross)
-    }
+    fun calculateRemaining(gross: String) =
+        (gross.toDouble()
+                - calculateUnidedSocialСontributionUan(gross).toDouble() -
+                calculateUnitedTaxUan(gross, 1.0).toDouble())
+            .roundToTwoDecimals().toString()
+
 
     fun calculateIncomeUanQuarter(incomes: List<Double>): Double {
         return incomes.sum()
@@ -75,6 +67,14 @@ class SharedIncomeViewModel @Inject constructor(
         var sum: Double = 0.0
         incomes.forEach { it -> sum += it * 0.22 }
         return sum
+    }
+
+    fun calculateTaxes(gross: String) =
+        (gross.toDouble() - calculateRemaining(gross).toDouble()).roundToTwoDecimals().toString()
+
+
+    fun Double.roundToTwoDecimals(): Double {
+        return Math.round(this * 100) / 100.0
     }
 
     fun passwordValidation(text: String): ValidateResult = validator.validateInput(text)
