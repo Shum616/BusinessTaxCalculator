@@ -23,23 +23,22 @@ class HomeFragment : BaseTabFragment() {
     ): View {
         binding = HomeFragmentLayoutBinding.inflate(inflater, container, false)
 
-        binding.cardVw1.setValues(getString(R.string.flat_rate_tax), "0")
-        binding.cardVw2.setValues(getString(R.string.unified_social_contribution), "0")
-        binding.cardVw3.setValues(getString(R.string.net_gross), "0")
-        binding.cardVw4.setValues(getString(R.string.taxes), "0")
+        binding.unitedTax.setValues(getString(R.string.flat_rate_tax), "0")
+        binding.unitedContr.setValues(getString(R.string.unified_social_contribution), "0")
+        binding.remaining.setValues(getString(R.string.net_gross), "0")
+        binding.taxes.setValues(getString(R.string.taxes), "0")
 
         binding.calculateBttn.setOnClickListener {
             val inputTxt = binding.txtField.text.toString()
-            val numToCalculate = inputTxt.toDouble()
-            val validRes = viewModel.incomeValidation(inputTxt)
+            val validRes = viewModel.incomeValidation(binding.txtField.text.toString())
 
             binding.txtInputLt.error =
                 if (!validRes.isSuccess) "Invalid income input"
                 else {
-                    binding.cardVw1.setValues(getString(R.string.flat_rate_tax), viewModel.calculateUnitedTaxUan(numToCalculate, 1.0).toString())
-                    binding.cardVw2.setValues(getString(R.string.unified_social_contribution), viewModel.calculateUnidedSocialСontributionUan(numToCalculate).toString())
-                    binding.cardVw3.setValues(getString(R.string.net_gross), viewModel.calculateRemaining(numToCalculate).toString())
-                    binding.cardVw4.setValues(getString(R.string.taxes), viewModel.calculateTaxes(numToCalculate).toString())
+                    binding.unitedTax.setValues(getString(R.string.flat_rate_tax), viewModel.calculateUnitedTaxUan(inputTxt, 1.0))
+                    binding.unitedContr.setValues(getString(R.string.unified_social_contribution), viewModel.calculateUnidedSocialСontributionUan(inputTxt))
+                    binding.remaining.setValues(getString(R.string.net_gross), viewModel.calculateRemaining(inputTxt))
+                    binding.taxes.setValues(getString(R.string.taxes), viewModel.calculateTaxes(inputTxt))
                     ""
                 }
         }

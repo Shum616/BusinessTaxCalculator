@@ -36,13 +36,13 @@ class SharedIncomeViewModel @Inject constructor(
 
     suspend fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
 
-    fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double): Double {
-        return String.format("%.2f", Math.round(gross * exchangeRate * 0.05 * 100) / 100.0).toDouble()
-    }
+    fun calculateUnitedTaxUan(gross: String, exchangeRate: Double) =
+        (gross.toDouble() * exchangeRate * 0.05).roundToTwoDecimals().toString()
 
-    fun calculateUnidedSocialСontributionUan(gross: Double): Double {
-        return String.format("%.2f", gross * 0.22).toDouble()
-    }
+
+    fun calculateUnidedSocialСontributionUan(gross: String) =
+        (gross.toDouble() * 0.22 ).roundToTwoDecimals().toString()
+
 
     fun calculateIncomeCurrency(gross: Double, currRate: Double): Double {
         return gross * currRate
@@ -52,10 +52,12 @@ class SharedIncomeViewModel @Inject constructor(
         return gross * currRate
     }
 
-    fun calculateRemaining(gross: Double): Double {
-        return String.format("%.2f", gross - calculateUnidedSocialСontributionUan(gross) -
-                calculateUnitedTaxUan(gross, 1.0)).toDouble()
-    }
+    fun calculateRemaining(gross: String) =
+        (gross.toDouble()
+                - calculateUnidedSocialСontributionUan(gross).toDouble() -
+                calculateUnitedTaxUan(gross, 1.0).toDouble())
+            .roundToTwoDecimals().toString()
+
 
     fun calculateIncomeUanQuarter(incomes: List<Double>): Double {
         return incomes.sum()
@@ -67,8 +69,12 @@ class SharedIncomeViewModel @Inject constructor(
         return sum
     }
 
-    fun calculateTaxes(gross: Double) : Double{
-        return  String.format("%.2f", gross - calculateRemaining(gross)).toDouble()
+    fun calculateTaxes(gross: String) =
+        (gross.toDouble() - calculateRemaining(gross).toDouble()).roundToTwoDecimals().toString()
+
+
+    fun Double.roundToTwoDecimals(): Double {
+        return Math.round(this * 100) / 100.0
     }
 
     fun passwordValidation(text: String): ValidateResult = validator.validateInput(text)
