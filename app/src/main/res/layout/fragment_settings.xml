@@ -10,107 +10,110 @@
             type="com.example.businesstaxcalculator.ui.SharedIncomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/currencyRateUsd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp20"
-            android:layout_marginTop="@dimen/dp10"
-            android:background="@drawable/violet_background_rectangle"
-            android:contentDescription="@string/description"
-            android:gravity="center"
-            android:padding="@dimen/dp15"
-            android:text="@string/description"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toStartOf="@id/currencyRateEur"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/currencyRateEur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp10"
-            android:background="@drawable/violet_background_rectangle"
-            android:contentDescription="@string/description"
-            android:gravity="center"
-            android:padding="@dimen/dp15"
-            android:text="@string/description"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/currencyRateUsd"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dp10"
-            android:paddingTop="@dimen/dp10"
-            android:paddingBottom="@dimen/dp10"
-            android:text="@string/choose_currency"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currencyRateUsd"
-            tools:ignore="RtlSymmetry" />
+            android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/currencyDropdown"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="@dimen/dp250"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/field"
-            android:paddingLeft="@dimen/dp10"
-            android:paddingBottom="@dimen/dp10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:ignore="RtlHardcoded,RtlSymmetry">
+            <TextView
+                android:id="@+id/currencyRateUsd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/violet_background_rectangle"
+                android:contentDescription="@string/description"
+                android:gravity="center"
+                android:padding="@dimen/dp15"
+                android:text="@string/description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toStartOf="@id/currencyRateEur"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <AutoCompleteTextView
-                android:id="@+id/materialSpinner"
+            <TextView
+                android:id="@+id/currencyRateEur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/violet_background_rectangle"
+                android:contentDescription="@string/description"
+                android:gravity="center"
+                android:padding="@dimen/dp15"
+                android:text="@string/description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/currencyRateUsd"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@null"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                android:text="@string/choose_currency"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/currencyRateUsd"
+                tools:ignore="RtlSymmetry" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/currencyDropdown"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="@dimen/dp250"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/field"
-                android:hint="@string/available_currencies"
-                android:inputType="none"
-                tools:ignore="ContentDescription" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:paddingLeft="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                tools:ignore="RtlHardcoded,RtlSymmetry">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp2"
-            android:background="@android:color/black"
-            android:paddingTop="@dimen/dp10"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currencyDropdown" />
+                <AutoCompleteTextView
+                    android:id="@+id/materialSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@null"
+                    android:contentDescription="@string/field"
+                    android:hint="@string/available_currencies"
+                    android:inputType="none"
+                    tools:ignore="ContentDescription" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp10"
-            android:paddingStart="@dimen/dp10"
-            android:paddingTop="@dimen/dp10"
-            android:paddingBottom="@dimen/dp10"
-            android:text="@string/custom_rate_input"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:ignore="RtlSymmetry" />
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"
+                android:background="@android:color/black"
+                android:paddingTop="@dimen/dp10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/currencyDropdown" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:paddingStart="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                android:text="@string/custom_rate_input"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                tools:ignore="RtlSymmetry" />
         <EditText
             android:id="@+id/editDollar"
             android:layout_width="@dimen/dp200"
@@ -198,16 +201,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etNewPassword" />
 
-        <Button
-            android:id="@+id/btnSavePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@color/violet"
-            android:text="@string/save_password"
-            app:layout_constraintEnd_toEndOf="@+id/etConfirmPassword"
-            app:layout_constraintStart_toStartOf="@+id/etConfirmPassword"
-            app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword" />
+            <Button
+                android:id="@+id/btnSavePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/violet"
+                android:text="@string/save_password"
+                app:layout_constraintEnd_toEndOf="@+id/etConfirmPassword"
+                app:layout_constraintStart_toStartOf="@+id/etConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword" />
 
         <View
             android:id="@+id/view4"
@@ -244,18 +247,19 @@
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <Switch
-            android:id="@+id/switch_fingerprint_unlock"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp16"
-            android:layout_marginTop="@dimen/dp16"
-            android:layout_marginEnd="@dimen/dp16"
-            android:text="@string/unlock_with_fingerprint"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/switch_app_lock"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Switch
+                android:id="@+id/switch_fingerprint_unlock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:text="@string/unlock_with_fingerprint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switch_app_lock"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
