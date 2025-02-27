@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.ui.home
+package com.example.businesstaxcalculator.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.databinding.HomeFragmentLayoutBinding
-import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
+import com.example.businesstaxcalculator.ui.main.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,18 +29,27 @@ class HomeFragment : BaseTabFragment() {
         binding.taxes.setValues(getString(R.string.taxes), "0")
 
         binding.calculateBttn.setOnClickListener {
-            val inputTxt = binding.txtField.text.toString()
-            val validRes = viewModel.incomeValidation(binding.txtField.text.toString())
+            val validatedIncome = viewModel.incomeValidation(binding.txtField.text.toString())
 
-            binding.txtInputLt.error =
-                if (!validRes.isSuccess) "Invalid income input"
-                else {
-                    binding.unitedTax.setValues(getString(R.string.flat_rate_tax), viewModel.calculateUnitedTaxUan(inputTxt, 1.0))
-                    binding.unitedContr.setValues(getString(R.string.unified_social_contribution), viewModel.calculateUnidedSocialСontributionUan(inputTxt))
-                    binding.remaining.setValues(getString(R.string.net_gross), viewModel.calculateRemaining(inputTxt))
-                    binding.taxes.setValues(getString(R.string.taxes), viewModel.calculateTaxes(inputTxt))
-                    ""
-                }
+            if (validatedIncome == null) binding.txtInputLt.error = "Invalid income input"
+            else {
+                binding.unitedTax.setValues(
+                    getString(R.string.flat_rate_tax),
+                    viewModel.getUnitedTaxUan(validatedIncome, 1.0).toString()
+                )
+                binding.unitedContr.setValues(
+                    getString(R.string.unified_social_contribution),
+                    viewModel.getUnidedSocialСontributionUan(validatedIncome).toString()
+                )
+                binding.remaining.setValues(
+                    getString(R.string.net_gross),
+                    viewModel.getRemaining(validatedIncome).toString()
+                )
+                binding.taxes.setValues(
+                    getString(R.string.taxes),
+                    viewModel.getTaxes(validatedIncome).toString()
+                )
+            }
         }
         return binding.root
     }
