@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.ui.settings
+package com.example.businesstaxcalculator.ui.main.settings
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.databinding.FragmentSettingsBinding
-import com.example.businesstaxcalculator.ui.SharedIncomeViewModel
+import com.example.businesstaxcalculator.ui.main.SharedIncomeViewModel
 import com.example.businesstaxcalculator.ui.base.BaseTabFragment
 import kotlinx.coroutines.launch
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +26,7 @@ class SettingsFragment : BaseTabFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     override val viewModel: SharedIncomeViewModel by viewModels()
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -37,7 +38,8 @@ class SettingsFragment : BaseTabFragment() {
 
         val biometricAvailable = isBiometricSupported(requireContext())
 
-        binding.switchFingerprintUnlock.visibility = if (biometricAvailable) View.VISIBLE else View.GONE
+        binding.switchFingerprintUnlock.visibility =
+            if (biometricAvailable) View.VISIBLE else View.GONE
 
         val isAppLockEnabled = sharedPreferences.getBoolean("switch_app_lock", false)
         val isFingerprintEnabled = sharedPreferences.getBoolean("switch_fingerprint_unlock", false)
@@ -74,44 +76,48 @@ class SettingsFragment : BaseTabFragment() {
         }
 
         binding.getRateBtn.setOnClickListener {
-            val inputTxtDollar = binding.editDollar.text.toString()
-            val validResDollar = viewModel.incomeValidation(inputTxtDollar)
+            val validResDollar = viewModel.incomeValidation(binding.editDollar.text.toString())
+            val validResEuro = viewModel.incomeValidation(binding.editEuro.text.toString())
 
-            val inputTxtEuro = binding.editEuro.text.toString()
-            val validResEuro = viewModel.incomeValidation(inputTxtEuro)
-
-            if (validResDollar.isSuccess) userSelection.dollarInput = inputTxtDollar.toDouble()
-            else Toast.makeText(requireContext(),
+            if (validResDollar != null) userSelection.dollarInput = validResDollar
+            else Toast.makeText(
+                requireContext(),
                 getString(R.string.enter_value_again),
-                Toast.LENGTH_SHORT).show()
+                Toast.LENGTH_SHORT
+            ).show()
 
-            if (validResEuro.isSuccess)  userSelection.euroInput = inputTxtEuro.toDouble()
-            else Toast.makeText(requireContext(),
+            if (validResEuro != null) userSelection.euroInput = validResEuro
+            else Toast.makeText(
+                requireContext(),
                 getString(R.string.enter_value_again),
-                Toast.LENGTH_SHORT).show()
+                Toast.LENGTH_SHORT
+            ).show()
 
             viewModel.dataStorageSave(userSelection)
-
         }
 
         observeRates()
         viewModel.fetchRates()
         binding.btnSavePassword.setOnClickListener {
             val newPassword = binding.etNewPassword.text.toString()
-            val validPassword = viewModel.passwordValidation(newPassword)
+            val validPassword = viewModel.validatePassword(newPassword)
 
             val confirmPassword = binding.etConfirmPassword.text.toString()
-            val validConfirmPassword = viewModel.passwordValidation(confirmPassword)
+            val validConfirmPassword = viewModel.validatePassword(confirmPassword)
 
             if (validPassword.isSuccess && validConfirmPassword.isSuccess && newPassword == confirmPassword) {
-                viewModel.savePasswords(newPassword,sharedPreferences)
-                Toast.makeText(requireContext(),
+                viewModel.savePasswords(newPassword, sharedPreferences)
+                Toast.makeText(
+                    requireContext(),
                     getString(R.string.password_changed_successfully),
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(requireContext(),
+                Toast.makeText(
+                    requireContext(),
                     getString(R.string.error_in_entering_password),
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         return binding.root

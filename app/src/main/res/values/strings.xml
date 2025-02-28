@@ -45,5 +45,9 @@
     <string name="eur_template">EUR: %.2f</string>
     <string name="usd_n_a">USD: N/A</string>
     <string name="eur_n_a">EUR: N/A</string>
+    <string name="flat_rate_tax">Єдиний податок</string>
+    <string name="unified_social_contribution">ЄСВ</string>
+    <string name="net_gross">Чистий прибуток</string>
+    <string name="taxes">ФОП рахунок</string>
 
 </resources>
