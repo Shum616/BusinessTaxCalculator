@@ -25,7 +25,11 @@ class SharedIncomeViewModel @Inject constructor(
     private val dataStorage: IDataStorage<UserSelection>,
     private val currencyRate: ICurrencyRateRepository,
     private val db: AppDatabase
+
+
 ) : ViewModel() {
+
+    var userSelection: UserSelection? = null
 
     private val _usdRate = MutableStateFlow<CurrencyFormat?>(null)
     val usdRate: StateFlow<CurrencyFormat?> = _usdRate
@@ -38,6 +42,9 @@ class SharedIncomeViewModel @Inject constructor(
 
     fun dataStorageSave(userSelection: UserSelection) =
         viewModelScope.launch { dataStorage.save(userSelection) }
+
+    fun dataStorageLoad() =
+        viewModelScope.launch { userSelection = dataStorage.load() }
 
     suspend fun getRateDollar(date: Date): CurrencyFormat = currencyRate.getDollarRate(date)
 
@@ -85,5 +92,10 @@ class SharedIncomeViewModel @Inject constructor(
                 Log.e("ViewModel", "Помилка при отриманні курсів: ${e.message}")
             }
         }
+    }
+    fun checkUnitsOfTaxes(): String{
+        dataStorageLoad()
+        return if (userSelection?.spinnerSelection.toString() == "") " UAH"
+        else " " + userSelection?.spinnerSelection.toString().substringBefore(" - ")
     }
 }

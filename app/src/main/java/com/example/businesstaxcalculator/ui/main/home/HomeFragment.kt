@@ -30,24 +30,25 @@ class HomeFragment : BaseTabFragment() {
 
         binding.calculateBttn.setOnClickListener {
             val validatedIncome = viewModel.incomeValidation(binding.txtField.text.toString())
+            val suffix = viewModel.checkUnitsOfTaxes()
 
             if (validatedIncome == null) binding.txtInputLt.error = "Invalid income input"
             else {
                 binding.unitedTax.setValues(
                     getString(R.string.flat_rate_tax),
-                    viewModel.getUnitedTaxUan(validatedIncome, 1.0).toString()
+                    viewModel.getUnitedTaxUan(validatedIncome, 1.0).toString() + suffix
                 )
                 binding.unitedContr.setValues(
                     getString(R.string.unified_social_contribution),
-                    viewModel.getUnidedSocialСontributionUan(validatedIncome).toString()
+                    viewModel.getUnidedSocialСontributionUan(validatedIncome).toString()+ suffix
                 )
                 binding.remaining.setValues(
                     getString(R.string.net_gross),
-                    viewModel.getRemaining(validatedIncome).toString()
+                    viewModel.getRemaining(validatedIncome).toString()+ suffix
                 )
                 binding.taxes.setValues(
                     getString(R.string.taxes),
-                    viewModel.getTaxes(validatedIncome).toString()
+                    viewModel.getTaxes(validatedIncome).toString()+ suffix
                 )
             }
         }
