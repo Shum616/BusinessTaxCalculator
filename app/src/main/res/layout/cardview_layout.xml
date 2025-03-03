@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/dp160"
-        android:layout_height="@dimen/dp80"
+        android:layout_width="@dimen/dp170"
+        android:layout_height="@dimen/dp90"
         android:background="@drawable/pink_rectangle"
         android:shadowRadius="0">
 

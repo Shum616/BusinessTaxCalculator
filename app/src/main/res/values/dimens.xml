@@ -35,4 +35,6 @@
     <dimen name="sp14">14sp</dimen>
     <dimen name="sp20">20sp</dimen>
     <dimen name="sp50">50sp</dimen>
+    <dimen name="dp180">180dp</dimen>
+    <dimen name="dp170">170dp</dimen>
 </resources>

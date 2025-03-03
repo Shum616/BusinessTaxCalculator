@@ -18,17 +18,18 @@
             app:layout_constraintStart_toStartOf="@+id/scrollViewMain"
             app:layout_constraintTop_toTopOf="@+id/scrollViewMain">
 
-            <CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="@dimen/dp350"
-                android:layout_height="@dimen/dp300"
-                android:layout_marginTop="@dimen/dp20"
-                android:background="@drawable/custom_calendar_background"
-                android:dateTextAppearance="@style/CalendarDateTextStyle"
-                android:weekDayTextAppearance="@style/CalendarWeekDayTextStyle"
+            <EditText
+                android:layout_marginTop="@dimen/dp30"
+                android:id="@+id/datePicker"
+                android:layout_width="@dimen/dp300"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+                android:focusable="false"
+                android:hint="@string/choose_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputLt"
@@ -44,7 +45,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/unitedTax"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView">
+                app:layout_constraintTop_toBottomOf="@+id/datePicker">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtField"
