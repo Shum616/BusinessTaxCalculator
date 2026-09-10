@@ -10,7 +10,7 @@ interface PrivatBankApi {
      * @param date The string of format :DD.MM.YYYY.
      * @return ExchangeRatesResponse.
      */
-    @GET("exchange_rates?json")
+    @GET("exchange_rates?")
     suspend fun getExchangeRates(
         @retrofit2.http.Query("date") date: String
     ): ExchangeRatesResponse

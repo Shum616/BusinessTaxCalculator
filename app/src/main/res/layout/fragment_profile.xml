@@ -5,12 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.profile.ProfileFragment">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp200"
-        android:text="@string/profile"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp50"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.main.profile.ProfileFragment">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp200"
+                android:text="@string/profile"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp50"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

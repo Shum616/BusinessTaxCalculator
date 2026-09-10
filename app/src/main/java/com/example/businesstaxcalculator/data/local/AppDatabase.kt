@@ -34,7 +34,6 @@ abstract class AppDatabase : RoomDatabase() {
     }
 }
 
-
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL("ALTER TABLE Income ADD COLUMN income_year INTEGER NOT NULL DEFAULT 0")

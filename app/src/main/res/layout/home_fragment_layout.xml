@@ -4,86 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools="com.example.businesstaxcalculator.ui.main.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_container_view"
+    <ScrollView
+        android:id="@+id/scrollViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:fillViewport="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtInputLt"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_container_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dp42"
-            android:hint="@string/enter_income"
-            android:textColorHint="@color/_424242"
-            app:boxStrokeColor="@color/_515fcf"
-            app:boxStrokeErrorColor="@color/f70000"
-            app:errorTextColor="@color/f70000"
-            app:hintTextColor="@color/_515fcf"
-            app:layout_constraintBottom_toTopOf="@+id/cardVw1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="@+id/scrollViewMain"
+            app:layout_constraintEnd_toEndOf="@+id/scrollViewMain"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewMain"
+            app:layout_constraintTop_toTopOf="@+id/scrollViewMain">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtField"
+            <EditText
+                android:layout_marginTop="@dimen/dp30"
+                android:id="@+id/datePicker"
+                android:layout_width="@dimen/dp300"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+                android:focusable="false"
+                android:hint="@string/choose_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputLt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:textColor="@color/black" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginHorizontal="@dimen/dp42"
+                android:hint="@string/enter_income"
+                android:textColorHint="@color/_424242"
+                app:boxStrokeColor="@color/ef63ff"
+                app:boxStrokeErrorColor="@color/f70000"
+                app:errorTextColor="@color/f70000"
+                app:hintTextColor="@color/ee65fb"
+                app:layout_constraintBottom_toTopOf="@+id/unitedTax"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datePicker">
 
-        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
-            android:id="@+id/cardVw1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtInputLt"
-            app:layout_constraintBottom_toTopOf="@+id/cardVw3"
-            app:layout_constraintEnd_toStartOf="@id/cardVw2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/_69f1beff"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
-            android:id="@+id/cardVw2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/cardVw4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardVw1"
-            app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
+            <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
+                android:id="@+id/unitedTax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtInputLt"
+                app:layout_constraintBottom_toTopOf="@+id/remaining"
+                app:layout_constraintEnd_toStartOf="@id/unitedContr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
 
-        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
-            android:id="@+id/cardVw3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/calculateBttn"
-            app:layout_constraintEnd_toStartOf="@+id/cardVw4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardVw1" />
+            <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
+                android:id="@+id/unitedContr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/taxes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/unitedTax"
+                app:layout_constraintTop_toBottomOf="@id/txtInputLt" />
 
-        <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
-            android:id="@+id/cardVw4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/calculateBttn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardVw3"
-            app:layout_constraintTop_toBottomOf="@+id/cardVw2" />
+            <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
+                android:id="@+id/remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/calculateBttn"
+                app:layout_constraintEnd_toStartOf="@+id/taxes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/unitedTax" />
 
-        <Button
-            android:id="@+id/calculateBttn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/violet"
-            android:text="@string/calculate_taxes"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardVw4" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.example.businesstaxcalculator.widgets.cardview.CardViewMainVw
+                android:id="@+id/taxes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/calculateBttn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/remaining"
+                app:layout_constraintTop_toBottomOf="@+id/unitedContr" />
+
+            <Button
+                android:id="@+id/calculateBttn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/_642b75"
+                android:text="@string/calculate_taxes"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/taxes" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

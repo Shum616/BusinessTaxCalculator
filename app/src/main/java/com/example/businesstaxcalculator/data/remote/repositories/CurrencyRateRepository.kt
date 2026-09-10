@@ -1,10 +1,11 @@
 package com.example.businesstaxcalculator.data.remote.repositories
 
+import android.util.Log
 import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
 import com.example.businesstaxcalculator.data.models.CurrencyFormat
+import com.example.businesstaxcalculator.data.models.ExchangeRate
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.sql.Date
 import java.text.SimpleDateFormat
@@ -13,38 +14,54 @@ import javax.inject.Inject
 
 class CurrencyRateRepository @Inject constructor(private val currencyApi: PrivatBankApi) :
     ICurrencyRateRepository {
-    private suspend fun getRateForCurrency(date: String, currency: String): CurrencyFormat {
-        return withContext(Dispatchers.IO) {
+
+    companion object {
+        private const val TAG = "CurrencyRateRepository"
+        private const val EXPIRE_TIME = 900000L
+    }
+
+    private var cashedExchangeRates: Pair<Long, List<ExchangeRate>>? = null
+
+    private suspend fun getRateForCurrency(date: String): List<ExchangeRate> {
+        if (cashedExchangeRates == null
+            || (System.currentTimeMillis() - (cashedExchangeRates?.first ?: 0)) > EXPIRE_TIME
+            || cashedExchangeRates?.second?.isEmpty() != false
+        ) cashedExchangeRates = withContext(Dispatchers.IO) {
             try {
-                val response = currencyApi.getExchangeRates(date)
-                val rate = response.exchangeRate.find { it.currency == currency }
-                if (rate != null) {
-                    CurrencyFormat(
-                        date = response.date,
-                        currency = rate.currency
-                    )
-                } else {
-                    null
-                }
+                Pair(
+                    System.currentTimeMillis(),
+                    currencyApi.getExchangeRates(date).exchangeRate
+                )
             } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            } as CurrencyFormat
+                Log.e(TAG, e.stackTraceToString())
+                throw CurrencyNotFoundException()
+            }
         }
+        return cashedExchangeRates?.second ?: throw CurrencyNotFoundException()
     }
 
-    private fun formatDate(date: Date): String {
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        return dateFormat.format(date)
-    }
+    private fun formatDate(date: Date) =
+        SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
 
-    override fun getDollarRate(date: Date): CurrencyFormat = runBlocking {
-        val formattedDate = formatDate(date)
-        getRateForCurrency(formattedDate, "USD")
-    }
+    override suspend fun getDollarRate(date: Date) =
+        getRateForCurrency(formatDate(date)).find { it.currency == "USD" }?.let {
+            CurrencyFormat(
+                date = formatDate(date),
+                currency = it.currency,
+                purchaseRate = it.purchaseRateNB,
+                saleRate = it.saleRateNB
+            )
+        } ?: throw CurrencyNotFoundException()
 
-    override fun getEuroRate(date: Date): CurrencyFormat = runBlocking {
-        val formattedDate = formatDate(date)
-        getRateForCurrency(formattedDate, "EUR")
-    }
+    override suspend fun getEuroRate(date: Date) =
+        getRateForCurrency(formatDate(date)).find { it.currency == "EUR" }?.let {
+            CurrencyFormat(
+                date = formatDate(date),
+                currency = it.currency,
+                purchaseRate = it.purchaseRateNB,
+                saleRate = it.saleRateNB
+            )
+        } ?: throw CurrencyNotFoundException()
 }
+
+class CurrencyNotFoundException : Exception("Cant fetch data")

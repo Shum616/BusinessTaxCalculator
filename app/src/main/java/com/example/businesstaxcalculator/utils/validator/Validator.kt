@@ -14,7 +14,7 @@ class Validator : IValidator {
     }
 
     override fun validateInput(income: String): ValidateResult {
-        val isValid = !TextUtils.isEmpty(income) && income.toBigDecimal() > BigDecimal.ZERO
+        val isValid = !TextUtils.isEmpty(income) && income.toDouble() > 0.0
         return ValidateResult(
             isValid,
             if (isValid) R.string.text_validation_success else R.string.text_validation_error_income
