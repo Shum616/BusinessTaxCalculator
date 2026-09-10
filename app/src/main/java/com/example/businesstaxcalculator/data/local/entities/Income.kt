@@ -18,6 +18,15 @@ data class Income(
     @ColumnInfo(name = "income_quarter")
     val incomeQuarter: Int,
 
+    @ColumnInfo(name = "income_date_epoch_day")
+    val incomeDateEpochDay: Long = 0,
+
+    @ColumnInfo(name = "income_military_tax_uan")
+    val incomeMilitaryTaxUan: Double = 0.0,
+
+    @ColumnInfo(name = "fop_group")
+    val fopGroup: Int = 1,
+
     @ColumnInfo(name = "income_united_tax_uan")
     val incomeUnitedTaxUan: Double,
 

@@ -1,25 +1,21 @@
-import org.gradle.kotlin.dsl.android
-import org.gradle.kotlin.dsl.libs
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.android.legacy.kapt)
+    alias(libs.plugins.hilt.android)
     id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.example.businesstaxcalculator"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.businesstaxcalculator"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 1
-        versionName = "1.0"
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,14 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures{
-        dataBinding = true
+        compose = true
     }
     packaging {
         resources.excludes.add("META-INF/LICENSE.md")
@@ -50,37 +43,24 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.databinding.compiler)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.material)
-    // Use to implement support for wear tiles
-    implementation(libs.androidx.tiles)
-
-    // Use to utilize standard components and layouts in your tiles
-    implementation(libs.androidx.protolayout)
-
-    // Use to utilize components and layouts with Material Design in your tiles
-    implementation(libs.androidx.protolayout.material)
+    // FragmentActivity is required by BiometricPrompt, but all UI is Compose.
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     // ViewModel utilities for Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    // LiveData
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.fragment.ktx)
-
-    // Views/Fragments integration
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.navigation.dynamic.features.fragment)
 
     //dagger hilt
     implementation(libs.hilt.android)
@@ -93,9 +73,7 @@ dependencies {
     
     //room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor (libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.rxjava3)
 
     //firebase
     implementation(platform(libs.firebase.bom))

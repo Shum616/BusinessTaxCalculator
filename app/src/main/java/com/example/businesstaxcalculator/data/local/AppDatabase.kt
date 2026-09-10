@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.businesstaxcalculator.data.local.entities.Income
 import com.example.businesstaxcalculator.data.local.dao.IncomeDao
 
-@Database(entities = [Income::class], version = 2)
+@Database(entities = [Income::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun incomeDao(): IncomeDao
 
@@ -29,8 +29,21 @@ abstract class AppDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context,
                 AppDatabase::class.java, "database-name"
-            ).addMigrations(MIGRATION_1_2)
+            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build()
+    }
+}
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE Income ADD COLUMN income_date_epoch_day INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("ALTER TABLE Income ADD COLUMN income_military_tax_uan REAL NOT NULL DEFAULT 0.0")
+    }
+}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE Income ADD COLUMN fop_group INTEGER NOT NULL DEFAULT 1")
     }
 }
 

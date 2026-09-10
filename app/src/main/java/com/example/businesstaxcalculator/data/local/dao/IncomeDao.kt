@@ -7,12 +7,19 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.businesstaxcalculator.data.local.entities.Income
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface IncomeDao {
     @Query("SELECT * FROM income")
     fun getAll(): List<Income>
+
+    @Query("SELECT * FROM income ORDER BY income_date_epoch_day DESC, incomeId DESC")
+    fun observeAll(): Flow<List<Income>>
+
+    @Query("DELETE FROM income")
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM income WHERE incomeId IN (:incomeIds)")
     fun loadAllByIds(incomeIds: IntArray): List<Income>

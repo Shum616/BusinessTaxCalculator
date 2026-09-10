@@ -3,6 +3,7 @@ package com.example.businesstaxcalculator.data.database
 import android.content.SharedPreferences
 import com.example.businesstaxcalculator.data.UserSelection
 import javax.inject.Inject
+import androidx.core.content.edit
 
 class UserSettingsDataStorage @Inject constructor(
     private val sharedPreferences: SharedPreferences
@@ -13,11 +14,11 @@ class UserSettingsDataStorage @Inject constructor(
     private val keyEuroInput = "euro_input"
 
     override suspend fun save(data: UserSelection) {
-        sharedPreferences.edit()
-            .putString(keySpinner, data.spinnerSelection)
-            .putFloat(keyDollarInput, data.dollarInput.toFloat())
-            .putFloat(keyEuroInput, data.euroInput.toFloat())
-            .apply()
+        sharedPreferences.edit {
+            putString(keySpinner, data.spinnerSelection)
+                .putFloat(keyDollarInput, data.dollarInput.toFloat())
+                .putFloat(keyEuroInput, data.euroInput.toFloat())
+        }
     }
 
     override suspend fun load(): UserSelection? {
@@ -33,15 +34,14 @@ class UserSettingsDataStorage @Inject constructor(
     }
 
     override suspend fun delete() {
-        sharedPreferences.edit()
-            .remove(keySpinner)
-            .remove(keyDollarInput)
-            .remove(keyEuroInput)
-            .apply()
+        sharedPreferences.edit {
+            remove(keySpinner)
+                .remove(keyDollarInput)
+                .remove(keyEuroInput)
+        }
     }
 
     override suspend fun hasData(): Boolean {
         return sharedPreferences.contains(keySpinner)
     }
-
 }

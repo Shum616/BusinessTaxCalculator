@@ -7,9 +7,12 @@ import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.data.database.UserSettingsDataStorage
 import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRepository
-import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
+import com.example.businesstaxcalculator.data.remote.repositories.api.NbuApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.data.local.AppDatabase
+import com.example.businesstaxcalculator.data.local.IncomeHistoryRepositoryImpl
+import com.example.businesstaxcalculator.data.local.dao.IncomeDao
+import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import com.example.businesstaxcalculator.utils.BASE_URL
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.Validator
@@ -36,12 +39,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesPrivatApi(retrofit: Retrofit): PrivatBankApi =
-        retrofit.create(PrivatBankApi::class.java)
+    fun provideNbuApi(retrofit: Retrofit): NbuApi =
+        retrofit.create(NbuApi::class.java)
 
     @Provides
     @Singleton
-    fun provideCurrencyRate(api: PrivatBankApi): ICurrencyRateRepository =
+    fun provideCurrencyRate(api: NbuApi): ICurrencyRateRepository =
         CurrencyRateRepository(api)
     
     @Provides
@@ -49,6 +52,15 @@ object AppModule {
     fun provideDatabase(app: Application): AppDatabase {
         return AppDatabase.invoke(app.applicationContext)
     }
+
+    @Provides
+    fun provideIncomeDao(database: AppDatabase): IncomeDao = database.incomeDao()
+
+    @Provides
+    @Singleton
+    fun provideIncomeHistoryRepository(
+        repository: IncomeHistoryRepositoryImpl
+    ): IncomeHistoryRepository = repository
 
     @Provides
     @Singleton

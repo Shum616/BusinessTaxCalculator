@@ -1,67 +1,48 @@
 package com.example.businesstaxcalculator.data.remote.repositories
 
 import android.util.Log
-import com.example.businesstaxcalculator.data.remote.repositories.api.PrivatBankApi
 import com.example.businesstaxcalculator.data.models.CurrencyFormat
-import com.example.businesstaxcalculator.data.models.ExchangeRate
+import com.example.businesstaxcalculator.data.models.NbuExchangeRate
+import com.example.businesstaxcalculator.data.remote.repositories.api.NbuApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.sql.Date
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
-class CurrencyRateRepository @Inject constructor(private val currencyApi: PrivatBankApi) :
-    ICurrencyRateRepository {
+class CurrencyRateRepository @Inject constructor(
+    private val currencyApi: NbuApi
+) : ICurrencyRateRepository {
+    private val cache = mutableMapOf<String, Pair<Long, NbuExchangeRate>>()
 
-    companion object {
-        private const val TAG = "CurrencyRateRepository"
-        private const val EXPIRE_TIME = 900000L
-    }
+    override suspend fun getDollarRate() = getRate(USD)
 
-    private var cashedExchangeRates: Pair<Long, List<ExchangeRate>>? = null
+    override suspend fun getEuroRate() = getRate(EUR)
 
-    private suspend fun getRateForCurrency(date: String): List<ExchangeRate> {
-        if (cashedExchangeRates == null
-            || (System.currentTimeMillis() - (cashedExchangeRates?.first ?: 0)) > EXPIRE_TIME
-            || cashedExchangeRates?.second?.isEmpty() != false
-        ) cashedExchangeRates = withContext(Dispatchers.IO) {
-            try {
-                Pair(
-                    System.currentTimeMillis(),
-                    currencyApi.getExchangeRates(date).exchangeRate
-                )
-            } catch (e: Exception) {
-                Log.e(TAG, e.stackTraceToString())
-                throw CurrencyNotFoundException()
-            }
+    private suspend fun getRate(currencyCode: String): CurrencyFormat {
+        val now = System.currentTimeMillis()
+        val cached = cache[currencyCode]?.takeIf { now - it.first < CACHE_DURATION_MS }?.second
+        val rate = cached ?: try {
+            currencyApi.getCurrentExchangeRate(currencyCode).firstOrNull()
+                ?.also { cache[currencyCode] = now to it }
+                ?: throw CurrencyNotFoundException()
+        } catch (exception: Exception) {
+            Log.e(TAG, "Cannot load $currencyCode rate from NBU", exception)
+            throw CurrencyNotFoundException(exception)
         }
-        return cashedExchangeRates?.second ?: throw CurrencyNotFoundException()
+
+        return CurrencyFormat(
+            date = rate.exchangedate,
+            currency = rate.cc,
+            purchaseRate = rate.rate,
+            saleRate = rate.rate
+        )
     }
 
-    private fun formatDate(date: Date) =
-        SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
-
-    override suspend fun getDollarRate(date: Date) =
-        getRateForCurrency(formatDate(date)).find { it.currency == "USD" }?.let {
-            CurrencyFormat(
-                date = formatDate(date),
-                currency = it.currency,
-                purchaseRate = it.purchaseRateNB,
-                saleRate = it.saleRateNB
-            )
-        } ?: throw CurrencyNotFoundException()
-
-    override suspend fun getEuroRate(date: Date) =
-        getRateForCurrency(formatDate(date)).find { it.currency == "EUR" }?.let {
-            CurrencyFormat(
-                date = formatDate(date),
-                currency = it.currency,
-                purchaseRate = it.purchaseRateNB,
-                saleRate = it.saleRateNB
-            )
-        } ?: throw CurrencyNotFoundException()
+    private companion object {
+        const val TAG = "CurrencyRateRepository"
+        const val USD = "USD"
+        const val EUR = "EUR"
+        const val CACHE_DURATION_MS = 15 * 60 * 1000L
+    }
 }
 
-class CurrencyNotFoundException : Exception("Cant fetch data")
+class CurrencyNotFoundException(cause: Throwable? = null) :
+    Exception("Cannot fetch currency rate", cause)
