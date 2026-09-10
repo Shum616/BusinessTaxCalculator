@@ -73,6 +73,7 @@ class SettingsFragment : BaseTabFragment() {
         binding.materialSpinner.setOnItemClickListener { _, _, position, _ ->
             val selectedItem = currencies[position]
             userSelection.spinnerSelection = selectedItem
+            viewModel.dataStorageSave(userSelection)
         }
 
         binding.getRateBtn.setOnClickListener {
