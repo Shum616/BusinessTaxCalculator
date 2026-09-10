@@ -1,4 +1,4 @@
-package com.example.businesstaxcalculator.ui.base
+package com.example.businesstaxcalculator.ui.main.base
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel

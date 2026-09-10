@@ -1,7 +1,6 @@
 package com.example.businesstaxcalculator.ui.main
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.data.UserSelection
@@ -13,9 +12,6 @@ import kotlinx.coroutines.launch
 import com.example.businesstaxcalculator.data.models.CurrencyFormat
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.data.local.AppDatabase
-import com.example.businesstaxcalculator.data.remote.repositories.CurrencyNotFoundException
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import java.sql.Date
 import javax.inject.Inject
 
@@ -25,77 +21,64 @@ class SharedIncomeViewModel @Inject constructor(
     private val dataStorage: IDataStorage<UserSelection>,
     private val currencyRate: ICurrencyRateRepository,
     private val db: AppDatabase
-
-
 ) : ViewModel() {
 
-    var userSelection: UserSelection? = null
+    fun setIncomeTax(income: String): Array<Double> {
+        val incomeNum = income.toDouble()
 
-    private val _usdRate = MutableStateFlow<CurrencyFormat?>(null)
-    val usdRate: StateFlow<CurrencyFormat?> = _usdRate
+        var taxResult1 = incomeNum * 2
+        var taxResult2 = incomeNum * 3
+        var taxResult3 = incomeNum * 4
+        var taxResult4 = incomeNum * 5
 
-    private val _eurRate = MutableStateFlow<CurrencyFormat?>(null)
-    val eurRate: StateFlow<CurrencyFormat?> = _eurRate
+        return arrayOf(taxResult1, taxResult2, taxResult3, taxResult4)
+    }
 
-    fun incomeValidation(text: String): Double? =
-        if (validator.validateInput(text).isSuccess) text.toDouble() else null
+    fun incomeValidation(text: String): ValidateResult = validator.validateInput(text)
 
     fun dataStorageSave(userSelection: UserSelection) =
         viewModelScope.launch { dataStorage.save(userSelection) }
 
-    fun dataStorageLoad() =
-        viewModelScope.launch { userSelection = dataStorage.load() }
+    fun currencyRateDollar(date: Date): CurrencyFormat = currencyRate.getDollarRate(date)
 
-    suspend fun getRateDollar(date: Date): CurrencyFormat = currencyRate.getDollarRate(date)
+    fun currencyRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
 
-    suspend fun getRateEuro(date: Date): CurrencyFormat = currencyRate.getEuroRate(date)
+    fun calculateUnitedTaxUan(gross: Double, exchangeRate: Double): Double {
+        return Math.round(gross * exchangeRate * 0.05 * 100) / 100.0
+    }
 
-    fun getUnitedTaxUan(gross: Double, exchangeRate: Double) =
-        (gross * exchangeRate * 0.05).roundToTwoDecimals()
+    fun calculateUnidedSocialСontributionUan(gross: Double): Double {
+        return gross * 0.22
+    }
 
-    fun getUnidedSocialСontributionUan(gross: Double) = (gross * 0.22).roundToTwoDecimals()
+    fun calculateIncomeCurrency(gross: Double, currRate: Double): Double {
+        return gross * currRate
+    }
 
-    fun getIncomeCurrency(gross: Double, currRate: Double) = gross * currRate
+    fun calculateIncomeUan(gross: Double, currRate: Double): Double {
+        return gross * currRate
+    }
 
-    fun getIncomeUan(gross: Double, currRate: Double) = gross * currRate
+    fun calculateRemaining(gross: Double): Double {
+        return gross - calculateUnidedSocialСontributionUan(gross)
+    }
 
-    fun getRemaining(gross: Double) =
-        (gross - getUnidedSocialСontributionUan(gross)
-                - getUnitedTaxUan(gross, 1.0)).roundToTwoDecimals()
+    fun calculateIncomeUanQuarter(incomes: List<Double>): Double {
+        return incomes.sum()
+    }
 
-    fun getIncomeUanQuarter(incomes: List<Double>) = incomes.sum()
-
-    fun getRemainingQuarter(incomes: List<Double>): Double {
-        var sum = 0.0
-        incomes.forEach { sum += it * 0.22 }
+    fun calculateRemainingQuarter(incomes: List<Double>): Double {
+        var sum: Double = 0.0
+        incomes.forEach { it -> sum += it * 0.22 }
         return sum
     }
 
-    fun getTaxes(gross: Double) = (gross - getRemaining(gross)).roundToTwoDecimals()
+    fun passwordValidation(text: String): ValidateResult = validator.validateInput(text)
 
-    fun Double.roundToTwoDecimals() = Math.round(this * 100) / 100.0
-
-    fun validatePassword(text: String): ValidateResult = validator.validateInput(text)
-
-    fun savePasswords(password: String, preferences: SharedPreferences) =
-        preferences.edit().putString("password", password).apply() //TODO: move this logic to DATA layer
-
-    fun fetchRates() {
-        val timestamp: Long = System.currentTimeMillis()
-        val today = Date(timestamp)
-
-        viewModelScope.launch {
-            try {
-                _usdRate.value = currencyRate.getDollarRate(today)
-                _eurRate.value = currencyRate.getEuroRate(today)
-            } catch (e: CurrencyNotFoundException) {
-                Log.e("ViewModel", "Помилка при отриманні курсів: ${e.message}")
-            }
-        }
+    fun savePasswords(password: String, preferences:SharedPreferences){
+        preferences.edit().putString("password", password).apply()
     }
-    fun checkUnitsOfTaxes(): String{
-        dataStorageLoad()
-        return if (userSelection?.spinnerSelection.toString() == "") " UAH"
-        else " " + userSelection?.spinnerSelection.toString().substringBefore(" - ")
-    }
+
+
+
 }
