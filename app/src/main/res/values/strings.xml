@@ -49,5 +49,6 @@
     <string name="unified_social_contribution">ЄСВ</string>
     <string name="net_gross">Чистий прибуток</string>
     <string name="taxes">ФОП рахунок</string>
+    <string name="choose_date">Виберіть дату</string>
 
 </resources>
