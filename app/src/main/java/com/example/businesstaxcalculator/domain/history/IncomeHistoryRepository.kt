@@ -3,15 +3,16 @@ package com.example.businesstaxcalculator.domain.history
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import com.example.businesstaxcalculator.utils.FopGroup
+import com.example.businesstaxcalculator.domain.money.Money
 
 data class IncomeHistoryRecord(
     val date: LocalDate,
     val fopGroup: FopGroup,
-    val grossIncome: Double,
-    val netProfit: Double,
-    val esv: Double,
-    val militaryTax: Double,
-    val singleTax: Double
+    val grossIncome: Money,
+    val netProfit: Money,
+    val esv: Money,
+    val militaryTax: Money,
+    val singleTax: Money
 )
 
 interface IncomeHistoryRepository {

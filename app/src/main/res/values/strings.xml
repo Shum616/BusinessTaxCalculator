@@ -72,7 +72,7 @@
     <string name="income_history_deleted">Історію доходів видалено</string>
     <string name="delete">Видалити</string>
     <string name="current_nbu_rates">Офіційний курс НБУ</string>
-    <string name="current_rate_value">%1$.2f грн</string>
+    <string name="current_rate_value">%1$s грн</string>
     <string name="current_rates_date">Станом на %1$s</string>
     <string name="current_rates_error">Не вдалося завантажити поточний курс</string>
     <string name="retry">Повторити</string>

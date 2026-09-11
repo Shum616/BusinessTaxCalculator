@@ -5,15 +5,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.businesstaxcalculator.R
-import com.example.businesstaxcalculator.presentation.profile.screen.formatAmount
+import com.example.businesstaxcalculator.domain.money.Money
+import com.example.businesstaxcalculator.utils.formatAmount
 import com.example.businesstaxcalculator.utils.FopGroup
-import com.example.businesstaxcalculator.utils.GROUP_1_MILITARY_TAX_MONTHLY_UAH
-import com.example.businesstaxcalculator.utils.GROUP_1_SINGLE_TAX_MONTHLY_UAH
-import com.example.businesstaxcalculator.utils.GROUP_2_MILITARY_TAX_MONTHLY_UAH
-import com.example.businesstaxcalculator.utils.GROUP_2_SINGLE_TAX_MONTHLY_UAH
+import com.example.businesstaxcalculator.utils.GROUP_1_MILITARY_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.utils.GROUP_1_SINGLE_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.utils.GROUP_2_MILITARY_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.utils.GROUP_2_SINGLE_TAX_MONTHLY_KOPIYKY
 import com.example.businesstaxcalculator.utils.GROUP_3_MILITARY_TAX_PERCENT
 import com.example.businesstaxcalculator.utils.Group3TaxRate
-import com.example.businesstaxcalculator.utils.MONTHLY_ESV_UAH
+import com.example.businesstaxcalculator.utils.MONTHLY_ESV_KOPIYKY
 
 @Composable
 fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group3TaxRate) -> Unit) {
@@ -28,7 +29,7 @@ fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group
                 TaxLine(
                     R.string.single_tax,
                     stringResource(R.string.amount_uah,
-                        formatAmount(GROUP_1_SINGLE_TAX_MONTHLY_UAH))
+                        Money(GROUP_1_SINGLE_TAX_MONTHLY_KOPIYKY).formatAmount())
                 )
 
                 Text(stringResource(
@@ -39,8 +40,7 @@ fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group
                 TaxLine(
                     R.string.military_tax,
                     stringResource(R.string.amount_uah,
-                        formatAmount(
-                    GROUP_1_MILITARY_TAX_MONTHLY_UAH))
+                        Money(GROUP_1_MILITARY_TAX_MONTHLY_KOPIYKY).formatAmount())
 
                 )
 
@@ -52,8 +52,7 @@ fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group
                 TaxLine(
                     R.string.esv_for_self,
                     stringResource(R.string.amount_uah,
-                        formatAmount(
-                    MONTHLY_ESV_UAH))
+                        Money(MONTHLY_ESV_KOPIYKY).formatAmount())
                 )
             }
 
@@ -62,8 +61,7 @@ fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group
                 TaxLine(
                     R.string.single_tax,
                     stringResource(R.string.amount_uah,
-                        formatAmount(
-                    GROUP_2_SINGLE_TAX_MONTHLY_UAH))
+                        Money(GROUP_2_SINGLE_TAX_MONTHLY_KOPIYKY).formatAmount())
                 )
 
                 Text(
@@ -74,15 +72,13 @@ fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group
                 TaxLine(
                     R.string.military_tax,
                     stringResource(R.string.amount_uah,
-                        formatAmount(
-                    GROUP_2_MILITARY_TAX_MONTHLY_UAH))
+                        Money(GROUP_2_MILITARY_TAX_MONTHLY_KOPIYKY).formatAmount())
                 )
 
                 TaxLine(
                     R.string.esv_for_self,
                     stringResource(R.string.amount_uah,
-                        formatAmount(
-                    MONTHLY_ESV_UAH))
+                        Money(MONTHLY_ESV_KOPIYKY).formatAmount())
                 )
             }
 
@@ -104,8 +100,7 @@ fun Taxes(group: FopGroup, group3Rate: Group3TaxRate, onGroup3RateChange: (Group
                 TaxLine(
                     R.string.esv_for_self,
                     stringResource(R.string.amount_uah_monthly,
-                        formatAmount(
-                    MONTHLY_ESV_UAH))
+                        Money(MONTHLY_ESV_KOPIYKY).formatAmount())
                 )
             }
         }

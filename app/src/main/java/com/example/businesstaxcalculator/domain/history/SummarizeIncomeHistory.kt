@@ -1,20 +1,19 @@
 package com.example.businesstaxcalculator.domain.history
 
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.time.LocalDate
+import com.example.businesstaxcalculator.domain.money.Money
 
 enum class HistoryPeriod { DAY, MONTH, QUARTER, YEAR }
 
 data class IncomeHistorySummary(
     val periodStart: LocalDate,
-    val grossIncome: Double,
-    val netProfit: Double,
-    val esv: Double,
-    val militaryTax: Double,
-    val singleTax: Double
+    val grossIncome: Money,
+    val netProfit: Money,
+    val esv: Money,
+    val militaryTax: Money,
+    val singleTax: Money
 ) {
-    val totalTax: Double get() = (esv + militaryTax + singleTax).money()
+    val totalTax: Money get() = esv + militaryTax + singleTax
 }
 
 fun summarizeIncomeHistory(
@@ -25,11 +24,11 @@ fun summarizeIncomeHistory(
     .map { (start, entries) ->
         IncomeHistorySummary(
             periodStart = start,
-            grossIncome = entries.sumOf { it.grossIncome }.money(),
-            netProfit = entries.sumOf { it.netProfit }.money(),
-            esv = entries.sumOf { it.esv }.money(),
-            militaryTax = entries.sumOf { it.militaryTax }.money(),
-            singleTax = entries.sumOf { it.singleTax }.money()
+            grossIncome = entries.sumMoney { it.grossIncome },
+            netProfit = entries.sumMoney { it.netProfit },
+            esv = entries.sumMoney { it.esv },
+            militaryTax = entries.sumMoney { it.militaryTax },
+            singleTax = entries.sumMoney { it.singleTax }
         )
     }
     .sortedByDescending { it.periodStart }
@@ -41,4 +40,5 @@ private fun LocalDate.periodStart(period: HistoryPeriod): LocalDate = when (peri
     HistoryPeriod.YEAR -> LocalDate.of(year, 1, 1)
 }
 
-private fun Double.money() = BigDecimal.valueOf(this).setScale(2, RoundingMode.HALF_UP).toDouble()
+private inline fun <T> Iterable<T>.sumMoney(value: (T) -> Money): Money =
+    fold(Money.ZERO) { total, item -> total + value(item) }

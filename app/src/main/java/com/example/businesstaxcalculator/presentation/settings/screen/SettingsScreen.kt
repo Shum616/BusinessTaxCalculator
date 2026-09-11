@@ -19,6 +19,8 @@ import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.presentation.settings.SettingsViewModel
 import com.example.businesstaxcalculator.presentation.settings.subview.LockSwitch
 import com.example.businesstaxcalculator.presentation.settings.subview.RateField
+import com.example.businesstaxcalculator.domain.money.ExchangeRate
+import com.example.businesstaxcalculator.utils.formatRate
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel)
@@ -221,11 +223,11 @@ fun SettingsScreen(viewModel: SettingsViewModel)
 }
 
 @Composable
-private fun CurrentRateRow(currency: String, rate: Double?) {
+private fun CurrentRateRow(currency: String, rate: ExchangeRate?) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         Text(currency)
         Text(
-            rate?.let { stringResource(R.string.current_rate_value, it) } ?: "—",
+            rate?.let { stringResource(R.string.current_rate_value, it.formatRate()) } ?: "—",
             style = MaterialTheme.typography.titleMedium
         )
     }

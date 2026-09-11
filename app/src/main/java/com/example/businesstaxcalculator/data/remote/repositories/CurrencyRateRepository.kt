@@ -5,6 +5,7 @@ import com.example.businesstaxcalculator.data.models.CurrencyFormat
 import com.example.businesstaxcalculator.data.models.NbuExchangeRate
 import com.example.businesstaxcalculator.data.remote.repositories.api.NbuApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
+import com.example.businesstaxcalculator.domain.money.ExchangeRate
 import javax.inject.Inject
 
 class CurrencyRateRepository @Inject constructor(
@@ -28,11 +29,12 @@ class CurrencyRateRepository @Inject constructor(
             throw CurrencyNotFoundException(exception)
         }
 
+        val exactRate = ExchangeRate.parse(rate.rate) ?: throw CurrencyNotFoundException()
         return CurrencyFormat(
             date = rate.exchangedate,
             currency = rate.cc,
-            purchaseRate = rate.rate,
-            saleRate = rate.rate
+            purchaseRate = exactRate,
+            saleRate = exactRate
         )
     }
 

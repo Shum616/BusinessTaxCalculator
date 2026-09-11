@@ -8,6 +8,7 @@ import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
+import com.example.businesstaxcalculator.domain.money.ExchangeRate
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +23,8 @@ data class SettingsUiState(
     val euroRate: String = "",
     val hasDollarRateError: Boolean = false,
     val hasEuroRateError: Boolean = false,
-    val currentDollarRate: Double? = null,
-    val currentEuroRate: Double? = null,
+    val currentDollarRate: ExchangeRate? = null,
+    val currentEuroRate: ExchangeRate? = null,
     val currentRatesDate: String = "",
     val isLoadingCurrentRates: Boolean = false,
     val hasCurrentRatesError: Boolean = false,
@@ -91,8 +92,10 @@ class SettingsViewModel @Inject constructor(
 
     fun saveRates(): Boolean {
         val state = _uiState.value
-        val dollarValid = validator.validateInput(state.dollarRate).isSuccess
-        val euroValid = validator.validateInput(state.euroRate).isSuccess
+        val dollarRate = ExchangeRate.parse(state.dollarRate)?.takeIf { it.scaledValue > 0 }
+        val euroRate = ExchangeRate.parse(state.euroRate)?.takeIf { it.scaledValue > 0 }
+        val dollarValid = dollarRate != null
+        val euroValid = euroRate != null
         _uiState.update {
             it.copy(hasDollarRateError = !dollarValid, hasEuroRateError = !euroValid)
         }
@@ -100,7 +103,7 @@ class SettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
             dataStorage.save(
-                UserSelection(state.currency, state.dollarRate.toDouble(), state.euroRate.toDouble())
+                UserSelection(state.currency, dollarRate, euroRate)
             )
         }
         return true
@@ -142,8 +145,11 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { historyRepository.deleteAll() }
     }
 
-    private fun SharedPreferences.rateText(key: String): String =
-        if (contains(key)) getFloat(key, 0f).toString() else ""
+    private fun SharedPreferences.rateText(key: String): String = when (val value = all[key]) {
+        is Long -> ExchangeRate(value).toPlainString()
+        is Number -> ExchangeRate.parse(value.toString())?.toPlainString().orEmpty()
+        else -> ""
+    }
 
     private companion object {
         const val CURRENCY_KEY = "spinner_selection"

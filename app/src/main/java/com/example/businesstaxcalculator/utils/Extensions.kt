@@ -6,6 +6,8 @@ import com.example.businesstaxcalculator.domain.history.IncomeHistorySummary
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import com.example.businesstaxcalculator.domain.money.ExchangeRate
+import com.example.businesstaxcalculator.domain.money.Money
 
 val HistoryPeriod.label: Int
     get() = when (this) {
@@ -25,7 +27,18 @@ fun IncomeHistorySummary.periodLabel(period: HistoryPeriod): String = when (peri
     HistoryPeriod.YEAR -> periodStart.year.toString()
 }
 
-fun Double.formatAmount(): String = NumberFormat
-    .getNumberInstance(Locale.forLanguageTag("uk-UA"))
-    .apply { minimumFractionDigits = 2; maximumFractionDigits = 2 }
-    .format(this)
+fun Money.formatAmount(): String {
+    val whole = kopiyky / 100
+    val fraction = kotlin.math.abs(kopiyky % 100).toString().padStart(2, '0')
+    val sign = if (kopiyky < 0 && whole == 0L) "-" else ""
+    return "$sign${amountFormatter.format(whole)},$fraction"
+}
+
+fun Long.formatWholeHryvnias(): String = amountFormatter.format(this)
+
+fun ExchangeRate.formatRate(): String {
+    val roundedKopiyky = (scaledValue + 50L) / 100L
+    return Money(roundedKopiyky).formatAmount()
+}
+
+private val amountFormatter = NumberFormat.getIntegerInstance(Locale.forLanguageTag("uk-UA"))

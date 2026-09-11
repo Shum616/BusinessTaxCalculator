@@ -7,6 +7,7 @@ import com.example.businesstaxcalculator.domain.calculator.IncomeTaxBreakdown
 import com.example.businesstaxcalculator.domain.calculator.calculateFopTaxes
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRecord
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
+import com.example.businesstaxcalculator.domain.money.Money
 import com.example.businesstaxcalculator.utils.FOP_GROUP_3_RATE_PREFERENCE
 import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
 import com.example.businesstaxcalculator.utils.FopGroup
@@ -67,7 +68,8 @@ class HomeViewModel @Inject constructor(
                 Group3TaxRate.WITHOUT_VAT.percent
             )
         )
-        val result = calculateFopTaxes(income.toDouble(), group, rate)
+        val grossIncome = Money.parse(income) ?: return
+        val result = calculateFopTaxes(grossIncome, group, rate)
         val date = LocalDate.ofEpochDay(_uiState.value.selectedDateEpochDay)
         _uiState.update { it.copy(result = result) }
         viewModelScope.launch {
@@ -75,7 +77,7 @@ class HomeViewModel @Inject constructor(
                 IncomeHistoryRecord(
                     date = date,
                     fopGroup = group,
-                    grossIncome = income.toDouble(),
+                    grossIncome = grossIncome,
                     netProfit = result.netProfit,
                     esv = result.esv,
                     militaryTax = result.militaryTax,

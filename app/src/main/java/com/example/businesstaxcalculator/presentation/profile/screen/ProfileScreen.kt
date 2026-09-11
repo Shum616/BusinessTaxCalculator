@@ -19,8 +19,6 @@ import com.example.businesstaxcalculator.presentation.profile.ProfileViewModel
 import com.example.businesstaxcalculator.presentation.profile.subview.AnnualIncomeLimit
 import com.example.businesstaxcalculator.presentation.profile.subview.FopGroupSelector
 import com.example.businesstaxcalculator.presentation.profile.subview.Taxes
-import java.text.NumberFormat
-import java.util.Locale
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel) {
@@ -45,8 +43,3 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
         Taxes(state.group, state.group3Rate, viewModel::selectGroup3Rate)
     }
 }
-
-fun formatAmount(amount: Double): String = NumberFormat.getNumberInstance(Locale.forLanguageTag("uk-UA")).apply {
-    minimumFractionDigits = if (amount % 1.0 == 0.0) 0 else 2
-    maximumFractionDigits = 2
-}.format(amount)

@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.businesstaxcalculator.R
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.businesstaxcalculator.domain.money.Money
+import com.example.businesstaxcalculator.utils.formatAmount
 
 @Composable
-fun IncomeResultCard(value: Double?, label: Int, modifier: Modifier = Modifier) {
+fun IncomeResultCard(value: Money?, label: Int, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.fillMaxHeight()
     ) {
@@ -28,7 +28,7 @@ fun IncomeResultCard(value: Double?, label: Int, modifier: Modifier = Modifier) 
             verticalArrangement = Arrangement.SpaceBetween)
         {
             Text(
-                value?.let { stringResource(R.string.amount_uah, formatAmount(it)) } ?: "—",
+                value?.let { stringResource(R.string.amount_uah, it.formatAmount()) } ?: "—",
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1
             )
@@ -41,8 +41,3 @@ fun IncomeResultCard(value: Double?, label: Int, modifier: Modifier = Modifier) 
         }
     }
 }
-
-private fun formatAmount(amount: Double): String = NumberFormat.getNumberInstance(Locale.forLanguageTag("uk-UA")).apply {
-    minimumFractionDigits = 2
-    maximumFractionDigits = 2
-}.format(amount)

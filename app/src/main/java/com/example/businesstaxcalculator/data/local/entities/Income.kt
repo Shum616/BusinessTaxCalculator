@@ -22,41 +22,41 @@ data class Income(
     val incomeDateEpochDay: Long = 0,
 
     @ColumnInfo(name = "income_military_tax_uan")
-    val incomeMilitaryTaxUan: Double = 0.0,
+    val incomeMilitaryTaxKopiyky: Long = 0,
 
     @ColumnInfo(name = "fop_group")
     val fopGroup: Int = 1,
 
     @ColumnInfo(name = "income_united_tax_uan")
-    val incomeUnitedTaxUan: Double,
+    val incomeUnitedTaxKopiyky: Long,
 
     @ColumnInfo(name = "income_united_local_contribution_uan")
-    val incomeUnitedLocalContributionUan: Double,
+    val incomeUnitedLocalContributionKopiyky: Long,
 
     @ColumnInfo(name = "income_currency")
-    val incomeCurrency: Double,
+    val incomeCurrencyKopiyky: Long,
 
     @ColumnInfo(name = "income_uan")
-    val incomeUan: Double,
+    val incomeUahKopiyky: Long,
 
     @ColumnInfo(name = "income_remaining")
-    val incomeRemaining: Double,
+    val incomeRemainingKopiyky: Long,
 
     @ColumnInfo(name = "income_uan_quarter")
-    val incomeUanQuarter: Double,
+    val incomeUahQuarterKopiyky: Long,
 
     @ColumnInfo(name = "income_remaining_quarter")
-    val incomeRemainingQuarter: Double,
+    val incomeRemainingQuarterKopiyky: Long,
 
     @ColumnInfo(name = "income_gross")
-    val gross: Double,
+    val grossKopiyky: Long,
 
     @ColumnInfo(name = "exchange_rate")
-    val exchangeRate: Double,
+    val exchangeRateScaled: Long,
 
     @ColumnInfo(name = "rent")
-    val rent: Double?,
+    val rentKopiyky: Long?,
 
     @ColumnInfo(name = "extra_expenses")
-    val extraExpenses: Double?,
+    val extraExpensesKopiyky: Long?,
 )

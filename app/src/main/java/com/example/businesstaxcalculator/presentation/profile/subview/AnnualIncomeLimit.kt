@@ -5,8 +5,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.businesstaxcalculator.R
-import com.example.businesstaxcalculator.presentation.profile.screen.formatAmount
 import com.example.businesstaxcalculator.utils.FopGroup
+import com.example.businesstaxcalculator.utils.formatWholeHryvnias
 
 @Composable
 fun AnnualIncomeLimit(group: FopGroup) {
@@ -16,7 +16,7 @@ fun AnnualIncomeLimit(group: FopGroup) {
         Text(
             stringResource(
                 R.string.annual_limit_details,
-                formatAmount(group.annualIncomeLimitUah.toDouble()),
+                group.annualIncomeLimitUah.toLong().formatWholeHryvnias(),
                 group.minimumSalaryCount
             ),
             style = MaterialTheme.typography.titleMedium

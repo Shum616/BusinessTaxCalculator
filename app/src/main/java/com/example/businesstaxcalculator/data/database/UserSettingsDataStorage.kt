@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.example.businesstaxcalculator.data.UserSelection
 import javax.inject.Inject
 import androidx.core.content.edit
+import com.example.businesstaxcalculator.domain.money.ExchangeRate
 
 class UserSettingsDataStorage @Inject constructor(
     private val sharedPreferences: SharedPreferences
@@ -16,15 +17,15 @@ class UserSettingsDataStorage @Inject constructor(
     override suspend fun save(data: UserSelection) {
         sharedPreferences.edit {
             putString(keySpinner, data.spinnerSelection)
-                .putFloat(keyDollarInput, data.dollarInput.toFloat())
-                .putFloat(keyEuroInput, data.euroInput.toFloat())
+                .putLong(keyDollarInput, data.dollarInput.scaledValue)
+                .putLong(keyEuroInput, data.euroInput.scaledValue)
         }
     }
 
     override suspend fun load(): UserSelection? {
         val spinnerSelection = sharedPreferences.getString(keySpinner, null) ?: return null
-        val dollarInput = sharedPreferences.getFloat(keyDollarInput, Float.MIN_VALUE).toDouble()
-        val euroInput = sharedPreferences.getFloat(keyEuroInput, Float.MIN_VALUE).toDouble()
+        val dollarInput = sharedPreferences.readRate(keyDollarInput) ?: return null
+        val euroInput = sharedPreferences.readRate(keyEuroInput) ?: return null
 
         return UserSelection(spinnerSelection, dollarInput, euroInput)
     }
@@ -43,5 +44,11 @@ class UserSettingsDataStorage @Inject constructor(
 
     override suspend fun hasData(): Boolean {
         return sharedPreferences.contains(keySpinner)
+    }
+
+    private fun SharedPreferences.readRate(key: String): ExchangeRate? = when (val value = all[key]) {
+        is Long -> ExchangeRate(value)
+        is Number -> ExchangeRate.parse(value.toString())
+        else -> null
     }
 }

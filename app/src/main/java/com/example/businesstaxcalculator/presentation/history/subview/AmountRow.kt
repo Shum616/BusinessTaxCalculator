@@ -10,9 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.utils.formatAmount
+import com.example.businesstaxcalculator.domain.money.Money
 
 @Composable
-fun AmountRow(label: Int, amount: Double) {
+fun AmountRow(label: Int, amount: Money) {
     Row(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween)

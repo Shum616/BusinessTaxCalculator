@@ -1,6 +1,7 @@
 package com.example.businesstaxcalculator.utils.validator
 
 import com.example.businesstaxcalculator.R
+import com.example.businesstaxcalculator.domain.money.Money
 
 class Validator : IValidator {
     override fun validateEmpty(input: String): ValidateResult {
@@ -12,8 +13,8 @@ class Validator : IValidator {
     }
 
     override fun validateInput(income: String): ValidateResult {
-        val value = income.toDoubleOrNull()
-        val isValid = value != null && value.isFinite() && value > 0.0
+        val value = Money.parse(income)
+        val isValid = value != null && value > Money.ZERO
         return ValidateResult(
             isValid,
             if (isValid) R.string.text_validation_success else R.string.text_validation_error_income
