@@ -1,6 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.multiplatform.library)
     alias(libs.plugins.compose.multiplatform)
@@ -30,6 +32,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            api(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+            api(libs.kotlinx.datetime)
+            api(libs.kotlinx.coroutines.core)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -37,4 +43,14 @@ kotlin {
             implementation(compose.components.resources)
         }
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

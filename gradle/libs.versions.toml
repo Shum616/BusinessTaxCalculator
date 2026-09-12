@@ -1,4 +1,6 @@
 [versions]
+kotlinxDatetime = "0.8.0"
+kotlinxCoroutines = "1.11.0"
 agp = "9.3.2"
 biometric = "1.4.0-alpha07"
 firebaseBom = "34.19.0"
@@ -17,8 +19,13 @@ activity = "1.13.0"
 navigationUi = "2.10.1"
 retrofit = "3.0.0"
 roomRuntime = "2.8.5"
+ksp = "2.3.12"
+sqlite = "2.7.1"
 
 [libraries]
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2026.09.00" }
@@ -49,6 +56,8 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+androidx-room = { id = "androidx.room", version.ref = "roomRuntime" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

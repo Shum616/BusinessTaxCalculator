@@ -5,8 +5,8 @@ import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import com.example.businesstaxcalculator.utils.FOP_GROUP_3_RATE_PREFERENCE
 import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
-import com.example.businesstaxcalculator.utils.FopGroup
-import com.example.businesstaxcalculator.utils.Group3TaxRate
+import com.example.businesstaxcalculator.domain.fop.FopGroup
+import com.example.businesstaxcalculator.domain.fop.Group3TaxRate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

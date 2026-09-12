@@ -6,6 +6,7 @@ import com.example.businesstaxcalculator.domain.history.IncomeHistorySummary
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlinx.datetime.toJavaLocalDate
 import com.example.businesstaxcalculator.domain.money.ExchangeRate
 import com.example.businesstaxcalculator.domain.money.Money
 
@@ -18,12 +19,12 @@ val HistoryPeriod.label: Int
     }
 
 fun IncomeHistorySummary.periodLabel(period: HistoryPeriod): String = when (period) {
-    HistoryPeriod.DAY -> periodStart.format(
+    HistoryPeriod.DAY -> periodStart.toJavaLocalDate().format(
         DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-    HistoryPeriod.MONTH -> periodStart.format(
+    HistoryPeriod.MONTH -> periodStart.toJavaLocalDate().format(
         DateTimeFormatter.ofPattern("LLLL yyyy", Locale.forLanguageTag("uk-UA"))
     ).replaceFirstChar { it.titlecase(Locale.forLanguageTag("uk-UA")) }
-    HistoryPeriod.QUARTER -> "${(periodStart.monthValue - 1) / 3 + 1} квартал ${periodStart.year}"
+    HistoryPeriod.QUARTER -> "${periodStart.month.ordinal / 3 + 1} квартал ${periodStart.year}"
     HistoryPeriod.YEAR -> periodStart.year.toString()
 }
 

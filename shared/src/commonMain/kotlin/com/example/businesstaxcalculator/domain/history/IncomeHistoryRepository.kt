@@ -1,8 +1,8 @@
 package com.example.businesstaxcalculator.domain.history
 
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
-import com.example.businesstaxcalculator.utils.FopGroup
+import kotlinx.datetime.LocalDate
+import com.example.businesstaxcalculator.domain.fop.FopGroup
 import com.example.businesstaxcalculator.domain.money.Money
 
 data class IncomeHistoryRecord(

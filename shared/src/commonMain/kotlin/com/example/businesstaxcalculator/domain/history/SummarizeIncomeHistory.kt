@@ -1,6 +1,6 @@
 package com.example.businesstaxcalculator.domain.history
 
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import com.example.businesstaxcalculator.domain.money.Money
 
 enum class HistoryPeriod { DAY, MONTH, QUARTER, YEAR }
@@ -35,9 +35,9 @@ fun summarizeIncomeHistory(
 
 private fun LocalDate.periodStart(period: HistoryPeriod): LocalDate = when (period) {
     HistoryPeriod.DAY -> this
-    HistoryPeriod.MONTH -> withDayOfMonth(1)
-    HistoryPeriod.QUARTER -> LocalDate.of(year, ((monthValue - 1) / 3) * 3 + 1, 1)
-    HistoryPeriod.YEAR -> LocalDate.of(year, 1, 1)
+    HistoryPeriod.MONTH -> LocalDate(year, month, 1)
+    HistoryPeriod.QUARTER -> LocalDate(year, ((month.ordinal) / 3) * 3 + 1, 1)
+    HistoryPeriod.YEAR -> LocalDate(year, 1, 1)
 }
 
 private inline fun <T> Iterable<T>.sumMoney(value: (T) -> Money): Money =

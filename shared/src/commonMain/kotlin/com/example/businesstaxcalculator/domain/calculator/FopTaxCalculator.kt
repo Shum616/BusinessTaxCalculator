@@ -1,14 +1,14 @@
 package com.example.businesstaxcalculator.domain.calculator
 
 import com.example.businesstaxcalculator.domain.money.Money
-import com.example.businesstaxcalculator.utils.FopGroup
-import com.example.businesstaxcalculator.utils.GROUP_1_MILITARY_TAX_MONTHLY_KOPIYKY
-import com.example.businesstaxcalculator.utils.GROUP_1_SINGLE_TAX_MONTHLY_KOPIYKY
-import com.example.businesstaxcalculator.utils.GROUP_2_MILITARY_TAX_MONTHLY_KOPIYKY
-import com.example.businesstaxcalculator.utils.GROUP_2_SINGLE_TAX_MONTHLY_KOPIYKY
-import com.example.businesstaxcalculator.utils.GROUP_3_MILITARY_TAX_PERCENT
-import com.example.businesstaxcalculator.utils.Group3TaxRate
-import com.example.businesstaxcalculator.utils.MONTHLY_ESV_KOPIYKY
+import com.example.businesstaxcalculator.domain.fop.FopGroup
+import com.example.businesstaxcalculator.domain.fop.GROUP_1_MILITARY_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.domain.fop.GROUP_1_SINGLE_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.domain.fop.GROUP_2_MILITARY_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.domain.fop.GROUP_2_SINGLE_TAX_MONTHLY_KOPIYKY
+import com.example.businesstaxcalculator.domain.fop.GROUP_3_MILITARY_TAX_PERCENT
+import com.example.businesstaxcalculator.domain.fop.Group3TaxRate
+import com.example.businesstaxcalculator.domain.fop.MONTHLY_ESV_KOPIYKY
 
 data class IncomeTaxBreakdown(
     val netProfit: Money,

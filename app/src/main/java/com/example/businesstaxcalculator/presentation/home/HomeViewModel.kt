@@ -10,8 +10,8 @@ import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import com.example.businesstaxcalculator.domain.money.Money
 import com.example.businesstaxcalculator.utils.FOP_GROUP_3_RATE_PREFERENCE
 import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
-import com.example.businesstaxcalculator.utils.FopGroup
-import com.example.businesstaxcalculator.utils.Group3TaxRate
+import com.example.businesstaxcalculator.domain.fop.FopGroup
+import com.example.businesstaxcalculator.domain.fop.Group3TaxRate
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlinx.datetime.toKotlinLocalDate
 import javax.inject.Inject
 
 data class HomeUiState(
@@ -75,7 +76,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             historyRepository.save(
                 IncomeHistoryRecord(
-                    date = date,
+                    date = date.toKotlinLocalDate(),
                     fopGroup = group,
                     grossIncome = grossIncome,
                     netProfit = result.netProfit,

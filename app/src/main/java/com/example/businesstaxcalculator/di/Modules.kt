@@ -10,6 +10,7 @@ import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRe
 import com.example.businesstaxcalculator.data.remote.repositories.api.NbuApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.data.local.AppDatabase
+import com.example.businesstaxcalculator.data.local.createDatabase
 import com.example.businesstaxcalculator.data.local.IncomeHistoryRepositoryImpl
 import com.example.businesstaxcalculator.data.local.dao.IncomeDao
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
@@ -50,7 +51,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(app: Application): AppDatabase {
-        return AppDatabase.invoke(app.applicationContext)
+        return createDatabase(app.applicationContext)
     }
 
     @Provides
@@ -59,8 +60,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideIncomeHistoryRepository(
-        repository: IncomeHistoryRepositoryImpl
-    ): IncomeHistoryRepository = repository
+        incomeDao: IncomeDao
+    ): IncomeHistoryRepository = IncomeHistoryRepositoryImpl(incomeDao)
 
     @Provides
     @Singleton

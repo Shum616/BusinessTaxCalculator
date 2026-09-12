@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.businesstaxcalculator.R
-import com.example.businesstaxcalculator.utils.FopGroup
+import com.example.businesstaxcalculator.domain.fop.FopGroup
 
 @Composable
 fun FopGroupSelector(selected: FopGroup, onSelect: (FopGroup) -> Unit) {

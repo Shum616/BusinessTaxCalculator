@@ -5,6 +5,8 @@ buildscript {
 }
 
 plugins {
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.androidx.room) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.multiplatform.library) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false

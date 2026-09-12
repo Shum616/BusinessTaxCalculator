@@ -1,0 +1,131 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "fc63543dc89343ad4cc52068a0e88a14",
+    "entities": [
+      {
+        "tableName": "Income",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`incomeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `income_value` TEXT NOT NULL, `income_year` INTEGER NOT NULL, `income_quarter` INTEGER NOT NULL, `income_date_epoch_day` INTEGER NOT NULL, `income_military_tax_uan` INTEGER NOT NULL, `fop_group` INTEGER NOT NULL, `income_united_tax_uan` INTEGER NOT NULL, `income_united_local_contribution_uan` INTEGER NOT NULL, `income_currency` INTEGER NOT NULL, `income_uan` INTEGER NOT NULL, `income_remaining` INTEGER NOT NULL, `income_uan_quarter` INTEGER NOT NULL, `income_remaining_quarter` INTEGER NOT NULL, `income_gross` INTEGER NOT NULL, `exchange_rate` INTEGER NOT NULL, `rent` INTEGER, `extra_expenses` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "incomeId",
+            "columnName": "incomeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeValue",
+            "columnName": "income_value",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeYear",
+            "columnName": "income_year",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeQuarter",
+            "columnName": "income_quarter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeDateEpochDay",
+            "columnName": "income_date_epoch_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeMilitaryTaxKopiyky",
+            "columnName": "income_military_tax_uan",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fopGroup",
+            "columnName": "fop_group",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeUnitedTaxKopiyky",
+            "columnName": "income_united_tax_uan",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeUnitedLocalContributionKopiyky",
+            "columnName": "income_united_local_contribution_uan",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeCurrencyKopiyky",
+            "columnName": "income_currency",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeUahKopiyky",
+            "columnName": "income_uan",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeRemainingKopiyky",
+            "columnName": "income_remaining",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeUahQuarterKopiyky",
+            "columnName": "income_uan_quarter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeRemainingQuarterKopiyky",
+            "columnName": "income_remaining_quarter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "grossKopiyky",
+            "columnName": "income_gross",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exchangeRateScaled",
+            "columnName": "exchange_rate",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rentKopiyky",
+            "columnName": "rent",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "extraExpensesKopiyky",
+            "columnName": "extra_expenses",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "incomeId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fc63543dc89343ad4cc52068a0e88a14')"
+    ]
+  }
+}

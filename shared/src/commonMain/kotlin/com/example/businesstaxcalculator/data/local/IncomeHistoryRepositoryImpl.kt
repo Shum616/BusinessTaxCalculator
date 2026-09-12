@@ -5,13 +5,12 @@ import com.example.businesstaxcalculator.data.local.entities.Income
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRecord
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import kotlinx.coroutines.flow.map
-import java.time.LocalDate
-import com.example.businesstaxcalculator.utils.FopGroup
+import kotlinx.datetime.LocalDate
+import com.example.businesstaxcalculator.domain.fop.FopGroup
 import com.example.businesstaxcalculator.domain.money.ExchangeRate
 import com.example.businesstaxcalculator.domain.money.Money
-import javax.inject.Inject
 
-class IncomeHistoryRepositoryImpl @Inject constructor(
+class IncomeHistoryRepositoryImpl(
     private val incomeDao: IncomeDao
 ) : IncomeHistoryRepository {
     override fun observeAll() = incomeDao.observeAll().map { incomes ->
@@ -28,8 +27,8 @@ class IncomeHistoryRepositoryImpl @Inject constructor(
         incomeId = 0,
         incomeValue = grossIncome.kopiyky.toString(),
         incomeYear = date.year,
-        incomeQuarter = (date.monthValue - 1) / 3 + 1,
-        incomeDateEpochDay = date.toEpochDay(),
+        incomeQuarter = date.month.ordinal / 3 + 1,
+        incomeDateEpochDay = date.toEpochDays(),
         incomeMilitaryTaxKopiyky = militaryTax.kopiyky,
         fopGroup = fopGroup.number,
         incomeUnitedTaxKopiyky = singleTax.kopiyky,
@@ -46,13 +45,10 @@ class IncomeHistoryRepositoryImpl @Inject constructor(
     )
 
     private fun Income.toHistoryRecord(): IncomeHistoryRecord {
-        val storedDate = incomeDateEpochDay.takeIf { it > 0 }?.let(LocalDate::ofEpochDay)
-        val fallbackYear = incomeYear.takeIf { it in 1970..9999 } ?: 1970
-        val fallbackMonth = ((incomeQuarter.coerceIn(1, 4) - 1) * 3) + 1
         return IncomeHistoryRecord(
-            date = storedDate ?: LocalDate.of(fallbackYear, fallbackMonth, 1),
+            date = LocalDate.fromEpochDays(incomeDateEpochDay),
             fopGroup = FopGroup.from(fopGroup),
-            grossIncome = Money(grossKopiyky.takeIf { it != 0L } ?: incomeUahKopiyky),
+            grossIncome = Money(grossKopiyky),
             netProfit = Money(incomeRemainingKopiyky),
             esv = Money(incomeUnitedLocalContributionKopiyky),
             militaryTax = Money(incomeMilitaryTaxKopiyky),

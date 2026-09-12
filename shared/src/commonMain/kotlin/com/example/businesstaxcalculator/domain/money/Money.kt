@@ -1,5 +1,7 @@
 package com.example.businesstaxcalculator.domain.money
 
+import kotlin.jvm.JvmInline
+
 @JvmInline
 value class Money(val kopiyky: Long) : Comparable<Money> {
     operator fun plus(other: Money) = Money(checkedAdd(kopiyky, other.kopiyky))

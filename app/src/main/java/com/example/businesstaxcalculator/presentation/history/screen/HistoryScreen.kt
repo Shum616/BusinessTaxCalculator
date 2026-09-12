@@ -24,7 +24,7 @@ import com.example.businesstaxcalculator.R
 import com.example.businesstaxcalculator.domain.history.HistoryPeriod
 import com.example.businesstaxcalculator.domain.history.IncomeHistorySummary
 import com.example.businesstaxcalculator.presentation.history.HistoryViewModel
-import com.example.businesstaxcalculator.utils.FopGroup
+import com.example.businesstaxcalculator.domain.fop.FopGroup
 import com.example.businesstaxcalculator.presentation.history.subview.HistoryCard
 import com.example.businesstaxcalculator.utils.label
 import java.text.NumberFormat
@@ -77,7 +77,7 @@ fun HistoryScreen(viewModel: HistoryViewModel) {
             )
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(state.summaries, key = { it.periodStart.toEpochDay() }) { summary ->
+                items(state.summaries, key = { it.periodStart.toString() }) { summary ->
                     HistoryCard(
                         summary,
                         state.period

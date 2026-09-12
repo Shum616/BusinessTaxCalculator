@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.businesstaxcalculator.R
-import com.example.businesstaxcalculator.utils.GROUP_3_SINGLE_TAX_WITHOUT_VAT_PERCENT
-import com.example.businesstaxcalculator.utils.GROUP_3_SINGLE_TAX_WITH_VAT_PERCENT
-import com.example.businesstaxcalculator.utils.Group3TaxRate
+import com.example.businesstaxcalculator.domain.fop.GROUP_3_SINGLE_TAX_WITHOUT_VAT_PERCENT
+import com.example.businesstaxcalculator.domain.fop.GROUP_3_SINGLE_TAX_WITH_VAT_PERCENT
+import com.example.businesstaxcalculator.domain.fop.Group3TaxRate
 
 @Composable
 fun Group3RateSelector(selected: Group3TaxRate, onSelect: (Group3TaxRate) -> Unit) {

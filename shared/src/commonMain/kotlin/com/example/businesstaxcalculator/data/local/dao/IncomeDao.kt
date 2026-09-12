@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface IncomeDao {
     @Query("SELECT * FROM income")
-    fun getAll(): List<Income>
+    suspend fun getAll(): List<Income>
 
     @Query("SELECT * FROM income ORDER BY income_date_epoch_day DESC, incomeId DESC")
     fun observeAll(): Flow<List<Income>>
@@ -22,24 +22,24 @@ interface IncomeDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM income WHERE incomeId IN (:incomeIds)")
-    fun loadAllByIds(incomeIds: IntArray): List<Income>
+    suspend fun loadAllByIds(incomeIds: IntArray): List<Income>
 
     @Query("SELECT * FROM income WHERE income_year = :year ")
-    fun getQuarter(year: Int): List<Income>
+    suspend fun getQuarter(year: Int): List<Income>
 
     @Insert
-    fun insertAll(vararg incomes: Income)
+    suspend fun insertAll(vararg incomes: Income)
 
     @Insert
-    fun insertOne(vararg income: Income)
+    suspend fun insertOne(vararg income: Income)
 
     @Delete
-    fun delete(income: Income)
+    suspend fun delete(income: Income)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(income: Income)
 
     @Update
-    fun update(income: Income)
+    suspend fun update(income: Income)
 
 }

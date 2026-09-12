@@ -72,14 +72,9 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.gson)
     
-    //room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-
     //firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    kapt (libs.androidx.room.compiler)
 
     ///biometric
     implementation(libs.androidx.biometric)

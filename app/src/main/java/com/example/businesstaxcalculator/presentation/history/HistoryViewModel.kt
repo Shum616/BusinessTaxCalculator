@@ -9,7 +9,7 @@ import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import com.example.businesstaxcalculator.domain.history.IncomeHistorySummary
 import com.example.businesstaxcalculator.domain.history.summarizeIncomeHistory
 import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
-import com.example.businesstaxcalculator.utils.FopGroup
+import com.example.businesstaxcalculator.domain.fop.FopGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
