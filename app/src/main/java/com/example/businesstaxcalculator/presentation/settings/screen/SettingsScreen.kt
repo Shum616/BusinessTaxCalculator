@@ -76,27 +76,20 @@ fun SettingsScreen(viewModel: SettingsViewModel)
                     stringResource(R.string.current_nbu_rates),
                     style = MaterialTheme.typography.titleMedium
                 )
-                when {
-                    state.isLoadingCurrentRates -> CircularProgressIndicator()
-                    state.hasCurrentRatesError -> {
-                        Text(stringResource(R.string.current_rates_error))
-                        TextButton(onClick = viewModel::refreshCurrentRates) {
-                            Text(stringResource(R.string.retry))
-                        }
-                    }
-                    else -> {
-                        CurrentRateRow("USD", state.currentDollarRate)
-                        CurrentRateRow("EUR", state.currentEuroRate)
-                        if (state.currentRatesDate.isNotEmpty()) {
-                            Text(
-                                stringResource(R.string.current_rates_date, state.currentRatesDate),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                        TextButton(onClick = viewModel::refreshCurrentRates) {
-                            Text(stringResource(R.string.refresh_rates))
-                        }
-                    }
+                CurrentRateRow(
+                    "USD", state.currentDollarRate, state.currentDollarRateDate,
+                    state.hasCurrentDollarRateError
+                )
+                CurrentRateRow(
+                    "EUR", state.currentEuroRate, state.currentEuroRateDate,
+                    state.hasCurrentEuroRateError
+                )
+                if (state.isLoadingCurrentRates) CircularProgressIndicator()
+                TextButton(
+                    onClick = viewModel::refreshCurrentRates,
+                    enabled = !state.isLoadingCurrentRates
+                ) {
+                    Text(stringResource(R.string.refresh_rates))
                 }
             }
         }
@@ -223,12 +216,24 @@ fun SettingsScreen(viewModel: SettingsViewModel)
 }
 
 @Composable
-private fun CurrentRateRow(currency: String, rate: ExchangeRate?) {
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text(currency)
-        Text(
-            rate?.let { stringResource(R.string.current_rate_value, it.formatRate()) } ?: "—",
-            style = MaterialTheme.typography.titleMedium
-        )
+private fun CurrentRateRow(currency: String, rate: ExchangeRate?, date: String, hasError: Boolean) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(currency)
+            Text(
+                rate?.let { stringResource(R.string.current_rate_value, it.formatRate()) } ?: "—",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        if (date.isNotEmpty()) {
+            Text(stringResource(R.string.current_rates_date, date), style = MaterialTheme.typography.bodySmall)
+        }
+        if (hasError) {
+            Text(
+                stringResource(R.string.current_rates_error),
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
     }
 }

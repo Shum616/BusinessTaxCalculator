@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 data class SettingsUiState(
@@ -25,9 +27,11 @@ data class SettingsUiState(
     val hasEuroRateError: Boolean = false,
     val currentDollarRate: ExchangeRate? = null,
     val currentEuroRate: ExchangeRate? = null,
-    val currentRatesDate: String = "",
+    val currentDollarRateDate: String = "",
+    val currentEuroRateDate: String = "",
     val isLoadingCurrentRates: Boolean = false,
-    val hasCurrentRatesError: Boolean = false,
+    val hasCurrentDollarRateError: Boolean = false,
+    val hasCurrentEuroRateError: Boolean = false,
     val password: String = "",
     val passwordConfirmation: String = "",
     val appLockEnabled: Boolean = true,
@@ -55,28 +59,46 @@ class SettingsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        refreshCurrentRates()
+        loadCurrentRates(forceRefresh = false)
     }
 
-    fun refreshCurrentRates() {
+    fun refreshCurrentRates() = loadCurrentRates(forceRefresh = true)
+
+    private fun loadCurrentRates(forceRefresh: Boolean) {
         if (_uiState.value.isLoadingCurrentRates) return
-        _uiState.update { it.copy(isLoadingCurrentRates = true, hasCurrentRatesError = false) }
+        _uiState.update {
+            it.copy(
+                isLoadingCurrentRates = true,
+                hasCurrentDollarRateError = false,
+                hasCurrentEuroRateError = false
+            )
+        }
         viewModelScope.launch {
-            runCatching {
-                currencyRateRepository.getDollarRate() to currencyRateRepository.getEuroRate()
-            }.onSuccess { (dollar, euro) ->
-                _uiState.update {
-                    it.copy(
-                        currentDollarRate = dollar.saleRate,
-                        currentEuroRate = euro.saleRate,
-                        currentRatesDate = dollar.date,
-                        isLoadingCurrentRates = false
-                    )
+            try {
+                coroutineScope {
+                    launch { loadRate(isDollar = true, forceRefresh = forceRefresh) }
+                    launch { loadRate(isDollar = false, forceRefresh = forceRefresh) }
                 }
-            }.onFailure {
-                _uiState.update {
-                    it.copy(isLoadingCurrentRates = false, hasCurrentRatesError = true)
-                }
+            } finally {
+                _uiState.update { it.copy(isLoadingCurrentRates = false) }
+            }
+        }
+    }
+
+    private suspend fun loadRate(isDollar: Boolean, forceRefresh: Boolean) {
+        try {
+            val rate = if (isDollar) currencyRateRepository.getDollarRate(forceRefresh)
+                else currencyRateRepository.getEuroRate(forceRefresh)
+            _uiState.update {
+                if (isDollar) it.copy(currentDollarRate = rate.saleRate, currentDollarRateDate = rate.date)
+                else it.copy(currentEuroRate = rate.saleRate, currentEuroRateDate = rate.date)
+            }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (_: Exception) {
+            _uiState.update {
+                if (isDollar) it.copy(hasCurrentDollarRateError = true)
+                else it.copy(hasCurrentEuroRateError = true)
             }
         }
     }

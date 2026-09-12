@@ -10,23 +10,19 @@ import com.example.businesstaxcalculator.data.settings.createAppSettings
 import com.example.businesstaxcalculator.data.security.AndroidAppLockCredentials
 import com.example.businesstaxcalculator.domain.settings.AppSettings
 import com.example.businesstaxcalculator.domain.security.AppLockCredentials
-import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRepository
-import com.example.businesstaxcalculator.data.remote.repositories.api.NbuApi
+import com.example.businesstaxcalculator.data.remote.repositories.createCurrencyRateRepository
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
 import com.example.businesstaxcalculator.data.local.AppDatabase
 import com.example.businesstaxcalculator.data.local.createDatabase
 import com.example.businesstaxcalculator.data.local.IncomeHistoryRepositoryImpl
 import com.example.businesstaxcalculator.data.local.dao.IncomeDao
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
-import com.example.businesstaxcalculator.utils.BASE_URL
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import com.example.businesstaxcalculator.utils.validator.Validator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -37,20 +33,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    @Provides
-    @Singleton
-    fun provideNbuApi(retrofit: Retrofit): NbuApi =
-        retrofit.create(NbuApi::class.java)
-
-    @Provides
-    @Singleton
-    fun provideCurrencyRate(api: NbuApi): ICurrencyRateRepository =
-        CurrencyRateRepository(api)
+    fun provideCurrencyRate(): ICurrencyRateRepository = createCurrencyRateRepository()
     
     @Provides
     @Singleton

@@ -67,10 +67,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    //retrofit + gson
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.gson)
     
     //firebase
     implementation(platform(libs.firebase.bom))
