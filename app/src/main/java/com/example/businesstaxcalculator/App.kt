@@ -1,7 +1,8 @@
 package com.example.businesstaxcalculator
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.businesstaxcalculator.di.createAppContainer
 
-@HiltAndroidApp
-class App : Application()
+class App : Application() {
+    val container by lazy { createAppContainer(this) }
+}

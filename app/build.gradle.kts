@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.android.legacy.kapt)
-    alias(libs.plugins.hilt.android)
     id("com.google.gms.google-services")
 }
 
@@ -47,8 +45,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
@@ -57,26 +53,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     // FragmentActivity is required by BiometricPrompt, but all UI is Compose.
     implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    // ViewModel utilities for Compose
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.navigation.compose)
 
-    //dagger hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
-    
-    //firebase
+//firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 
-    ///biometric
-    implementation(libs.androidx.biometric)
-
-
-}
-kapt {
-    correctErrorTypes = true
 }

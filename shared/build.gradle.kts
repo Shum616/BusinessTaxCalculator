@@ -15,6 +15,7 @@ kotlin {
         namespace = "com.example.businesstaxcalculator.shared"
         compileSdk = 37
         minSdk = 28
+        androidResources.enable = true
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -33,6 +34,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.multiplatform.viewmodel.compose)
+            implementation(libs.multiplatform.lifecycle.compose)
+            implementation(libs.multiplatform.navigation.compose)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -47,6 +51,9 @@ kotlin {
             implementation(compose.components.resources)
         }
         androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.fragment.ktx)
+            implementation(libs.androidx.biometric)
             implementation(libs.ktor.client.okhttp)
         }
         iosMain.dependencies {
@@ -63,4 +70,8 @@ dependencies {
 
 room {
     schemaDirectory("$projectDir/schemas")
+}
+
+compose.resources {
+    packageOfResClass = "com.example.businesstaxcalculator.resources"
 }

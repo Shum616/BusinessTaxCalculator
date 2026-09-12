@@ -17,8 +17,8 @@
         android:name=".App"
         tools:targetApi="37">
 
-        <activity android:name=".presentation.applock.AppLockActivity" />
-        
+
+
         <activity
             android:name=".presentation.MainActivity"
 
