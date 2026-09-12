@@ -14,3 +14,6 @@
 .cxx
 local.properties
 /.idea
+/.kotlin/metadata
+/shared/build
+.idea/gradle.xml

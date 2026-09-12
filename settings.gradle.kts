@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "BusinessTaxCalculator"
 include(":app")
+include(":shared")
  

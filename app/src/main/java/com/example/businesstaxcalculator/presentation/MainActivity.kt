@@ -7,12 +7,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.example.businesstaxcalculator.presentation.applock.AppLockActivity
-import com.example.businesstaxcalculator.presentation.common.BusinessTaxApp
 import com.example.businesstaxcalculator.presentation.home.HomeViewModel
 import com.example.businesstaxcalculator.presentation.history.HistoryViewModel
 import com.example.businesstaxcalculator.presentation.profile.ProfileViewModel
 import com.example.businesstaxcalculator.presentation.settings.SettingsViewModel
-import com.example.businesstaxcalculator.presentation.theme.BusinessTaxTheme
+import com.example.businesstaxcalculator.shared.SharedApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,9 +29,7 @@ class MainActivity : ComponentActivity() {
             startActivity(Intent(this, AppLockActivity::class.java))
         }
         setContent {
-            BusinessTaxTheme {
-                BusinessTaxApp(homeViewModel, historyViewModel, settingsViewModel, profileViewModel)
-            }
+            SharedApp()
         }
     }
 }
