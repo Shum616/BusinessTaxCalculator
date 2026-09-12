@@ -1,6 +1,6 @@
 package com.example.businesstaxcalculator.presentation.history
 
-import android.content.SharedPreferences
+import com.example.businesstaxcalculator.domain.settings.AppSettings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.domain.history.HistoryPeriod
@@ -8,7 +8,6 @@ import com.example.businesstaxcalculator.domain.history.IncomeHistoryRecord
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import com.example.businesstaxcalculator.domain.history.IncomeHistorySummary
 import com.example.businesstaxcalculator.domain.history.summarizeIncomeHistory
-import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
 import com.example.businesstaxcalculator.domain.fop.FopGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,14 +27,12 @@ data class HistoryUiState(
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val repository: IncomeHistoryRepository,
-    preferences: SharedPreferences
+    settings: AppSettings
 ) : ViewModel() {
     private var records: List<IncomeHistoryRecord> = emptyList()
     private val _uiState = MutableStateFlow(
         HistoryUiState(
-            fopGroup = FopGroup.from(
-                preferences.getInt(FOP_GROUP_PREFERENCE, FopGroup.FIRST.number)
-            )
+            fopGroup = settings.fopGroup
         )
     )
     val uiState = _uiState.asStateFlow()

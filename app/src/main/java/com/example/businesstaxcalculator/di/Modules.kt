@@ -6,6 +6,10 @@ import android.content.SharedPreferences
 import com.example.businesstaxcalculator.data.UserSelection
 import com.example.businesstaxcalculator.data.database.IDataStorage
 import com.example.businesstaxcalculator.data.database.UserSettingsDataStorage
+import com.example.businesstaxcalculator.data.settings.createAppSettings
+import com.example.businesstaxcalculator.data.security.AndroidAppLockCredentials
+import com.example.businesstaxcalculator.domain.settings.AppSettings
+import com.example.businesstaxcalculator.domain.security.AppLockCredentials
 import com.example.businesstaxcalculator.data.remote.repositories.CurrencyRateRepository
 import com.example.businesstaxcalculator.data.remote.repositories.api.NbuApi
 import com.example.businesstaxcalculator.data.remote.repositories.interfaces.ICurrencyRateRepository
@@ -77,7 +81,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDataStorage(sharedPreferences: SharedPreferences): IDataStorage<UserSelection> {
-        return UserSettingsDataStorage(sharedPreferences)
+    fun provideAppSettings(sharedPreferences: SharedPreferences): AppSettings =
+        createAppSettings(sharedPreferences)
+
+    @Provides
+    @Singleton
+    fun provideCredentials(sharedPreferences: SharedPreferences): AppLockCredentials =
+        AndroidAppLockCredentials(sharedPreferences)
+
+    @Provides
+    @Singleton
+    fun provideDataStorage(settings: AppSettings): IDataStorage<UserSelection> {
+        return UserSettingsDataStorage(settings)
     }
 }

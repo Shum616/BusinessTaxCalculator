@@ -1,6 +1,6 @@
 package com.example.businesstaxcalculator.presentation.home
 
-import android.content.SharedPreferences
+import com.example.businesstaxcalculator.domain.settings.AppSettings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.domain.calculator.IncomeTaxBreakdown
@@ -8,10 +8,6 @@ import com.example.businesstaxcalculator.domain.calculator.calculateFopTaxes
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRecord
 import com.example.businesstaxcalculator.domain.history.IncomeHistoryRepository
 import com.example.businesstaxcalculator.domain.money.Money
-import com.example.businesstaxcalculator.utils.FOP_GROUP_3_RATE_PREFERENCE
-import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
-import com.example.businesstaxcalculator.domain.fop.FopGroup
-import com.example.businesstaxcalculator.domain.fop.Group3TaxRate
 import com.example.businesstaxcalculator.utils.validator.IValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,7 +34,7 @@ sealed interface HomeUiEvent {
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val validator: IValidator,
-    private val preferences: SharedPreferences,
+    private val settings: AppSettings,
     private val historyRepository: IncomeHistoryRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -60,15 +56,8 @@ class HomeViewModel @Inject constructor(
             _uiState.update { it.copy(hasIncomeError = true) }
             return
         }
-        val group = FopGroup.from(
-            preferences.getInt(FOP_GROUP_PREFERENCE, FopGroup.FIRST.number)
-        )
-        val rate = Group3TaxRate.from(
-            preferences.getInt(
-                FOP_GROUP_3_RATE_PREFERENCE,
-                Group3TaxRate.WITHOUT_VAT.percent
-            )
-        )
+        val group = settings.fopGroup
+        val rate = settings.group3TaxRate
         val grossIncome = Money.parse(income) ?: return
         val result = calculateFopTaxes(grossIncome, group, rate)
         val date = LocalDate.ofEpochDay(_uiState.value.selectedDateEpochDay)

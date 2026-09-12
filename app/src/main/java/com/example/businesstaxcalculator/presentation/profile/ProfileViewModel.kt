@@ -1,10 +1,7 @@
 package com.example.businesstaxcalculator.presentation.profile
 
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import com.example.businesstaxcalculator.domain.settings.AppSettings
 import androidx.lifecycle.ViewModel
-import com.example.businesstaxcalculator.utils.FOP_GROUP_3_RATE_PREFERENCE
-import com.example.businesstaxcalculator.utils.FOP_GROUP_PREFERENCE
 import com.example.businesstaxcalculator.domain.fop.FopGroup
 import com.example.businesstaxcalculator.domain.fop.Group3TaxRate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,30 +17,23 @@ data class ProfileUiState(
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val preferences: SharedPreferences
+    private val settings: AppSettings
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         ProfileUiState(
-            group = FopGroup.from(
-                preferences.getInt(FOP_GROUP_PREFERENCE, FopGroup.FIRST.number)
-            ),
-            group3Rate = Group3TaxRate.from(
-                preferences.getInt(
-                    FOP_GROUP_3_RATE_PREFERENCE,
-                    Group3TaxRate.WITHOUT_VAT.percent
-                )
-            )
+            group = settings.fopGroup,
+            group3Rate = settings.group3TaxRate
         )
     )
     val uiState = _uiState.asStateFlow()
 
     fun selectGroup(group: FopGroup) {
         _uiState.update { it.copy(group = group) }
-        preferences.edit { putInt(FOP_GROUP_PREFERENCE, group.number) }
+        settings.fopGroup = group
     }
 
     fun selectGroup3Rate(rate: Group3TaxRate) {
         _uiState.update { it.copy(group3Rate = rate) }
-        preferences.edit { putInt(FOP_GROUP_3_RATE_PREFERENCE, rate.percent) }
+        settings.group3TaxRate = rate
     }
 }

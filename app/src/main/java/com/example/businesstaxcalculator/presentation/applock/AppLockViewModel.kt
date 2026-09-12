@@ -1,6 +1,7 @@
 package com.example.businesstaxcalculator.presentation.applock
 
-import android.content.SharedPreferences
+import com.example.businesstaxcalculator.domain.settings.AppSettings
+import com.example.businesstaxcalculator.domain.security.AppLockCredentials
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,13 +17,14 @@ data class AppLockUiState(
 
 @HiltViewModel
 class AppLockViewModel @Inject constructor(
-    private val preferences: SharedPreferences
+    private val settings: AppSettings,
+    private val credentials: AppLockCredentials
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AppLockUiState())
     val uiState = _uiState.asStateFlow()
 
     val fingerprintEnabled: Boolean
-        get() = preferences.getBoolean("switch_fingerprint_unlock", false)
+        get() = settings.fingerprintEnabled
 
     fun updatePassword(password: String) {
         _uiState.update { it.copy(password = password, hasPasswordError = false) }
@@ -33,7 +35,7 @@ class AppLockViewModel @Inject constructor(
     }
 
     fun validatePassword(): Boolean {
-        val valid = _uiState.value.password == preferences.getString("password", "1234")
+        val valid = credentials.verify(_uiState.value.password)
         _uiState.update { it.copy(hasPasswordError = !valid) }
         return valid
     }

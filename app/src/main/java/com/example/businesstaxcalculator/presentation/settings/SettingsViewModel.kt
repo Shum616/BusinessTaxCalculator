@@ -1,7 +1,7 @@
 package com.example.businesstaxcalculator.presentation.settings
 
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import com.example.businesstaxcalculator.domain.settings.AppSettings
+import com.example.businesstaxcalculator.domain.security.AppLockCredentials
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.businesstaxcalculator.data.UserSelection
@@ -38,17 +38,18 @@ data class SettingsUiState(
 class SettingsViewModel @Inject constructor(
     private val validator: IValidator,
     private val dataStorage: IDataStorage<UserSelection>,
-    private val preferences: SharedPreferences,
+    private val settings: AppSettings,
+    private val credentials: AppLockCredentials,
     private val historyRepository: IncomeHistoryRepository,
     private val currencyRateRepository: ICurrencyRateRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         SettingsUiState(
-            currency = preferences.getString(CURRENCY_KEY, "").orEmpty(),
-            dollarRate = preferences.rateText(DOLLAR_RATE_KEY),
-            euroRate = preferences.rateText(EURO_RATE_KEY),
-            appLockEnabled = preferences.getBoolean(APP_LOCK_KEY, true),
-            fingerprintEnabled = preferences.getBoolean(FINGERPRINT_KEY, false)
+            currency = settings.currency,
+            dollarRate = settings.dollarRate?.toPlainString().orEmpty(),
+            euroRate = settings.euroRate?.toPlainString().orEmpty(),
+            appLockEnabled = settings.appLockEnabled,
+            fingerprintEnabled = settings.fingerprintEnabled
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -120,24 +121,23 @@ class SettingsViewModel @Inject constructor(
             state.password == state.passwordConfirmation
         if (!valid) return false
 
-        preferences.edit { putString(PASSWORD_KEY, state.password) }
+        credentials.save(state.password)
         _uiState.update { it.copy(password = "", passwordConfirmation = "") }
         return true
     }
 
     fun setAppLockEnabled(enabled: Boolean) {
-        preferences.edit { putBoolean(APP_LOCK_KEY, enabled) }
+        settings.appLockEnabled = enabled
         _uiState.update {
             it.copy(
                 appLockEnabled = enabled,
                 fingerprintEnabled = if (enabled) it.fingerprintEnabled else false
             )
         }
-        if (!enabled) preferences.edit { putBoolean(FINGERPRINT_KEY, false) }
     }
 
     fun setFingerprintEnabled(enabled: Boolean) {
-        preferences.edit { putBoolean(FINGERPRINT_KEY, enabled) }
+        settings.fingerprintEnabled = enabled
         _uiState.update { it.copy(fingerprintEnabled = enabled) }
     }
 
@@ -145,18 +145,4 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { historyRepository.deleteAll() }
     }
 
-    private fun SharedPreferences.rateText(key: String): String = when (val value = all[key]) {
-        is Long -> ExchangeRate(value).toPlainString()
-        is Number -> ExchangeRate.parse(value.toString())?.toPlainString().orEmpty()
-        else -> ""
-    }
-
-    private companion object {
-        const val CURRENCY_KEY = "spinner_selection"
-        const val DOLLAR_RATE_KEY = "dollar_input"
-        const val EURO_RATE_KEY = "euro_input"
-        const val PASSWORD_KEY = "password"
-        const val APP_LOCK_KEY = "switch_app_lock"
-        const val FINGERPRINT_KEY = "switch_fingerprint_unlock"
-    }
 }
